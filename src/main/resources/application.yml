@@ -16,8 +16,8 @@ spring:
   # view Resolver
   mvc:
     view:
-      prefix: /WEB-INF/views/
-      suffix: .jsx
+      prefix: /views/
+      suffix: .html
       
       
 # Mybatis
