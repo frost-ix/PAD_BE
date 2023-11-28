@@ -1,6 +1,6 @@
 server:
-  port : 8080
-  
+  port: 8080
+
 # Oracle Connect
 spring:
   datasource:
@@ -8,19 +8,18 @@ spring:
     username: ADMIN
     password: Padoracle5day
     driver-class-name: oracle.jdbc.OracleDriver
-    
-  devtools: 
+
+  devtools:
     livereload:
       enabled: true
 
   # view Resolver
   mvc:
     view:
-      prefix: /WEB-INF/views/
-      suffix: .jsx
-      
-      
+      prefix: /
+      suffix: .html
+
 # Mybatis
-mybatis: 
+mybatis:
   config-location: classpath:configuration.xml
   mapper-locations: classpath:mappers/*.xml
