@@ -18,7 +18,7 @@ spring:
     view:
       prefix: /
       suffix: .html
-
+      
 # Mybatis
 mybatis:
   config-location: classpath:configuration.xml
