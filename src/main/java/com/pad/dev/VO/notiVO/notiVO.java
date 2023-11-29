@@ -1,10 +1,10 @@
-package com.pad.dev.VO.notiVO;
+package com.pad.dev.VO.NotiVO;
 
 import java.util.Date;
 import lombok.Data;
 
 @Data
-public class notiVO {
+public class NotiVO {
 	private int notiID;
 	private String notiTitle;
 	private String notiContent;

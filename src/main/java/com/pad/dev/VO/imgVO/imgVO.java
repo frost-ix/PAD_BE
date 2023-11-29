@@ -1,9 +1,9 @@
-package com.pad.dev.VO.imgVO;
+package com.pad.dev.VO.ImgVO;
 
 import lombok.Data;
 
 @Data
-public class imgVO {
+public class ImgVO {
 	private int imgID;
 	private String imageType;
 	private String imagePath;

@@ -1,9 +1,9 @@
-package com.pad.dev.VO.cateVO;
+package com.pad.dev.VO.CateVO;
 
 import lombok.Data;
 
 @Data
-public class cateVO {
+public class CateVO {
 	private String cateID;
 	private String cateName;
 	private String cateRef;

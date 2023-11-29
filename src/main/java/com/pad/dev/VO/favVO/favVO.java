@@ -1,9 +1,9 @@
-package com.pad.dev.VO.favVO;
+package com.pad.dev.VO.FavVO;
 
 import lombok.Data;
 
 @Data
-public class favVO {
+public class FavVO {
 	private String memID;
 	private int boardID;
 }
