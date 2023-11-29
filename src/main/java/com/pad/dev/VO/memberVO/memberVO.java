@@ -1,9 +1,9 @@
-package com.pad.dev.VO.memberVO;
+package com.pad.dev.VO.MemberVO;
 
 import lombok.Data;
 
 @Data
-public class memberVO {
+public class MemberVO {
 	private String memID;
 	private String memPW;
 	private String memNN;
