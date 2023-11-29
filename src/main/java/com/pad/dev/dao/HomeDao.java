@@ -1,5 +1,5 @@
-package com.pad.dev.dao;
+package com.pad.dev.DAO;
 
 interface HomeDao {
-    
+
 }

@@ -1,4 +1,4 @@
-package com.pad.dev.dao;
+package com.pad.dev.DAO;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -9,5 +9,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class HomeDaoImplementaion implements HomeDao {
     private final SqlSession session;
-    
+
 }

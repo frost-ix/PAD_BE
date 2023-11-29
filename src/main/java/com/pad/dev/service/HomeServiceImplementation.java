@@ -2,7 +2,7 @@ package com.pad.dev.service;
 
 import org.springframework.stereotype.Service;
 
-import com.pad.dev.dao.HomeDaoImplementaion;
+import com.pad.dev.DAO.HomeDaoImplementaion;
 
 import lombok.RequiredArgsConstructor;
 
