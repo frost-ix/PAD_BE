@@ -3,11 +3,11 @@
 
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.pad.dev.VO.boardVO" alias="BoardVO"/>
-        <typeAlias type="com.pad.dev.VO.cateVO" alias="CateVO"/>
-        <typeAlias type="com.pad.dev.VO.favVO" alias="FavVO"/>
-        <typeAlias type="com.pad.dev.VO.imgVO" alias="ImgVO"/>
-        <typeAlias type="com.pad.dev.VO.memberVO" alias="MemberVO"/>
-        <typeAlias type="com.pad.dev.VO.notiVO" alias="NotiVO"/>
+		<typeAlias type="com.pad.dev.VO.boardVO.BoardVO" alias="BoardVO"/>
+        <typeAlias type="com.pad.dev.VO.cateVO.CateVO" alias="CateVO"/>
+        <typeAlias type="com.pad.dev.VO.favVO.FavVO" alias="FavVO"/>
+        <typeAlias type="com.pad.dev.VO.imgVO.ImgVO" alias="ImgVO"/>
+        <typeAlias type="com.pad.dev.VO.memberVO.MemberVO" alias="MemberVO"/>
+        <typeAlias type="com.pad.dev.VO.notiVO.NotiVO" alias="NotiVO"/>
 	</typeAliases>
 </configuration>

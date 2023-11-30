@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.pad.dev.VO.MemberVO.MemberVO;
+import com.pad.dev.VO.memberVO.MemberVO;
 
 /***
  * <h1>Member Controller</h1>
