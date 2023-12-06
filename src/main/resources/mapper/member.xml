@@ -5,4 +5,7 @@
     <select id="getMemberList" resultType="MemberVO">
 		select * from member
 	</select>
+	<select id="getMember" parameterType="String" resultType="MemberVO">
+		select * from member where memid = #{memid}
+	</select>
 </mapper>

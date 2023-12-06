@@ -5,14 +5,14 @@ import com.pad.dev.vo.boardVO.BoardVO;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.pad.dev.serviceImpl.BoardServiceImple;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
@@ -44,7 +44,7 @@ public class BoardController {
 	public String getBoard() {
 		System.out.println("Board list");
 		List<BoardVO> boardList = bs.getBoardList();
-		return "board";
+		return "localhost:3000/board";
 	}
 
 	/***

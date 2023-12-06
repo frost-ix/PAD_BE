@@ -4,13 +4,13 @@ server:
 # Oracle Connect
 spring:
   datasource:
-    url: jdbc:oracle:thin:@pad_high?TNS_ADMIN=C:\\OracleWalletPad
-    # url: jdbc:oracle:thin:@pad_medium?TNS_ADMIN=/Users/sung/Desktop/shortcut/Oracle/Oracle_wallet_PAD
+    # url: jdbc:oracle:thin:@pad_high?TNS_ADMIN=C:\\OracleWalletPad
+    url: jdbc:oracle:thin:@pad_medium?TNS_ADMIN=/Users/sung/Desktop/shortcut/Oracle/Oracle_wallet_PAD
     username: ADMIN
     password: Padoracle5day
     driver-class-name: oracle.jdbc.OracleDriver
 
-  devtools: 
+  devtools:
     livereload:
       enabled: true
 

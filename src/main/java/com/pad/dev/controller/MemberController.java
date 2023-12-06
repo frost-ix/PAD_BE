@@ -1,11 +1,19 @@
 package com.pad.dev.controller;
 
+import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.pad.dev.serviceImpl.BoardServiceImple;
+import com.pad.dev.serviceImpl.MemberServiceImpl;
 import com.pad.dev.vo.memberVO.MemberVO;
+
+import lombok.RequiredArgsConstructor;
 
 /***
  * <h1>Member Controller</h1>
@@ -13,9 +21,13 @@ import com.pad.dev.vo.memberVO.MemberVO;
  * This class is a controller class that handles member-related requests.
  * </p>
  */
-@Controller
+
+@RestController
 @RequestMapping("/member")
+@RequiredArgsConstructor
 public class MemberController {
+	private final MemberServiceImpl ms;
+
 	/***
 	 * <h2>R : read one member's data</h2>
 	 * 
@@ -24,11 +36,13 @@ public class MemberController {
 	 *          <p>
 	 *          resource path : /member/{memberID}
 	 *          </p>
-	 * @param memberID : One member's account id.
+	 * @param memID : One member's account id.
 	 */
-	@GetMapping("/{memberID}")
-	public String getMemberOne(String memberID) {
-		return "member";
+	@GetMapping("/{memID}")
+	public MemberVO getMemberOne(@PathVariable String memID) {
+		System.out.println("Get member one | " + memID);
+		MemberVO member = ms.getMember(memID);
+		return member;
 	}
 
 	/***
@@ -43,7 +57,7 @@ public class MemberController {
 	public String getMember() {
 		MemberVO member = new MemberVO();
 		member.setMemID("admin");
-		return "member";
+		return member.getMemID();
 	}
 
 	/***

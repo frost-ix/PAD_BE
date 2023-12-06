@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pad.dev.dao.BoardDAO;
 import com.pad.dev.vo.boardVO.BoardVO;
+import com.pad.dev.vo.memberVO.MemberVO;
 
 import lombok.RequiredArgsConstructor;
 
