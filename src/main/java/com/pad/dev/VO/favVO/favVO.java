@@ -1,4 +1,4 @@
-package com.pad.dev.VO.FavVO;
+package com.pad.dev.VO.favVO;
 
 import lombok.Data;
 

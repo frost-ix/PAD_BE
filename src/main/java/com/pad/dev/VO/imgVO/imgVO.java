@@ -1,4 +1,4 @@
-package com.pad.dev.VO.ImgVO;
+package com.pad.dev.VO.imgVO;
 
 import lombok.Data;
 

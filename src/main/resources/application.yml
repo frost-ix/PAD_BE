@@ -4,14 +4,14 @@ server:
 # Oracle Connect
 spring:
   datasource:
-    url: jdbc:oracle:thin:@oracledb_high?TNS_ADMIN=C:\Oracle Wallet pad
-    username: ADMIN
-    password: Padoracle5day
-    driver-class-name: oracle.jdbc.OracleDriver
-
-  devtools:
-    livereload:
-      enabled: true
+    # url: jdbc:oracle:thin:@pad_high?TNS_ADMIN=C:\\OracleWalletPad
+    # username: ADMIN
+    # password: Padoracle5day
+    # driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:mysql://localhost:3306/scottdb?serverTimezone=Asia/Seoul
+    username: root
+    password: mysql80
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   # view Resolver
   mvc:
@@ -22,4 +22,4 @@ spring:
 # Mybatis
 mybatis:
   config-location: classpath:configuration.xml
-  mapper-locations: classpath:mappers/*.xml
+  mapper-locations: classpath:mapper/**/*.xml
