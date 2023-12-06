@@ -5,14 +5,14 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.pad.dev.dao.HomeDao;
+import com.pad.dev.dao.HomeDAO;
 import com.pad.dev.vo.boardVO.BoardVO;
 
 import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
-public class HomeDaoImple implements HomeDao {
+public class HomeDAOImple implements HomeDAO {
 
     private final SqlSessionTemplate sqlSession;
 

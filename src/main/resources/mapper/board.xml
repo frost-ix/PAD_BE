@@ -5,4 +5,7 @@
     <select id="getBoardList" resultType="BoardVO">
 		select * from board
 	</select>
+	<select id="getBoard" resultType="BoardVO">
+		select * from board where seq = #{seq}
+	</select>
 </mapper>
