@@ -1,4 +1,4 @@
-package com.pad.dev.VO.notiVO;
+package com.pad.dev.vo.notiVO;
 
 import java.util.Date;
 import lombok.Data;

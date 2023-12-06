@@ -1,4 +1,4 @@
-package com.pad.dev.VO.cateVO;
+package com.pad.dev.vo.cateVO;
 
 import lombok.Data;
 

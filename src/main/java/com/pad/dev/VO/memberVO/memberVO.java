@@ -1,4 +1,4 @@
-package com.pad.dev.VO.memberVO;
+package com.pad.dev.vo.memberVO;
 
 import lombok.Data;
 

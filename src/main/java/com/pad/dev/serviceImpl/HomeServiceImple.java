@@ -1,12 +1,12 @@
-package com.pad.dev.service;
+package com.pad.dev.serviceImpl;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.pad.dev.VO.boardVO.BoardVO;
-// import com.pad.dev.dao.HomeDaoImple;
 import com.pad.dev.dao.HomeDao;
+import com.pad.dev.service.HomeService;
+import com.pad.dev.vo.boardVO.BoardVO;
 
 import lombok.RequiredArgsConstructor;
 

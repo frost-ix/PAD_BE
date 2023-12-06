@@ -1,4 +1,4 @@
-package com.pad.dev.VO.boardVO;
+package com.pad.dev.vo.boardVO;
 
 import java.util.Date;
 

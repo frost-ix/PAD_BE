@@ -5,9 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.pad.dev.VO.boardVO.BoardVO;
-// import com.pad.dev.service.HomeService;
-import com.pad.dev.service.HomeServiceImple;
+import com.pad.dev.serviceImpl.HomeServiceImple;
+import com.pad.dev.vo.boardVO.BoardVO;
 
 import lombok.RequiredArgsConstructor;
 

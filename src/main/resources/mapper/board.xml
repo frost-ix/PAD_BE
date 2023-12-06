@@ -3,6 +3,6 @@
 
 <mapper namespace="HomeBoard">
     <select id="getBoardList" resultType="BoardVO">
-		select * from emp;
+		select * from board
 	</select>
 </mapper>
