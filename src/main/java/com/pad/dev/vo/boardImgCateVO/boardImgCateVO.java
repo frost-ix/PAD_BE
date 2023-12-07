@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class boardImgCateVO {
+public class BoardImgCateVO {
     // Board
     private int boardID;
 	private String boardtTitle;

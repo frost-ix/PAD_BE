@@ -9,5 +9,6 @@
         <typeAlias type="com.pad.dev.vo.imgVO.ImgVO" alias="ImgVO"/>
         <typeAlias type="com.pad.dev.vo.memberVO.MemberVO" alias="MemberVO"/>
         <typeAlias type="com.pad.dev.vo.notiVO.NotiVO" alias="NotiVO"/>
+        <typeAlias type="com.pad.dev.vo.boardImgCateVO.BoardImgCateVO" alias="BoardImgCateVO"/>
 	</typeAliases>
 </configuration>
