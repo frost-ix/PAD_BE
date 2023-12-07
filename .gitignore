@@ -4,11 +4,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-<<<<<<< HEAD
-!**/src/main/resource/application.yml
-=======
 application.yml
->>>>>>> 16385e274d72532b1118dea6c24507b036f1931f
 
 ### STS ###
 .apt_generated
