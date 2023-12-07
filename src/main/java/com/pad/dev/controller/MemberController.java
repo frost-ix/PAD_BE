@@ -36,7 +36,11 @@ public class MemberController {
 	}
 
 	@PostMapping("/Update")
-	public int updateMember(@RequestBody MemberVO memberVO) {
+	public int updateMember(@RequestParam String memID, @RequestParam String memPW, @RequestParam String newPW) {
+		MemberVO memberVO = new MemberVO();
+		memberVO.setMemID(memID);
+		memberVO.setMemPW(memPW);
+		memberVO.setNewPW(newPW);
 		int result = ms.updateMember(memberVO);
 		return result;
 	}

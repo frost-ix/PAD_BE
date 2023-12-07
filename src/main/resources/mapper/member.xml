@@ -16,7 +16,7 @@
 	</insert>
 
 	<update id="updateMember" parameterType="MemberVO">
-		update member set mempw = #{memPW} where memid = #{memID}
+		update member set mempw = #{newPW} where memid = #{memID} and mempw = #{memPW}
 	</update>
 
 	<delete id="deleteMember" parameterType="String">
