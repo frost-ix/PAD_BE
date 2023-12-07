@@ -9,7 +9,7 @@ public class PadApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PadApplication.class, args);
-		System.out.println("Server running... PORT : 8080");
+		System.out.println("Server running... PORT : 8800");
 	}
 
 }
