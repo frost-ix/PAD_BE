@@ -12,14 +12,4 @@ public class BoardVO {
 	private Date modifyDate;
 	private String cateID;
 	private String memID;
-
-	// test
-	private int empno;
-	private String ename;
-	private String job;
-	private int mgr;
-	private String hiredate;
-	private int sal;
-	private int comm;
-	private int deptno;
 }

@@ -1,9 +1,12 @@
 package com.pad.dev.service;
 
+import java.util.List;
+
+import com.pad.dev.vo.boardVO.BoardVO;
 import com.pad.dev.vo.memberVO.MemberVO;
 
 public interface MemberService {
-	MemberVO getMember(String memID);
+	List<MemberVO> getMyInfo(String memID);
 
 	int insertMember(MemberVO member);
 
@@ -11,5 +14,7 @@ public interface MemberService {
 
 	int deleteMember(MemberVO member);
 
-	MemberVO signInMember(MemberVO member);
+	List<MemberVO> signInMember(MemberVO memberVO);
+
+	List<BoardVO> showMyBoard(String memID);
 }
