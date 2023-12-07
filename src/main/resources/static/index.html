@@ -7,16 +7,29 @@
   </head>
   <body>
     <h1>test</h1>
-    <h1>되나?</h1>
+    <h1>ShowMyBoard</h1>
     <form action="/member/ShowMyBoard" method="post">
-      <input type="text" name="memID">
+      아이디: <input type="text" name="memID">
       <input type="submit">
     </form>
     <br>
+
+    <h1>SignIn</h1>
     <form action="/member/SignIn" method="post">
-      <input type="text" name="memID">
-      <input type="password" name="memPW">
+      아이디: <input type="text" name="memID">
+      비밀번호: <input type="password" name="memPW">
       <input type="submit">
     </form>
+    <br>
+
+    <h1>비밀번호 변경</h1>
+    <form action="/member/Update" method="post">
+      아이디: <input type="text" name="memID">
+      현재 비밀번호: <input type="password" name="memPW">
+      변경할 비밀번호: <input type="password" name="newPW">
+      <input type="submit">
+    </form>
+
+
   </body>
 </html>
