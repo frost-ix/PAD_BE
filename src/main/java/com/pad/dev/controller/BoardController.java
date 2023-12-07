@@ -41,10 +41,10 @@ public class BoardController {
 	 *          resource path : /board
 	 */
 	@GetMapping("")
-	public String getBoard() {
+	public List<BoardVO> getBoard() {
 		System.out.println("Board list");
 		List<BoardVO> boardList = bs.getBoardList();
-		return "localhost:3000/board";
+		return boardList;
 	}
 
 	/***

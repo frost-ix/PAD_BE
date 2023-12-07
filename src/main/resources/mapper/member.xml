@@ -8,4 +8,17 @@
 	<select id="getMember" parameterType="String" resultType="MemberVO">
 		select * from member where memid = #{memid}
 	</select>
+	<select id="signInMember" parameterType="MemberVO" resultType="MemberVO">
+		select * from member where member.memid = #{member.memID} and member.mempw = #{member.memPW}
+	</select>
+	<insert id="insertMember" parameterType="MemberVO">
+		insert into member(memid, mempw, memnn, memtel, memmail)
+		values(#{memID}, #{memPW}, #{memNN}, #{memTel}, #{memMail})
+	</insert>
+	<update id="updateMember" parameterType="MemberVO">
+		update member set mempw = #{memPW} where memid = #{memID}
+	</update>
+	<delete id="deleteMember" parameterType="String">
+		delete from member where memid = #{memID}
+	</delete>
 </mapper>
