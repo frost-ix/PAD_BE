@@ -1,7 +1,11 @@
 package com.pad.dev.daoImpl;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+
+import com.pad.dev.vo.boardVO.BoardVO;
 import com.pad.dev.vo.memberVO.MemberVO;
 import com.pad.dev.dao.MemberDAO;
 
@@ -12,41 +16,31 @@ import lombok.RequiredArgsConstructor;
 public class MemberDAOImpl implements MemberDAO {
 	private final SqlSession sqlSession;
 
-	public MemberVO getMember(String memID) {
-		MemberVO member = null;
+	public List<MemberVO> getMyInfo(String memID) {
+		List<MemberVO> myInfo = null;
 		try {
-			System.out.println(">> BoardDAO get section");
-			member = sqlSession.selectOne("getMember", memID);
-			System.out.println(">> select one query clear");
+			myInfo = sqlSession.selectList("getMyInfo", memID);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		System.out.println(member);
-		return member;
+		return myInfo;
 	}
 
-	public MemberVO signInMember(MemberVO member) {
-		MemberVO result = null;
+	public List<MemberVO> signInMember(MemberVO memberVO) {
+		List<MemberVO> member = null;
 		try {
-			System.out.println(">> BoardDAO sign in section");
-			result = sqlSession.selectOne("signInMember", member);
-			System.out.println(">> select one query clear");
+			member = sqlSession.selectList("signInMember", memberVO);
+			System.out.println("member: " + member);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return result;
+		return member;
 	}
 
 	public int insertMember(MemberVO member) {
 		int result = 0;
 		try {
-			System.out.println(">> BoardDAO insert section");
 			result = sqlSession.insert("insertMember", member);
-			if (result == 1) {
-				System.out.println(">> insert query clear");
-			} else {
-				System.out.println(">> insert query failed");
-			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -56,13 +50,7 @@ public class MemberDAOImpl implements MemberDAO {
 	public int updateMember(MemberVO member) {
 		int result = 0;
 		try {
-			System.out.println(">> BoardDAO update section");
 			result = sqlSession.update("updateMember", member);
-			if (result == 1) {
-				System.out.println(">> update query clear");
-			} else {
-				System.out.println(">> update query failed");
-			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -72,16 +60,21 @@ public class MemberDAOImpl implements MemberDAO {
 	public int deleteMember(MemberVO member) {
 		int result = 0;
 		try {
-			System.out.println(">> BoardDAO delete section");
 			result = sqlSession.delete("deleteMember", member);
-			if (result == 1) {
-				System.out.println(">> delete query clear");
-			} else {
-				System.out.println(">> delete query failed");
-			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return result;
+	}
+
+	@Override
+	public List<BoardVO> showMyBoard(String memID) {
+		List<BoardVO> myBoard = null;
+		try {
+			myBoard = sqlSession.selectList("showMyBoard", memID);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return myBoard;
 	}
 }

@@ -1,7 +1,10 @@
 package com.pad.dev.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.pad.dev.vo.boardVO.BoardVO;
 import com.pad.dev.vo.memberVO.MemberVO;
 import com.pad.dev.dao.MemberDAO;
 import com.pad.dev.service.MemberService;
@@ -12,9 +15,9 @@ import lombok.RequiredArgsConstructor;
 public class MemberServiceImpl implements MemberService {
 	private final MemberDAO md;
 
-	public MemberVO getMember(String memID) {
-		MemberVO member = md.getMember(memID);
-		return member;
+	public List<MemberVO> getMyInfo(String memID) {
+		List<MemberVO> myInfo = md.getMyInfo(memID);
+		return myInfo;
 	}
 
 	public int insertMember(MemberVO member) {
@@ -32,8 +35,14 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
-	public MemberVO signInMember(MemberVO member) {
-		MemberVO result = md.signInMember(member);
-		return result;
+	public List<MemberVO> signInMember(MemberVO memberVO) {
+		List<MemberVO> member = md.signInMember(memberVO);
+		return member;
+	}
+
+	@Override
+	public List<BoardVO> showMyBoard(String memID) {
+		List<BoardVO> myBoard = md.showMyBoard(memID);
+		return myBoard;
 	}
 }
