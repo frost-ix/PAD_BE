@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pad.dev.serviceImpl.BoardServiceImple;
@@ -53,9 +54,15 @@ public class BoardController {
 	 * @apiNote
 	 *          resource path : /board/write
 	 */
-	@PostMapping("/write")
-	public String postBoardWrite() {
-		return "boardWrite";
+	@PostMapping("/Write")
+	public void postBoardWrite(@RequestParam String boardTitle, @RequestParam String boardContent, @RequestParam String cateID, @RequestParam String memID) {
+		System.out.println("write controller");
+		BoardVO boardVO = new BoardVO();
+		boardVO.setBoardTitle(boardTitle);
+		boardVO.setBoardContent(boardContent);
+		boardVO.setCateID(cateID);
+		boardVO.setMemID(memID);
+		bs.postBoardWrite(boardVO);
 	}
 
 }

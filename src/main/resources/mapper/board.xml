@@ -5,4 +5,8 @@
     <select id="getBoardList" resultType="BoardVO">
 		select * from board
 	</select>
+
+	<insert id="postBoard" parameterType="BoardVO">
+		insert into board (boardid, boardtitle, boardcontent, regdate, cateid, memid) values (BOARDID_SEQ.nextval, #{boardTitle}, #{boardContent}, sysdate, #{cateID}, #{memID})
+	</insert>
 </mapper>

@@ -26,4 +26,16 @@ public class BoardDAOImpl implements BoardDAO {
 		System.out.println(boardList);
 		return boardList;
 	}
+
+	@Override
+	public int postBoardWrite(BoardVO boardVO) {
+		int result = 0;
+		try {
+			result = sqlSession.insert("postBoard", boardVO);
+			System.out.println("result: " + result);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return result;
+	}
 }
