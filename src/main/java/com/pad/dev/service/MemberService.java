@@ -14,7 +14,7 @@ public interface MemberService {
 
 	int deleteMember(MemberVO member);
 
-	List<MemberVO> signInMember(MemberVO memberVO);
+	MemberVO signInMember(MemberVO memberVO);
 
 	List<BoardVO> showMyBoard(String memID);
 }

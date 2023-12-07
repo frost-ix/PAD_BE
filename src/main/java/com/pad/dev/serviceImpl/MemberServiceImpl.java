@@ -35,8 +35,8 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
-	public List<MemberVO> signInMember(MemberVO memberVO) {
-		List<MemberVO> member = md.signInMember(memberVO);
+	public MemberVO signInMember(MemberVO memberVO) {
+		MemberVO member = md.signInMember(memberVO);
 		return member;
 	}
 
