@@ -52,16 +52,17 @@ public class MemberController {
 	}
 
 	@PostMapping("/SignIn")
-	public List<MemberVO> signInMember(@RequestParam String memID, @RequestParam String memPW, HttpServletRequest request) {
+	public List<MemberVO> signInMember(@RequestParam MemberVO memberGet, HttpServletRequest request) {
 		// 세션 생성
 		MemberVO memberVO = new MemberVO();
-		memberVO.setMemID(memID);
-		memberVO.setMemPW(memPW);
+		memberVO.setMemID(memberGet.getMemID());
+		memberVO.setMemPW(memberGet.getMemPW());
 		System.out.println("id, pw: " + memberVO.getMemID() + ", " + memberVO.getMemPW());
 		HttpSession session = request.getSession();
 		System.out.println("session: " + session);
 		List<MemberVO> member = ms.signInMember(memberVO);
-		if(member != null) session.setAttribute("Member", member);
+		if (member != null)
+			session.setAttribute("Member", member);
 		return member;
 	}
 
@@ -76,6 +77,5 @@ public class MemberController {
 		System.out.println("myBoard: " + myBoard);
 		return myBoard;
 	}
-	
-	
+
 }
