@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class BoardVO {
 	private int boardID;
-	private String boardtTitle;
+	private String boardTitle;
 	private String boardContent;
 	private Date modifyDate;
 	private String cateID;

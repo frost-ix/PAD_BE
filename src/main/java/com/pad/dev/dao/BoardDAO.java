@@ -5,4 +5,6 @@ import com.pad.dev.vo.boardVO.BoardVO;
 
 public interface BoardDAO {
 	public List<BoardVO> getBoardList();
+
+	public int postBoardWrite(BoardVO boardVO);
 }

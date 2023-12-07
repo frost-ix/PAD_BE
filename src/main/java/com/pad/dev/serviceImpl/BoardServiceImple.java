@@ -20,4 +20,8 @@ public class BoardServiceImple implements BoardService {
 		List<BoardVO> boardList = bm.getBoardList();
 		return boardList;
 	}
+
+    public void postBoardWrite(BoardVO boardVO) {
+		bm.postBoardWrite(boardVO);
+    }
 }
