@@ -1,38 +1,28 @@
 package com.pad.dev.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.List;
 
-@Controller
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.pad.dev.service.NoticeService;
+import com.pad.dev.vo.notiVO.NotiVO;
+
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.web.bind.annotation.PostMapping;
+
+@RestController
+@RequiredArgsConstructor
 @RequestMapping("/notice")
 public class NoticeController {
-	/***
-	 * <h2>R : read one notice</h2>
-	 * 
-	 * @author Frost-ix
-	 * @apiNote
-	 *          <p>
-	 *          resource path : /notice/{noticeID}
-	 *          </p>
-	 * 
-	 * @param noticeID : One notice's article id.
-	 */
-	@GetMapping("/{noticeID}")
-	public String notice(String noticeID) {
-		return "noticeOne";
-	}
+	private final NoticeService ns;
 
-	/***
-	 * <h2>R : read all notices</h2>
-	 * 
-	 * @author Frost-ix
-	 * @apiNote
-	 *          resource path : /notice
-	 */
-	@GetMapping("")
-	public String noticeAll() {
-		return "notice";
+	@PostMapping("")
+	public List<NotiVO> getNoticeList() {
+		System.out.println("noti controller");
+		List<NotiVO> noticeList = ns.getNoticeList();
+		return noticeList;
 	}
-
+	
 }
