@@ -48,7 +48,7 @@ public class MemberController {
 	 * @param memberVO : Member's id & pw (type : MemberVO :: RequestBody)
 	 * @return member (type : MemberVO)
 	 */
-	@PostMapping("")
+	@PostMapping("SignIn")
 	public MemberVO signInMember(@RequestBody MemberVO memberVO) {
 		System.out.println(">> Member sign in");
 		MemberVO member = ms.signInMember(memberVO);
