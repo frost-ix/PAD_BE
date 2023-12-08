@@ -16,5 +16,5 @@ public interface MemberDAO {
 
 	public MemberVO signInMember(MemberVO memberVO);
 
-    public List<BoardVO> showMyBoard(String memID);
+	public List<BoardVO> showMyBoard(String memID);
 }

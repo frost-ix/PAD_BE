@@ -103,6 +103,5 @@ public class MemberController {
 		System.out.println("myBoard: " + myBoard);
 		return myBoard;
 	}
-	
-	
+
 }
