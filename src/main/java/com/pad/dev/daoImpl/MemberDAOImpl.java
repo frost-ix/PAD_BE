@@ -50,6 +50,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	public int insertMember(MemberVO member) {
 		int result = 0;
+		System.out.println("memID: " + member.getMemID() + ", memPW: " + member.getMemPW() + ", memTel: " + member.getMemTel() + "memMail: " + member.getMemMail() + member.getMemNN());
 		try {
 			member.setMemPW(pwEncoder.encode(member.getMemPW()));
 			result = sqlSession.insert("insertMember", member);
