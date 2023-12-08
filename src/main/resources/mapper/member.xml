@@ -7,7 +7,7 @@
 	</select>
 
 	<select id="signInMember" parameterType="MemberVO" resultType="MemberVO">
-		select * from member m where m.memid = #{memID} and m.mempw = #{memPW}
+		select * from member m where m.memid = #{memID}
 	</select>
 
 	<insert id="insertMember" parameterType="MemberVO">

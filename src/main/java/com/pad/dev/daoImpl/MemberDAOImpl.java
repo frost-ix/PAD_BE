@@ -26,10 +26,10 @@ public class MemberDAOImpl implements MemberDAO {
 		return myInfo;
 	}
 
-	public List<MemberVO> signInMember(MemberVO memberVO) {
-		List<MemberVO> member = null;
+	public MemberVO signInMember(MemberVO memberVO) {
+		MemberVO member = null;
 		try {
-			member = sqlSession.selectList("signInMember", memberVO);
+			member = sqlSession.selectOne("signInMember", memberVO);
 			System.out.println("member: " + member);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -39,6 +39,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	public int insertMember(MemberVO member) {
 		int result = 0;
+		System.out.println("memID: " + member.getMemID() + ", memPW: " + member.getMemPW() + ", memTel: " + member.getMemTel() + "memMail: " + member.getMemMail() + member.getMemNN());
 		try {
 			result = sqlSession.insert("insertMember", member);
 		} catch (Exception e) {

@@ -7,12 +7,23 @@
   </head>
   <body>
     <h1>test</h1>
+
     <h1>ShowMyBoard</h1>
     <form action="/member/ShowMyBoard" method="post">
       아이디: <input type="text" name="memID">
       <input type="submit">
     </form>
     <br>
+
+    <h1>회원가입</h1>
+    <form action="/member/SignUp" method="post">
+      아이디: <input type="text" name="memID">
+      비밀번호: <input type="password" name="memPW">
+      전화: <input type="text" name="memTel">
+      이메일: <input type="email" name="memMail">
+      닉넴: <input type="text" name="memNN">
+      <input type="submit">
+    </form>
 
     <h1>SignIn</h1>
     <form action="/member/SignIn" method="post">
@@ -40,7 +51,26 @@
     <form action="/board/Write" method="post">
       제목: <input type="text" name="boardTitle">
       내용: <textarea name="boardContent"></textarea>
-      카테고리 코드: <input type="text" name="cateID">
+      카테고리 코드:
+      <select name="cateID">
+        <option value="C-002">공연</option>
+        <option value="C-003">축제</option>
+        <option value="C-004">박람회</option>
+        <option value="C-005">전시회</option>
+        <option value="S-002">런닝</option>
+        <option value="S-003">배드민턴</option>
+        <option value="S-004">골프</option>
+        <option value="S-005">테니스</option>
+        <option value="T-002">국내여행</option>
+        <option value="T-002">해외여행</option>
+        <option value="A-002">밴드</option>
+        <option value="A-002">재즈</option>
+        <option value="A-002">댄스</option>
+        <option value="E-002">게임</option>
+        <option value="E-002">봉사활동</option>
+        <option value="E-001">기타</option>
+        <option value="R-002">스터디</option>
+      </select>
       작성자: <input type="text" name="memID">
       <input type="submit">
     </form>

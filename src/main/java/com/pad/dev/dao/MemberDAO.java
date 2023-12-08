@@ -14,7 +14,7 @@ public interface MemberDAO {
 
 	public int deleteMember(MemberVO member);
 
-	public List<MemberVO> signInMember(MemberVO memberVO);
+	public MemberVO signInMember(MemberVO memberVO);
 
     public List<BoardVO> showMyBoard(String memID);
 }

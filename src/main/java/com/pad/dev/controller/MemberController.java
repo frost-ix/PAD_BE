@@ -2,6 +2,8 @@ package com.pad.dev.controller;
 
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +32,19 @@ public class MemberController {
 	}
 
 	@PostMapping("/SignUp")
-	public int memberCreate(@RequestBody MemberVO memberVO) {
+	public int memberCreate(/* @RequestBody MemberVO memberVO */ @RequestParam String memID, @RequestParam String memPW, @RequestParam String memTel, @RequestParam String memMail, @RequestParam String memNN) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		System.out.println("memID: " + memID + ", memPW: " + memPW + ", memTel: " + memTel + "memMail: " + memMail + ", memNN:" + memNN);
+		MemberVO memberVO = new MemberVO();
+		memberVO.setMemID(memID);
+		String ecnodePW = encoder.encode(memPW);
+		System.out.println(ecnodePW);
+		memberVO.setMemPW(ecnodePW);
+		memberVO.setMemTel(memTel);
+		memberVO.setMemMail(memMail);
+		memberVO.setMemNN(memNN);
+		System.out.println(memberVO.getMemID() + ", encodePW: " + memberVO.getMemPW());
+		
 		int result = ms.insertMember(memberVO);
 		return result;
 	}
@@ -52,17 +66,30 @@ public class MemberController {
 	}
 
 	@PostMapping("/SignIn")
-	public List<MemberVO> signInMember(@RequestParam String memID, @RequestParam String memPW, HttpServletRequest request) {
-		// 세션 생성
+	public MemberVO signInMember(@RequestParam String memID, @RequestParam String memPW, HttpServletRequest request) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		MemberVO memberVO = new MemberVO();
 		memberVO.setMemID(memID);
 		memberVO.setMemPW(memPW);
-		System.out.println("id, pw: " + memberVO.getMemID() + ", " + memberVO.getMemPW());
+
 		HttpSession session = request.getSession();
-		System.out.println("session: " + session);
-		List<MemberVO> member = ms.signInMember(memberVO);
+		MemberVO member = ms.signInMember(memberVO);
+		System.out.println("dao갔다온 후 pw: " + member.getMemPW());
+
 		if(member != null) session.setAttribute("Member", member);
-		return member;
+		
+		memPW = encoder.encode(memPW); // 로그인 시, 입력한 pw값을 인코딩
+		
+		boolean isVaild = false;
+		if(memberVO != null) {
+			// 입력한 pw값과 db의 pw값이 일치하는가
+			isVaild = BCrypt.checkpw(memberVO.getMemPW(), memPW);
+		}
+		if(isVaild) {
+			System.out.println("세션처리");
+			return member;
+		}
+		return null;
 	}
 
 	@PostMapping("/Logout")
