@@ -9,41 +9,46 @@
     <h1>test</h1>
     <h1>ShowMyBoard</h1>
     <form action="/member/ShowMyBoard" method="post">
-      아이디: <input type="text" name="memID">
-      <input type="submit">
+      아이디: <input type="text" name="memID" />
+      <input type="submit" />
     </form>
-    <br>
+    <br />
+
+    <h1>Create member</h1>
+    <form action="/member/SignUp" method="post">
+      아이디 : <input type="text" name="memID" /><br />
+      비밀번호 : <input type="password" name="memPW" /><br />
+      닉네임 : <input type="text" name="memNN" /><br />
+      연락처 : <input type="text" name="memTel" /><br />
+      이메일 : <input type="text" name="memMail" /><br />
+      <input type="submit" />
+    </form>
 
     <h1>SignIn</h1>
     <form action="/member/SignIn" method="post">
-      아이디: <input type="text" name="memID">
-      비밀번호: <input type="password" name="memPW">
-      <input type="submit">
+      아이디: <input type="text" name="memID" /> 비밀번호: <input type="password" name="memPW" />
+      <input type="submit" />
     </form>
-    <br>
+    <br />
 
     <h1>비밀번호 변경</h1>
     <form action="/member/Update" method="post">
-      아이디: <input type="text" name="memID">
-      현재 비밀번호: <input type="password" name="memPW">
-      변경할 비밀번호: <input type="password" name="newPW">
-      <input type="submit">
+      아이디: <input type="text" name="memID" /> 현재 비밀번호: <input type="password" name="memPW" /> 변경할 비밀번호:
+      <input type="password" name="newPW" />
+      <input type="submit" />
     </form>
-    <br>
+    <br />
 
     <h1>공지</h1>
     <form action="/notice" method="post">
-      <input type="submit" value="Notice List">
+      <input type="submit" value="Notice List" />
     </form>
 
     <h1>글 작성</h1>
     <form action="/board/Write" method="post">
-      제목: <input type="text" name="boardTitle">
-      내용: <textarea name="boardContent"></textarea>
-      카테고리 코드: <input type="text" name="cateID">
-      작성자: <input type="text" name="memID">
-      <input type="submit">
+      제목: <input type="text" name="boardTitle" /> 내용: <textarea name="boardContent"></textarea> 카테고리 코드:
+      <input type="text" name="cateID" /> 작성자: <input type="text" name="memID" />
+      <input type="submit" />
     </form>
-
   </body>
 </html>

@@ -16,10 +16,12 @@ import com.pad.dev.vo.memberVO.MemberVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/proxy/member")
+@Log4j2
 public class MemberController {
 	private final MemberServiceImpl ms;
 
@@ -52,7 +54,7 @@ public class MemberController {
 	}
 
 	@PostMapping("/SignIn")
-	public MemberVO signInMember(@RequestParam MemberVO member, HttpServletRequest request) {
+	public MemberVO signInMember(@RequestBody MemberVO member, HttpServletRequest request) {
 		// 세션 생성
 		MemberVO memberVO = new MemberVO();
 		memberVO.setMemID(member.getMemID());
@@ -61,6 +63,7 @@ public class MemberController {
 		HttpSession session = request.getSession();
 		System.out.println("session: " + session);
 		MemberVO memberRes = ms.signInMember(memberVO);
+		log.info("Member : " + memberRes.getMemID() + " + " + memberRes.getMemPW());
 		if (memberRes != null)
 			session.setAttribute("Member", memberRes);
 		return memberRes;

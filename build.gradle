@@ -43,6 +43,10 @@ dependencies {
 	implementation 'com.oracle.database.security:osdt_cert'
 	implementation 'com.oracle.database.security:oraclepki'
 	implementation 'com.oracle.database.security:osdt_core'
+
+// 토큰 / 암호화
+	// implementation 'io.jsonwebtoken:jjwt:0.12.1'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 tasks.named('test') {
