@@ -2,7 +2,6 @@ package com.pad.dev.controller;
 
 import java.util.List;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,69 +32,86 @@ public class MemberController {
 		return myInfo;
 	}
 
+	// React Fetch
 	@PostMapping("/SignUp")
-	public int memberCreate(/* @RequestBody MemberVO memberVO */ @RequestParam String memID, @RequestParam String memPW, @RequestParam String memTel, @RequestParam String memMail, @RequestParam String memNN) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		System.out.println("memID: " + memID + ", memPW: " + memPW + ", memTel: " + memTel + "memMail: " + memMail + ", memNN:" + memNN);
-		MemberVO memberVO = new MemberVO();
-		memberVO.setMemID(memID);
-		String ecnodePW = encoder.encode(memPW);
-		System.out.println(ecnodePW);
-		memberVO.setMemPW(ecnodePW);
-		memberVO.setMemTel(memTel);
-		memberVO.setMemMail(memMail);
-		memberVO.setMemNN(memNN);
-		System.out.println(memberVO.getMemID() + ", encodePW: " + memberVO.getMemPW());
-		
+	public int memberCreate(@RequestBody MemberVO memberVO, HttpServletRequest request) {
 		int result = ms.insertMember(memberVO);
+		if (result == 1) {
+			log.info("{}님이 회원가입하셨습니다.", memberVO.getMemID());
+		} else {
+			log.info("회원가입에 실패하였습니다. <이미 있는 아이디>");
+		}
 		return result;
 	}
+
+	// Local Test
+	// @PostMapping("/SignUp")
+	// public int memberCreate(@RequestParam String memID, @RequestParam String
+	// memPW, @RequestParam String memTel,
+	// @RequestParam String memMail,
+	// @RequestParam String memNN) {
+	// BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	// System.out.println("memID: " + memID + ", memPW: " + memPW + ", memTel: " +
+	// memTel + "memMail: " + memMail + ", memNN:" + memNN);
+	// MemberVO memberVO = new MemberVO();
+	// memberVO.setMemID(memID);
+	// String ecnodePW = encoder.encode(memPW);
+	// System.out.println(ecnodePW);
+	// memberVO.setMemPW(ecnodePW);
+	// memberVO.setMemTel(memTel);
+	// memberVO.setMemMail(memMail);
+	// memberVO.setMemNN(memNN);
+	// System.out.println(memberVO.getMemID() + ", encodePW: " +
+	// memberVO.getMemPW());
+	// int result = ms.insertMember(memberVO);
+	// return result;
+	// }
 
 	@PostMapping("/Update")
-	public int updateMember(@RequestParam String memID, @RequestParam String memPW, @RequestParam String newPW) {
-		MemberVO memberVO = new MemberVO();
-		memberVO.setMemID(memID);
-		memberVO.setMemPW(memPW);
-		memberVO.setNewPW(newPW);
-		int result = ms.updateMember(memberVO);
+	public int updateMember(@RequestBody MemberVO member, HttpServletRequest request) {
+		int result = ms.updateMember(member);
+		log.info("{}님의 비밀번호가 수정되었습니다.", member.getMemID());
 		return result;
 	}
 
+	// @PostMapping("/Update")
+	// public int updateMember(@RequestParam String memID, @RequestParam String
+	// memPW, @RequestParam String newPW) {
+	// MemberVO memberVO = new MemberVO();
+	// memberVO.setMemID(memID);
+	// memberVO.setMemPW(memPW);
+	// memberVO.setNewPW(newPW);
+	// int result = ms.updateMember(memberVO);
+	// return result;
+	// }
+
 	@PostMapping("/Delete")
+	// @DeleteMapping("/Delete")
 	public int deleteMember(@RequestBody MemberVO memberVO) {
 		int result = ms.deleteMember(memberVO);
+		log.info(memberVO.getMemID() + "님이 회원탈퇴하셨습니다.");
 		return result;
 	}
 
 	@PostMapping("/SignIn")
-	public MemberVO signInMember(@RequestParam String memID, @RequestParam String memPW, HttpServletRequest request) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		MemberVO memberVO = new MemberVO();
-		memberVO.setMemID(memID);
-		memberVO.setMemPW(memPW);
-
+	// public MemberVO signInMember(@RequestParam String memID, @RequestParam String
+	// memPW, HttpServletRequest request) {
+	public MemberVO signInMember(@RequestBody MemberVO member, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		MemberVO member = ms.signInMember(memberVO);
-		System.out.println("dao갔다온 후 pw: " + member.getMemPW());
-
-		if(member != null) session.setAttribute("Member", member);
-		
-		memPW = encoder.encode(memPW); // 로그인 시, 입력한 pw값을 인코딩
-		
-		boolean isVaild = false;
-		if(memberVO != null) {
-			// 입력한 pw값과 db의 pw값이 일치하는가
-			isVaild = BCrypt.checkpw(memberVO.getMemPW(), memPW);
+		MemberVO memberRes = ms.signInMember(member);
+		if (memberRes != null) {
+			session.setAttribute("Member", memberRes);
+			log.info("{}님이 로그인하셨습니다.", memberRes.getMemID());
+		} else {
+			log.info("로그인에 실패하였습니다.");
 		}
-		if(isVaild) {
-			System.out.println("세션처리");
-			return member;
-		}
-		return null;
+		return memberRes;
 	}
 
 	@PostMapping("/Logout")
 	public void logout(HttpSession session) {
+		MemberVO member = (MemberVO) session.getAttribute("Member");
+		log.info("{}님이 로그아웃하셨습니다.", member.getMemID());
 		session.invalidate();
 	}
 

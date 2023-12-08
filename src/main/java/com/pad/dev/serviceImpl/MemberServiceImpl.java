@@ -15,26 +15,31 @@ import lombok.RequiredArgsConstructor;
 public class MemberServiceImpl implements MemberService {
 	private final MemberDAO md;
 
+	@Override
 	public List<MemberVO> getMyInfo(String memID) {
 		List<MemberVO> myInfo = md.getMyInfo(memID);
 		return myInfo;
 	}
 
+	@Override
 	public int insertMember(MemberVO member) {
 		int result = md.insertMember(member);
 		return result;
 	}
 
+	@Override
 	public int updateMember(MemberVO member) {
 		int result = md.updateMember(member);
 		return result;
 	}
 
+	@Override
 	public int deleteMember(MemberVO member) {
 		int result = md.deleteMember(member);
 		return result;
 	}
 
+	@Override
 	public MemberVO signInMember(MemberVO memberVO) {
 		MemberVO member = md.signInMember(memberVO);
 		return member;

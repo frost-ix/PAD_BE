@@ -21,6 +21,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	private final SqlSession sqlSession;
 
+	@Override
 	public List<MemberVO> getMyInfo(String memID) {
 		List<MemberVO> myInfo = null;
 		try {
@@ -31,26 +32,29 @@ public class MemberDAOImpl implements MemberDAO {
 		return myInfo;
 	}
 
+	@Override
 	public MemberVO signInMember(MemberVO memberVO) {
-		MemberVO member = null;
 		try {
+			MemberVO member = new MemberVO();
+			member.setMemID(memberVO.getMemID());
+			member.setMemPW(memberVO.getMemPW());
 			member = sqlSession.selectOne("signInMember", memberVO);
 			if (pwEncoder.matches(memberVO.getMemPW(), member.getMemPW())) {
-				System.out.println("로그인 성공");
 				return member;
 			} else {
-				System.out.println("로그인 실패");
 				return null;
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			return null;
 		}
-		return member;
 	}
 
+	@Override
 	public int insertMember(MemberVO member) {
 		int result = 0;
-		System.out.println("memID: " + member.getMemID() + ", memPW: " + member.getMemPW() + ", memTel: " + member.getMemTel() + "memMail: " + member.getMemMail() + member.getMemNN());
+		System.out.println("memID: " + member.getMemID() + ", memPW: " + member.getMemPW() + ", memTel: "
+				+ member.getMemTel() + "memMail: " + member.getMemMail() + member.getMemNN());
 		try {
 			member.setMemPW(pwEncoder.encode(member.getMemPW()));
 			result = sqlSession.insert("insertMember", member);
@@ -60,9 +64,15 @@ public class MemberDAOImpl implements MemberDAO {
 		return result;
 	}
 
+	@Override
 	public int updateMember(MemberVO member) {
 		int result = 0;
 		try {
+			MemberVO memberVO = new MemberVO();
+			memberVO.setMemID(member.getMemID());
+			memberVO.setMemPW(member.getMemPW());
+			memberVO.setNewPW(member.getNewPW());
+			member.setNewPW(pwEncoder.encode(member.getNewPW()));
 			result = sqlSession.update("updateMember", member);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -70,6 +80,7 @@ public class MemberDAOImpl implements MemberDAO {
 		return result;
 	}
 
+	@Override
 	public int deleteMember(MemberVO member) {
 		int result = 0;
 		try {
