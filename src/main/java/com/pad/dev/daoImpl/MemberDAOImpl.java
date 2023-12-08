@@ -34,12 +34,13 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberVO signInMember(MemberVO memberVO) {
 		MemberVO member = null;
 		try {
-			memberVO.setMemPW(pwEncoder.encode(memberVO.getMemPW()));
-			System.out.println("memberVO encrypted: " + memberVO.getMemPW());
-			member = sqlSession.selectOne("signInMember", memberVO.getMemID());
-			System.out.println("member: " + member.toString());
-			if (member != null && pwEncoder.matches(memberVO.getMemPW(), member.getMemPW())) {
+			member = sqlSession.selectOne("signInMember", memberVO);
+			if (pwEncoder.matches(memberVO.getMemPW(), member.getMemPW())) {
+				System.out.println("로그인 성공");
 				return member;
+			} else {
+				System.out.println("로그인 실패");
+				return null;
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
