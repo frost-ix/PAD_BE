@@ -18,10 +18,12 @@ import com.pad.dev.vo.memberVO.MemberVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/proxy/member")
+@Log4j2
 public class MemberController {
 	private final MemberServiceImpl ms;
 
