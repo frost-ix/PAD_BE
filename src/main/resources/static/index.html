@@ -1,89 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>test</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+<body>
+  <h1>test</h1>
 
-    <h1>ShowMyBoard</h1>
-    <form action="/member/ShowMyBoard" method="post">
-      아이디: <input type="text" name="memID" />
-      <input type="submit" />
-    </form>
-    <br />
+  <h1>ShowMyBoard</h1>
+  <form action="/proxy/member/ShowMyBoard" method="post" class="bt" id="ShowMyBoard">
+    아이디: <input type="text" name="memID" />
+    <input type="submit" value="ShowMyBoard"/>
+  </form>
+  <br/>
 
-    <h1>Create member</h1>
-    <form action="/member/SignUp" method="post">
-      아이디 : <input type="text" name="memID" /><br />
-      비밀번호 : <input type="password" name="memPW" /><br />
-      닉네임 : <input type="text" name="memNN" /><br />
-      연락처 : <input type="text" name="memTel" /><br />
-      이메일 : <input type="text" name="memMail" /><br />
-      <input type="submit" />
-    </form>
+  <h1>SignUp</h1>
+  <form action="/proxy/member/SignUp" method="post" class="bt" id="SignUp">
+    아이디 : <input type="text" name="memID" /><br />
+    비밀번호 : <input type="password" name="memPW" /><br />
+    닉네임 : <input type="text" name="memNN" /><br />
+    연락처 : <input type="text" name="memTel" /><br />
+    이메일 : <input type="text" name="memMail" /><br />
+    <input type="submit" value="SignUp"/>
+  </form>
 
-    <h1>회원가입</h1>
-    <form action="/member/SignUp" method="post">
-      아이디: <input type="text" name="memID">
-      비밀번호: <input type="password" name="memPW">
-      전화: <input type="text" name="memTel">
-      이메일: <input type="email" name="memMail">
-      닉넴: <input type="text" name="memNN">
-      <input type="submit">
-    </form>
+  <h1>SignIn</h1>
+  <form action="/proxy/member/SignIn" method="post" class="bt" id="SignIn">
+    아이디: <input type="text" name="memID" /> 비밀번호: <input type="password" name="memPW" />
+    <input type="submit" value="SignIn"/>
+  </form>
+  <br />
 
-    <h1>SignIn</h1>
-    <form action="/member/SignIn" method="post">
-      아이디: <input type="text" name="memID" /> 비밀번호: <input type="password" name="memPW" />
-      <input type="submit" />
-    </form>
-    <br />
+  <h1>비밀번호 변경</h1>
+  <form action="/proxy/member/Update" method="post" class="bt" id="Update">
+    아이디: <input type="text" name="memID" /> 
+    현재 비밀번호: <input type="password" name="memPW" /> 
+    변경할 비밀번호: <input type="password" name="newPW" />
+    <input type="submit" value="Update"/>
+  </form>
+  <br />
 
-    <h1>비밀번호 변경</h1>
-    <form action="/member/Update" method="post">
-      아이디: <input type="text" name="memID" /> 현재 비밀번호: <input type="password" name="memPW" /> 변경할 비밀번호:
-      <input type="password" name="newPW" />
-      <input type="submit" />
-    </form>
-    <br />
+  <h1>공지</h1>
+  <form action="/proxy/notice" method="post" class="bt" id="notice">
+    <input type="submit" value="notice"/>
+  </form>
 
-    <h1>공지</h1>
-    <form action="/notice" method="post">
-      <input type="submit" value="Notice List" />
-    </form>
+  <h1>글 작성</h1>
+  <form action="/proxy/board/Write" method="post" class="bt" id="Write" name="Write">
+    제목: <input type="text" name="boardTitle">
+    내용: <textarea name="boardContent"></textarea>
+    카테고리 코드:
+    <select name="cateID">
+      <option value="C-002">공연</option>
+      <option value="C-003">축제</option>
+      <option value="C-004">박람회</option>
+      <option value="C-005">전시회</option>
+      <option value="S-002">런닝</option>
+      <option value="S-003">배드민턴</option>
+      <option value="S-004">골프</option>
+      <option value="S-005">테니스</option>
+      <option value="T-002">국내여행</option>
+      <option value="T-002">해외여행</option>
+      <option value="A-002">밴드</option>
+      <option value="A-002">재즈</option>
+      <option value="A-002">댄스</option>
+      <option value="E-002">게임</option>
+      <option value="E-002">봉사활동</option>
+      <option value="E-001">기타</option>
+      <option value="R-002">스터디</option>
+    </select>
+    작성자: <input type="text" name="memID" />
+    <input type="submit" value="Write"/>
+  </form>
 
-    <h1>글 작성</h1>
-    <form action="/board/Write" method="post">
-      제목: <input type="text" name="boardTitle">
-      내용: <textarea name="boardContent"></textarea>
-      카테고리 코드:
-      <select name="cateID">
-        <option value="C-002">공연</option>
-        <option value="C-003">축제</option>
-        <option value="C-004">박람회</option>
-        <option value="C-005">전시회</option>
-        <option value="S-002">런닝</option>
-        <option value="S-003">배드민턴</option>
-        <option value="S-004">골프</option>
-        <option value="S-005">테니스</option>
-        <option value="T-002">국내여행</option>
-        <option value="T-002">해외여행</option>
-        <option value="A-002">밴드</option>
-        <option value="A-002">재즈</option>
-        <option value="A-002">댄스</option>
-        <option value="E-002">게임</option>
-        <option value="E-002">봉사활동</option>
-        <option value="E-001">기타</option>
-        <option value="R-002">스터디</option>
-      </select>
-      작성자: <input type="text" name="memID">
-      <input type="submit">
-      제목: <input type="text" name="boardTitle" /> 내용: <textarea name="boardContent"></textarea> 카테고리 코드:
-      <input type="text" name="cateID" /> 작성자: <input type="text" name="memID" />
-      <input type="submit" />
-    </form>
-  </body>
+</body>
+<script>
+  const up = document.getElementById('SignUp');
+    up.addEventListener("submit", event => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const memID = form.memID.value;
+      const memPW = form.memPW.value;
+      const memNN = form.memNN.value;
+      const memTel = form.memTel.value;
+      const memMail = form.memMail.value;
+       
+    const member = {
+      memID : memID,
+      memPW : memPW,
+      memNN : memNN,
+      memTel : memTel,
+      memMail : memMail,
+    };
+      
+    fetch("/proxy/member/SignUp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(member),
+    })
+    .then(res => res.json())
+    .then(json => console.log(json));
+  });
+
+
+const signIn = document.getElementById('SignIn');
+  signIn.addEventListener("submit", event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const memID = form.memID.value;
+    const memPW = form.memPW.value;
+      
+    const member = {
+      memID : memID,
+      memPW : memPW,
+    };
+      
+    fetch("/proxy/member/SignIn", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(member),
+    })
+    .then(res => res.json())
+    .then(json => console.log(json));
+  });
+
+const update = document.getElementById('Update');
+  update.addEventListener("submit", event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const memID = form.memID.value;
+    const memPW = form.memPW.value;
+    const newPW = form.newPW.value;
+       
+    const member = {
+      memID : memID,
+      memPW : memPW,
+      newPW: newPW,
+    };
+      
+    fetch("/proxy/member/Update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(member),
+    })
+    .then(res => res.json())
+    .then(json => console.log(json));
+  });
+</script>
 </html>
+      

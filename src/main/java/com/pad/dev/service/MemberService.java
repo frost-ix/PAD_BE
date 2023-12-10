@@ -10,7 +10,7 @@ public interface MemberService {
 
 	int insertMember(MemberVO member);
 
-	int updateMember(MemberVO member);
+	int updateMember(MemberVO memberVO);
 
 	int deleteMember(MemberVO member);
 
