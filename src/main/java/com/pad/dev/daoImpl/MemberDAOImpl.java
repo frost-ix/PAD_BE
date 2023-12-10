@@ -3,8 +3,6 @@ package com.pad.dev.daoImpl;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.pad.dev.vo.boardVO.BoardVO;
@@ -16,9 +14,6 @@ import lombok.RequiredArgsConstructor;
 @Repository
 @RequiredArgsConstructor
 public class MemberDAOImpl implements MemberDAO {
-	@Autowired
-	private PasswordEncoder pwEncoder;
-
 	private final SqlSession sqlSession;
 
 	public List<MemberVO> getMyInfo(String memID) {
@@ -35,13 +30,6 @@ public class MemberDAOImpl implements MemberDAO {
 		MemberVO member = null;
 		try {
 			member = sqlSession.selectOne("signInMember", memberVO);
-			if (pwEncoder.matches(memberVO.getMemPW(), member.getMemPW())) {
-				System.out.println("로그인 성공");
-				return member;
-			} else {
-				System.out.println("로그인 실패");
-				return null;
-			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -50,9 +38,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	public int insertMember(MemberVO member) {
 		int result = 0;
-		System.out.println("memID: " + member.getMemID() + ", memPW: " + member.getMemPW() + ", memTel: " + member.getMemTel() + "memMail: " + member.getMemMail() + member.getMemNN());
 		try {
-			member.setMemPW(pwEncoder.encode(member.getMemPW()));
 			result = sqlSession.insert("insertMember", member);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -60,10 +46,10 @@ public class MemberDAOImpl implements MemberDAO {
 		return result;
 	}
 
-	public int updateMember(MemberVO member) {
+	public int updateMember(MemberVO memberVO) {
 		int result = 0;
 		try {
-			result = sqlSession.update("updateMember", member);
+			result = sqlSession.update("updateMember", memberVO);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

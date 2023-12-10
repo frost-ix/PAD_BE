@@ -10,7 +10,7 @@ public interface MemberDAO {
 
 	public int insertMember(MemberVO member);
 
-	public int updateMember(MemberVO member);
+	public int updateMember(MemberVO memberVO);
 
 	public int deleteMember(MemberVO member);
 

@@ -34,10 +34,11 @@ dependencies {
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
-	compileOnly "org.springframework.boot:spring-boot-devtools"
 
 	// Security
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.6.7'
+	// 토큰 / 암호화
+	// implementation 'io.jsonwebtoken:jjwt:0.12.1'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	
 	// Oracle 전자지갑 관련
 	implementation(enforcedPlatform("com.oracle.database.jdbc:ojdbc-bom:21.1.0.0"))
@@ -46,10 +47,6 @@ dependencies {
 	implementation 'com.oracle.database.security:osdt_cert'
 	implementation 'com.oracle.database.security:oraclepki'
 	implementation 'com.oracle.database.security:osdt_core'
-
-// 토큰 / 암호화
-	// implementation 'io.jsonwebtoken:jjwt:0.12.1'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 tasks.named('test') {

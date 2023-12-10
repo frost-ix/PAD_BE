@@ -25,8 +25,8 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
-	public int updateMember(MemberVO member) {
-		int result = md.updateMember(member);
+	public int updateMember(MemberVO memberVO) {
+		int result = md.updateMember(memberVO);
 		return result;
 	}
 
