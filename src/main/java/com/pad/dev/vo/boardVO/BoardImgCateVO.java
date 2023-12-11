@@ -1,4 +1,4 @@
-package com.pad.dev.vo.boardImgCateVO;
+package com.pad.dev.vo.boardVO;
 
 import java.util.Date;
 
@@ -6,20 +6,20 @@ import lombok.Data;
 
 @Data
 public class BoardImgCateVO {
-    // Board
-    private int boardID;
+	// Board
+	private int boardID;
 	private String boardtTitle;
 	private String boardContent;
 	private Date modifyDate;
 	private String memID;
 
-    // Img
-    private int imgID;
+	// Img
+	private int imgID;
 	private String imageType;
 	private String imagePath;
 
-    // Cate
-    private String cateID;
+	// Cate
+	private String cateID;
 	private String cateName;
 	private String cateRef;
 }

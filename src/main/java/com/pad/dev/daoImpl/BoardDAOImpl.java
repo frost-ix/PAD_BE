@@ -5,6 +5,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.pad.dev.dao.BoardDAO;
+import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardVO;
 
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,18 @@ import lombok.RequiredArgsConstructor;
 public class BoardDAOImpl implements BoardDAO {
 	private final SqlSessionTemplate sqlSession;
 
+	@Override
+	public BoardVO getBoardOne(int boardID) {
+		BoardVO board = null;
+		try {
+			board = sqlSession.selectOne("getBoardOne", boardID);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return board;
+	}
+
+	@Override
 	public List<BoardVO> getBoardList() {
 		List<BoardVO> boardList = null;
 		try {
@@ -28,10 +41,24 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int postBoardWrite(BoardVO boardVO) {
+	public List<BoardVO> getThumbnailList(String cateID) {
+		List<BoardVO> thumbnailList = null;
+		try {
+			if (cateID == null)
+				thumbnailList = sqlSession.selectList("getThumbnailList");
+			else
+				thumbnailList = sqlSession.selectList("getThumbnailList", cateID);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return thumbnailList;
+	}
+
+	@Override
+	public int postBoardWrite(BoardImgCateVO boardVO) {
 		int result = 0;
 		try {
-			result = sqlSession.insert("postBoard", boardVO);
+			result = sqlSession.insert("insertBoard", boardVO);
 			System.out.println("result: " + result);
 		} catch (Exception e) {
 			e.getMessage();

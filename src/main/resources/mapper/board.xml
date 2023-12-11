@@ -2,11 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Board">
+	<select id="getBoardOne" parameterType="int" resultType="BoardVO">
+		SELECT c.CATENAME , b.BOARDTITLE, m.MEMNN  , b.BOARDCONTENT , b.REGDATE , i.IMAGEPATH
+		FROM BOARD b
+		JOIN "MEMBER" m ON m.MEMID = b.MEMID
+		JOIN CATEGORY c ON b.CATEID = c.CATEID
+		JOIN IMAGE i ON i.BOARDID = b.BOARDID
+		WHERE b.BOARDID = #{boardID} AND i.IMAGETYPE = 'content'
+	</select>
+
     <select id="getBoardList" resultType="BoardVO">
 		select * from board
 	</select>
 
-	<insert id="postBoard" parameterType="BoardVO">
-		insert into board (boardid, boardtitle, boardcontent, regdate, cateid, memid) values (BOARDID_SEQ.nextval, #{boardTitle}, #{boardContent}, sysdate, #{cateID}, #{memID})
+	<select id="getThumbnailList" resultType="BoardVO">
+		SELECT DISTINCT  boardid, boardtitle, regdate, catename, imagetype, imagepath
+		FROM (
+    		SELECT b.boardid, b.boardtitle, b.regdate, c.catename, i.imagetype, i.imagepath,
+        	ROW_NUMBER()
+        	OVER(PARTITION BY b.boardid
+        		ORDER BY
+        			CASE WHEN i.imagetype = 'thumbnail' OR i.imagetype = NULL
+        					THEN 1
+        				ELSE 2
+        			END) as rn
+    		FROM board b
+    		JOIN image i ON b.boardid = i.boardid
+    		JOIN category c ON b.cateid = c.cateid
+		)
+		WHERE rn = 1
+		ORDER BY boardid ASC
+	</select>
+
+	<insert id="insertBoard" parameterType="BoardVO">
+		insert into board (boardid, boardtitle, boardcontent, regdate, cateid, memid)
+		values (BOARDID_SEQ.nextval, #{boardTitle}, #{boardContent}, sysdate, #{cateID}, #{memID});
+	</insert>
+
+	<insert id="insertImg" parameterType="ImgVO">
+	insert into image (imageid, imagetype, imagepath, boardid)
+		values (IMAGEID_SEQ.nextval, #{imgType}, #{imagePath}, BOARDID_SEQ.currval);
 	</insert>
 </mapper>
