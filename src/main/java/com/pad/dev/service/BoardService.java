@@ -2,7 +2,7 @@ package com.pad.dev.service;
 
 import java.util.List;
 
-import com.pad.dev.vo.boardVO.BoardImgCateVO;
+import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
 
 public interface BoardService {
@@ -12,5 +12,5 @@ public interface BoardService {
 
 	List<BoardVO> getThumbnailList(String cateID);
 
-	int postBoardWrite(BoardImgCateVO boardVO);
+	int postBoardWrite(BoardImgVO boardImgVO);
 }

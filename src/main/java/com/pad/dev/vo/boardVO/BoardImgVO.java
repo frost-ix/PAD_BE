@@ -7,9 +7,10 @@ import lombok.Data;
 public class BoardImgVO {
 	// Board
 	private int boardID;
-	private String boardtTitle;
+	private String boardTitle;
 	private String boardContent;
 	private Date modifyDate;
+	private String cateID;
 	private String memID;
 
 	// Img

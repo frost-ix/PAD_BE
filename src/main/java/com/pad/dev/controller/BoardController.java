@@ -2,7 +2,7 @@ package com.pad.dev.controller;
 
 import java.util.List;
 
-import com.pad.dev.vo.boardVO.BoardImgCateVO;
+import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
 
 import lombok.RequiredArgsConstructor;
@@ -57,7 +57,9 @@ public class BoardController {
 	 *          resource path : /board/write
 	 */
 	@PostMapping("/Write")
-	public int postBoardWrite(@RequestBody BoardImgCateVO boardVO) {
-		return bs.postBoardWrite(boardVO);
+	public int postBoardWrite(@RequestBody String boardVO) {
+		System.out.println(boardVO);
+		return 1;
+		// return bs.postBoardWrite(boardVO);
 	}
 }
