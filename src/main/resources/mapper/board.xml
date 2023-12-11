@@ -40,7 +40,7 @@
 		select count(*) from board
 	</select>
 
-	<select id="getMyBoardMax" parameterType="memID" resultType="int">
+	<select id="getMyBoardMax" parameterType="String" resultType="int">
 		select count(*) from board b where b.memid = #{memID}
 	</select>
 
