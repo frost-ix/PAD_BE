@@ -5,7 +5,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.pad.dev.dao.BoardDAO;
-import com.pad.dev.vo.boardVO.BoardImgCateVO;
+import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
 
 import lombok.RequiredArgsConstructor;
@@ -55,10 +55,10 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int postBoardWrite(BoardImgCateVO boardVO) {
+	public int postBoardWrite(BoardImgVO boardImgVO) {
 		int result = 0;
 		try {
-			result = sqlSession.insert("insertBoard", boardVO);
+			result = sqlSession.insert("insertBoard", boardImgVO);
 			System.out.println("result: " + result);
 		} catch (Exception e) {
 			e.getMessage();

@@ -2,7 +2,7 @@ package com.pad.dev.dao;
 
 import java.util.List;
 
-import com.pad.dev.vo.boardVO.BoardImgCateVO;
+import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
 
 public interface BoardDAO {
@@ -12,5 +12,5 @@ public interface BoardDAO {
 
 	public List<BoardVO> getThumbnailList(String cateID);
 
-	public int postBoardWrite(BoardImgCateVO boardVO);
+	public int postBoardWrite(BoardImgVO boardImgVO);
 }

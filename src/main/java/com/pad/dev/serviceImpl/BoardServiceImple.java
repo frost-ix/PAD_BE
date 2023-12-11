@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.pad.dev.dao.BoardDAO;
 import com.pad.dev.service.BoardService;
 import com.pad.dev.vo.boardVO.BoardImgCateVO;
+import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
 
 import lombok.RequiredArgsConstructor;
@@ -48,9 +49,9 @@ public class BoardServiceImple implements BoardService {
 	}
 
 	@Override
-	public int postBoardWrite(BoardImgCateVO boardVO) {
+	public int postBoardWrite(BoardImgVO boardImgVO) {
 		log.info("게시판 작성");
-		int res = bm.postBoardWrite(boardVO);
+		int res = bm.postBoardWrite(boardImgVO);
 		if (res == 1) {
 			log.info("게시판 작성 성공");
 			return 1;

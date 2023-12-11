@@ -34,13 +34,11 @@
 		ORDER BY boardid ASC
 	</select>
 
-	<insert id="insertBoard" parameterType="BoardVO">
+	<insert id="insertBoard" parameterType="BoardImgVO">
 		insert into board (boardid, boardtitle, boardcontent, regdate, cateid, memid)
 		values (BOARDID_SEQ.nextval, #{boardTitle}, #{boardContent}, sysdate, #{cateID}, #{memID});
-	</insert>
-
-	<insert id="insertImg" parameterType="ImgVO">
-	insert into image (imageid, imagetype, imagepath, boardid)
+		
+		insert into image (imageid, imagetype, imagepath, boardid)
 		values (IMAGEID_SEQ.nextval, #{imgType}, #{imagePath}, BOARDID_SEQ.currval);
 	</insert>
 </mapper>
