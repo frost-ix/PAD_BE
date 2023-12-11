@@ -7,6 +7,10 @@ import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
 
 public interface BoardDAO {
+	public List<BoardVO> getMyBoardVO(String memID);
+
+	public int getMyBoardMax(String memID);
+
 	public BoardImgCateVO getBoardOne(int boardID);
 
 	public List<BoardVO> getBoardList();

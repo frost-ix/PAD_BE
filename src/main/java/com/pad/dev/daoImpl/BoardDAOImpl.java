@@ -17,6 +17,17 @@ public class BoardDAOImpl implements BoardDAO {
 	private final SqlSessionTemplate sqlSession;
 
 	@Override
+	public List<BoardVO> getMyBoardVO(String memID) {
+		List<BoardVO> boardVO = null;
+		try {
+			boardVO = sqlSession.selectList("getMyBoard", memID);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return boardVO;
+	}
+
+	@Override
 	public BoardImgCateVO getBoardOne(int boardID) {
 		BoardImgCateVO board = null;
 		try {
@@ -46,6 +57,18 @@ public class BoardDAOImpl implements BoardDAO {
 		int maxCount = 0;
 		try {
 			maxCount = sqlSession.selectOne("getBoardMax");
+			System.out.println(maxCount);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return maxCount;
+	}
+
+	@Override
+	public int getMyBoardMax(String memID) {
+		int maxCount = 0;
+		try {
+			maxCount = sqlSession.selectOne("getMyBoardMax", memID);
 			System.out.println(maxCount);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

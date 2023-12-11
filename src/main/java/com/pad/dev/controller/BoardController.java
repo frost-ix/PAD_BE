@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +22,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/proxy/board")
 public class BoardController {
 	private final BoardServiceImple bs;
+
+	@PostMapping("/myBoard")
+	public List<BoardVO> getMyBoardVO(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String memID = session.getAttribute("Member").toString();
+		List<BoardVO> boardVO = bs.getMyBoardVO(memID);
+		return boardVO;
+	}
+
+	@PostMapping("myBoardCount")
+	public int getMyBoardMax(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String memID = session.getAttribute("Member").toString();
+		int maxCount = bs.getMyBoardMax(memID);
+		return maxCount;
+	}
 
 	/***
 	 * <h2>R : read one board</h2>

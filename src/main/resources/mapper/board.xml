@@ -2,6 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Board">
+	<select id="getBoardList" parameterType="int" resultType="BoardVO">
+		SELECT ROWNUM, boardid, boardtitle, regDate, memID, imagepath
+		FROM (
+			SELECT b.boardid, b.boardtitle, b.memID ,b.regdate, i.imagetype, i.imagepath,
+				ROW_NUMBER()
+				OVER(PARTITION BY b.boardid
+					ORDER BY
+						CASE WHEN i.imagetype = 'thumbnail' OR i.imagetype = NULL
+								THEN 1
+							ELSE 2
+						END) as rn
+			FROM board b
+			JOIN image i ON b.boardid = i.boardid
+			WHERE b.boardID &gt;= 1
+		)
+		WHERE rn = 1
+		AND ROWNUM &lt;= 9
+		AND memID = 'admin'
+		ORDER BY boardid DESC ;
+	</select>
+
 	<select id="getBoardOne" parameterType="int" resultType="BoardVO">
 		SELECT c.CATENAME , b.BOARDTITLE, m.MEMNN  , b.BOARDCONTENT , b.REGDATE , i.IMAGEPATH
 		FROM BOARD b
@@ -17,6 +38,10 @@
 
 	<select id="getBoardMax" resultType="int">
 		select count(*) from board
+	</select>
+
+	<select id="getMyBoardMax" parameterType="memID" resultType="int">
+		select count(*) from board b where b.memid = #{memID}
 	</select>
 
 	<select id="getThumbnailList" parameterType="int" resultType="BoardVO">

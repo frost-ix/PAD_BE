@@ -20,6 +20,20 @@ public class BoardServiceImple implements BoardService {
 	private final BoardDAO bm;
 
 	@Override
+	public List<BoardVO> getMyBoardVO(String memID) {
+		log.info("내 게시판 호출");
+		List<BoardVO> boardVO = bm.getMyBoardVO(memID);
+		return boardVO;
+	}
+
+	@Override
+	public int getMyBoardMax(String memID) {
+		log.info("내 게시판 최대 호출");
+		int maxCount = bm.getMyBoardMax(memID);
+		return maxCount;
+	}
+
+	@Override
 	public BoardImgCateVO getBoardOne(BoardVO boardVO) {
 		log.info("게시판 호출");
 		int boardID = boardVO.getBoardID();
