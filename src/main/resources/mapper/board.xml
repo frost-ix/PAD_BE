@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Board">
-	<select id="getMyBoardList" parameterType="String" resultType="BoardVO">
-		SELECT ROWNUM, boardid, boardtitle, regDate, memID, imagepath
+	<select id="getMyBoardList" parameterType="map" resultType="BoardVO">
+		SELECT ROWNUM, boardid, boardtitle, memID ,imagepath
 		FROM (
 			SELECT b.boardid, b.boardtitle, b.memID ,b.regdate, i.imagetype, i.imagepath,
 				ROW_NUMBER()
@@ -15,12 +15,10 @@
 						END) as rn
 			FROM board b
 			JOIN image i ON b.boardid = i.boardid
-			WHERE b.boardID &gt;= 1
+			WHERE b.boardID &gt;= #{currentBoardID} AND b.memID = #{memID}
 		)
-		WHERE rn = 1
-		AND ROWNUM &lt;= 9
-		AND memID = #{memID}
-		ORDER BY boardid DESC ;
+		WHERE ROWNUM &lt;= 9
+		ORDER BY boardid DESC, rn ASC
 	</select>
 
 	<select id="getBoardOne" parameterType="int" resultType="BoardVO">

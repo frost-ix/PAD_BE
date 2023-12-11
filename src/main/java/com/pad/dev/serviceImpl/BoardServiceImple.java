@@ -20,17 +20,26 @@ public class BoardServiceImple implements BoardService {
 	private final BoardDAO bm;
 
 	@Override
-	public List<BoardVO> getMyBoardVO(String memID) {
-		log.info("내 게시판 호출");
-		List<BoardVO> boardVO = bm.getMyBoardVO(memID);
-		return boardVO;
-	}
-
-	@Override
 	public int getMyBoardMax(String memID) {
 		log.info("내 게시판 최대 호출");
 		int maxCount = bm.getMyBoardMax(memID);
 		return maxCount;
+	}
+
+	@Override
+	public List<BoardVO> getMyBoardVO(int currentBoardID, String memID) {
+		log.info("내 게시판 호출");
+		List<BoardVO> boardVO = bm.getMyBoardVO(currentBoardID, memID);
+		if (boardVO != null) {
+			boardVO.forEach(board -> {
+				log.info(board);
+			});
+			return boardVO;
+		} else {
+			log.warn("게시글 없음");
+			return null;
+		}
+		// return boardVO;
 	}
 
 	@Override
@@ -66,7 +75,7 @@ public class BoardServiceImple implements BoardService {
 			});
 			return thumbnailList;
 		} else {
-			log.info("게시글 없음");
+			log.warn("게시글 없음");
 			return null;
 		}
 	}
@@ -83,7 +92,7 @@ public class BoardServiceImple implements BoardService {
 			log.info("게시판 작성 성공");
 			return 1;
 		} else {
-			log.info("게시판 작성 실패");
+			log.warn("게시판 작성 실패");
 			return 0;
 		}
 	}

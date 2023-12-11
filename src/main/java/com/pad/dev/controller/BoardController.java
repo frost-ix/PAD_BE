@@ -5,6 +5,7 @@ import java.util.List;
 import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
+import com.pad.dev.vo.memberVO.MemberVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -24,18 +25,19 @@ public class BoardController {
 	private final BoardServiceImple bs;
 
 	@PostMapping("/myBoard")
-	public List<BoardVO> getMyBoardVO(HttpServletRequest request) {
+	public List<BoardVO> getMyBoardVO(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String memID = session.getAttribute("Member").toString();
-		List<BoardVO> boardVO = bs.getMyBoardVO(memID);
+		int currentBoardID = boardImgVO.getCurrentBoardID();
+		MemberVO member = (MemberVO) session.getAttribute("Member");
+		List<BoardVO> boardVO = bs.getMyBoardVO(currentBoardID, member.getMemID());
 		return boardVO;
 	}
 
-	@PostMapping("myBoardCount")
+	@PostMapping("/myBoardCount")
 	public int getMyBoardMax(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String memID = session.getAttribute("Member").toString();
-		int maxCount = bs.getMyBoardMax(memID);
+		MemberVO member = (MemberVO) session.getAttribute("Member");
+		int maxCount = bs.getMyBoardMax(member.getMemID());
 		return maxCount;
 	}
 

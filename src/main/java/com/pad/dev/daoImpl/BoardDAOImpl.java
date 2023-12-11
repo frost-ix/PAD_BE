@@ -1,6 +1,9 @@
 package com.pad.dev.daoImpl;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -17,17 +20,6 @@ public class BoardDAOImpl implements BoardDAO {
 	private final SqlSessionTemplate sqlSession;
 
 	@Override
-	public List<BoardVO> getMyBoardVO(String memID) {
-		List<BoardVO> boardVO = null;
-		try {
-			boardVO = sqlSession.selectList("getMyBoardList", memID);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return boardVO;
-	}
-
-	@Override
 	public BoardImgCateVO getBoardOne(int boardID) {
 		BoardImgCateVO board = null;
 		try {
@@ -36,6 +28,20 @@ public class BoardDAOImpl implements BoardDAO {
 			System.out.println(e.getMessage());
 		}
 		return board;
+	}
+
+	@Override
+	public List<BoardVO> getThumbnailList(int currentBoardID) {
+		List<BoardVO> thumbnailList = null;
+		try {
+			if (currentBoardID == 0) {
+				System.out.println("No boardID");
+			} else
+				thumbnailList = sqlSession.selectList("getThumbnailList", currentBoardID);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return thumbnailList;
 	}
 
 	@Override
@@ -69,7 +75,7 @@ public class BoardDAOImpl implements BoardDAO {
 		int maxCount = 0;
 		try {
 			maxCount = sqlSession.selectOne("getMyBoardMax", memID);
-			System.out.println(maxCount);
+			System.out.println("Max Count : " + maxCount);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -77,17 +83,15 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardVO> getThumbnailList(int currentBoardID) {
-		List<BoardVO> thumbnailList = null;
+	public List<BoardVO> getMyBoardVO(int currentBoardID, String memID) {
+		List<BoardVO> boardVO = null;
 		try {
-			if (currentBoardID == 0) {
-				System.out.println("No boardID");
-			} else
-				thumbnailList = sqlSession.selectList("getThumbnailList", currentBoardID);
+			Map<String, Object> map = Map.of("currentBoardID", currentBoardID, "memID", memID);
+			boardVO = sqlSession.selectList("getMyBoardList", map);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return thumbnailList;
+		return boardVO;
 	}
 
 	@Override
