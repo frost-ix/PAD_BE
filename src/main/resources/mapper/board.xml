@@ -15,30 +15,37 @@
 		select * from board
 	</select>
 
-	<select id="getThumbnailList" resultType="BoardVO">
-		SELECT DISTINCT  boardid, boardtitle, regdate, catename, imagetype, imagepath
+	<select id="getBoardMax" resultType="int">
+		select count(*) from board
+	</select>
+
+	<select id="getThumbnailList" parameterType="int" resultType="BoardVO">
+		SELECT ROWNUM, boardid, boardtitle, imagepath
 		FROM (
-    		SELECT b.boardid, b.boardtitle, b.regdate, c.catename, i.imagetype, i.imagepath,
-        	ROW_NUMBER()
-        	OVER(PARTITION BY b.boardid
-        		ORDER BY
-        			CASE WHEN i.imagetype = 'thumbnail' OR i.imagetype = NULL
-        					THEN 1
-        				ELSE 2
-        			END) as rn
-    		FROM board b
-    		JOIN image i ON b.boardid = i.boardid
-    		JOIN category c ON b.cateid = c.cateid
+			SELECT b.boardid, b.boardtitle, b.regdate, i.imagetype, i.imagepath,
+				ROW_NUMBER()
+				OVER(PARTITION BY b.boardid
+					ORDER BY
+						CASE WHEN i.imagetype = 'thumbnail' OR i.imagetype = NULL
+								THEN 1
+							ELSE 2
+						END) as rn
+			FROM board b
+			JOIN image i ON b.boardid = i.boardid
+			WHERE b.boardID &gt;= #{currentBoardID}
 		)
 		WHERE rn = 1
-		ORDER BY boardid ASC
+		AND ROWNUM &lt;= 9
+		ORDER BY boardid DESC
 	</select>
 
 	<insert id="insertBoard" parameterType="BoardImgVO">
 		insert into board (boardid, boardtitle, boardcontent, regdate, cateid, memid)
-		values (BOARDID_SEQ.nextval, #{boardTitle}, #{boardContent}, sysdate, #{cateID}, #{memID});
-		
+		values (BOARDID_SEQ.nextval, #{boardTitle}, #{boardContent}, sysdate, #{cateID}, #{memID})
+		</insert>
+
+	<insert id="insertImage" parameterType="BoardImgVO">
 		insert into image (imageid, imagetype, imagepath, boardid)
-		values (IMAGEID_SEQ.nextval, #{imgType}, #{imagePath}, BOARDID_SEQ.currval);
+		values (IMAGEID_SEQ.nextval, #{imgType}, #{imagePath}, BOARDID_SEQ.currval)
 	</insert>
 </mapper>

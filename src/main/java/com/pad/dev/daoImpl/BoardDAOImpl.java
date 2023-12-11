@@ -5,6 +5,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.pad.dev.dao.BoardDAO;
+import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
 
@@ -16,8 +17,8 @@ public class BoardDAOImpl implements BoardDAO {
 	private final SqlSessionTemplate sqlSession;
 
 	@Override
-	public BoardVO getBoardOne(int boardID) {
-		BoardVO board = null;
+	public BoardImgCateVO getBoardOne(int boardID) {
+		BoardImgCateVO board = null;
 		try {
 			board = sqlSession.selectOne("getBoardOne", boardID);
 		} catch (Exception e) {
@@ -41,13 +42,25 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardVO> getThumbnailList(String cateID) {
+	public int getBoardMax() {
+		int maxCount = 0;
+		try {
+			maxCount = sqlSession.selectOne("getBoardMax");
+			System.out.println(maxCount);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return maxCount;
+	}
+
+	@Override
+	public List<BoardVO> getThumbnailList(int currentBoardID) {
 		List<BoardVO> thumbnailList = null;
 		try {
-			if (cateID == null)
-				thumbnailList = sqlSession.selectList("getThumbnailList");
-			else
-				thumbnailList = sqlSession.selectList("getThumbnailList", cateID);
+			if (currentBoardID == 0) {
+				System.out.println("No boardID");
+			} else
+				thumbnailList = sqlSession.selectList("getThumbnailList", currentBoardID);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -56,6 +69,7 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public int postBoardWrite(BoardImgVO boardImgVO) {
+		System.out.println(boardImgVO);
 		int result = 0;
 		try {
 			result = sqlSession.insert("insertBoard", boardImgVO);

@@ -2,9 +2,12 @@ package com.pad.dev.controller;
 
 import java.util.List;
 
+import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +34,9 @@ public class BoardController {
 	 *          </p>
 	 * @param boardID : One board's article id.
 	 */
-	@GetMapping("/{boardID}")
-	public BoardVO getBoardOne(int boardID) {
-		BoardVO board = bs.getBoardOne(boardID);
+	@PostMapping("/watch")
+	public BoardImgCateVO getBoardOne(@RequestBody BoardVO boardVO) {
+		BoardImgCateVO board = bs.getBoardOne(boardVO);
 		return board;
 	}
 
@@ -45,9 +48,17 @@ public class BoardController {
 	 *          resource path : /board
 	 */
 	@PostMapping("")
-	public List<BoardVO> getBoardList(@RequestBody String option) {
-		List<BoardVO> boardList = bs.getThumbnailList(option);
+	public List<BoardVO> getBoardList(@RequestBody BoardImgVO boardImgVO) {
+		int currentBoardID = boardImgVO.getCurrentBoardID();
+		System.out.println(currentBoardID);
+		List<BoardVO> boardList = bs.getThumbnailList(currentBoardID);
 		return boardList;
+	}
+
+	@PostMapping("count")
+	public int getBoardMax() {
+		int maxCount = bs.getBoardMax();
+		return maxCount;
 	}
 
 	/***
@@ -57,9 +68,10 @@ public class BoardController {
 	 *          resource path : /board/write
 	 */
 	@PostMapping("/Write")
-	public int postBoardWrite(@RequestBody String boardVO) {
-		System.out.println(boardVO);
-		return 1;
-		// return bs.postBoardWrite(boardVO);
+	public int postBoardWrite(@RequestBody BoardImgVO boardVO, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		System.out.println(boardVO + " | " + session.getAttribute("Member"));
+		boardVO.setMemID(session.getAttribute("Member").toString());
+		return bs.postBoardWrite(boardVO);
 	}
 }

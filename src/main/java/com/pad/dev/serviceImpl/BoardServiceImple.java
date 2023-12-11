@@ -20,9 +20,10 @@ public class BoardServiceImple implements BoardService {
 	private final BoardDAO bm;
 
 	@Override
-	public BoardVO getBoardOne(int boardID) {
+	public BoardImgCateVO getBoardOne(BoardVO boardVO) {
 		log.info("게시판 호출");
-		BoardVO board = bm.getBoardOne(boardID);
+		int boardID = boardVO.getBoardID();
+		BoardImgCateVO board = bm.getBoardOne(boardID);
 		return board;
 	}
 
@@ -34,9 +35,17 @@ public class BoardServiceImple implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> getThumbnailList(String cateID) {
+	public int getBoardMax() {
+		log.info("게시판 최대 호출");
+		int maxCount = bm.getBoardMax();
+		return maxCount;
+	}
+
+	@Override
+	public List<BoardVO> getThumbnailList(int currentBoardID) {
 		log.info("썸네일 호출");
-		List<BoardVO> thumbnailList = bm.getThumbnailList(cateID);
+		log.info(currentBoardID);
+		List<BoardVO> thumbnailList = bm.getThumbnailList(currentBoardID);
 		if (thumbnailList != null) {
 			thumbnailList.forEach(thumbnail -> {
 				log.info(thumbnail);
@@ -51,6 +60,10 @@ public class BoardServiceImple implements BoardService {
 	@Override
 	public int postBoardWrite(BoardImgVO boardImgVO) {
 		log.info("게시판 작성");
+		boardImgVO.setCateID("S-001");
+		boardImgVO.setImageType("content");
+		boardImgVO.setImagePath("/");
+		log.info(boardImgVO);
 		int res = bm.postBoardWrite(boardImgVO);
 		if (res == 1) {
 			log.info("게시판 작성 성공");
