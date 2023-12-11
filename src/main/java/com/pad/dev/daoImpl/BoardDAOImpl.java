@@ -20,7 +20,7 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<BoardVO> getMyBoardVO(String memID) {
 		List<BoardVO> boardVO = null;
 		try {
-			boardVO = sqlSession.selectList("getMyBoard", memID);
+			boardVO = sqlSession.selectList("getMyBoardList", memID);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
