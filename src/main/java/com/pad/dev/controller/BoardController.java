@@ -1,6 +1,8 @@
 package com.pad.dev.controller;
 
 import java.util.List;
+
+import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardVO;
 
 import lombok.RequiredArgsConstructor;
@@ -8,14 +10,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pad.dev.serviceImpl.BoardServiceImple;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/board")
+@RequestMapping("/proxy/board")
 public class BoardController {
 	private final BoardServiceImple bs;
 
@@ -30,8 +32,9 @@ public class BoardController {
 	 * @param boardID : One board's article id.
 	 */
 	@GetMapping("/{boardID}")
-	public String getBoardOne(String boardID) {
-		return "boardOne";
+	public BoardVO getBoardOne(int boardID) {
+		BoardVO board = bs.getBoardOne(boardID);
+		return board;
 	}
 
 	/***
@@ -41,10 +44,9 @@ public class BoardController {
 	 * @apiNote
 	 *          resource path : /board
 	 */
-	@GetMapping("")
-	public List<BoardVO> getBoard() {
-		System.out.println("Board list");
-		List<BoardVO> boardList = bs.getBoardList();
+	@PostMapping("")
+	public List<BoardVO> getBoardList(@RequestBody String option) {
+		List<BoardVO> boardList = bs.getThumbnailList(option);
 		return boardList;
 	}
 
@@ -55,14 +57,7 @@ public class BoardController {
 	 *          resource path : /board/write
 	 */
 	@PostMapping("/Write")
-	public void postBoardWrite(@RequestParam String boardTitle, @RequestParam String boardContent, @RequestParam String cateID, @RequestParam String memID) {
-		System.out.println("write controller");
-		BoardVO boardVO = new BoardVO();
-		boardVO.setBoardTitle(boardTitle);
-		boardVO.setBoardContent(boardContent);
-		boardVO.setCateID(cateID);
-		boardVO.setMemID(memID);
-		bs.postBoardWrite(boardVO);
+	public int postBoardWrite(@RequestBody BoardImgCateVO boardVO) {
+		return bs.postBoardWrite(boardVO);
 	}
-
 }
