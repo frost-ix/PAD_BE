@@ -5,7 +5,6 @@ import java.util.List;
 import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
-import com.pad.dev.vo.memberVO.MemberVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -28,16 +27,16 @@ public class BoardController {
 	public List<BoardVO> getMyBoardVO(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int currentBoardID = boardImgVO.getCurrentBoardID();
-		MemberVO member = (MemberVO) session.getAttribute("Member");
-		List<BoardVO> boardVO = bs.getMyBoardVO(currentBoardID, member.getMemID());
+		String member = (String) session.getAttribute("memID");
+		List<BoardVO> boardVO = bs.getMyBoardVO(currentBoardID, member);
 		return boardVO;
 	}
 
 	@PostMapping("/myBoardCount")
 	public int getMyBoardMax(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("Member");
-		int maxCount = bs.getMyBoardMax(member.getMemID());
+		String member = (String) session.getAttribute("memID");
+		int maxCount = bs.getMyBoardMax(member);
 		return maxCount;
 	}
 
@@ -88,7 +87,20 @@ public class BoardController {
 	public int postBoardWrite(@RequestBody BoardImgVO boardVO, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		System.out.println(boardVO + " | " + session.getAttribute("Member"));
-		boardVO.setMemID(session.getAttribute("Member").toString());
+		boardVO.setMemID(session.getAttribute("memID").toString());
 		return bs.postBoardWrite(boardVO);
 	}
+
+	@PostMapping("/Update")
+	public int postBoardUpdate(@RequestBody BoardImgVO boardVO) {
+		int boardID = bs.postBoardUpdate(boardVO);
+		return boardID;
+	}
+
+	@PostMapping("/Delete")
+	public int postBoardDelete(@RequestBody BoardImgVO boardVO) {
+		int result = bs.postBoardDelete(boardVO);
+		return result;
+	}
+
 }

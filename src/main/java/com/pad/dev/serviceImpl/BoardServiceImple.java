@@ -9,6 +9,7 @@ import com.pad.dev.service.BoardService;
 import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
+import com.pad.dev.vo.imgVO.ImgVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -29,6 +30,7 @@ public class BoardServiceImple implements BoardService {
 	@Override
 	public List<BoardVO> getMyBoardVO(int currentBoardID, String memID) {
 		log.info("내 게시판 호출");
+		log.info("Now Session member id : " + memID);
 		List<BoardVO> boardVO = bm.getMyBoardVO(currentBoardID, memID);
 		if (boardVO != null) {
 			boardVO.forEach(board -> {
@@ -93,6 +95,38 @@ public class BoardServiceImple implements BoardService {
 			return 1;
 		} else {
 			log.warn("게시판 작성 실패");
+			return 0;
+		}
+	}
+
+	@Override
+	public int postBoardUpdate(BoardImgVO boardImgVO) {
+		log.info("게시판 수정");
+		ImgVO imgVO = new ImgVO();
+		if (boardImgVO.getImageType().equals("content")) {
+			imgVO.setImagePath(boardImgVO.getImagePath());
+		} else {
+			imgVO.setImagePath("");
+		}
+		int res = bm.postBoardUpdate(boardImgVO, imgVO);
+		if (res == 1) {
+			log.info("게시판 수정 성공");
+			return res;
+		} else {
+			log.warn("게시판 수정 실패");
+			return res;
+		}
+	}
+
+	@Override
+	public int postBoardDelete(BoardImgVO boardImgVO) {
+		log.info("게시판 삭제");
+		int res = bm.postBoardDelete(boardImgVO);
+		if (res == 1) {
+			log.info("게시판 삭제 성공");
+			return 1;
+		} else {
+			log.warn("게시판 삭제 실패");
 			return 0;
 		}
 	}

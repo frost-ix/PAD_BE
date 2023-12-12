@@ -71,4 +71,25 @@
 		insert into image (imageid, imagetype, imagepath, boardid)
 		values (IMAGEID_SEQ.nextval, #{imgType}, #{imagePath}, BOARDID_SEQ.currval)
 	</insert>
+
+	<update id="updateBoard" parameterType="BoardImgVO">
+		UPDATE BOARD b
+			SET
+				b.BOARDTITLE = #{boardTitle},
+				b.BOARDCONTENT = #{boardContent},
+				b.CATEID = #{cateID}
+		WHERE b.BOARDID = #{boardID}
+	</update>
+
+	<update id="updateImage" parameterType="BoardImgVO">
+		UPDATE IMAGE i
+			SET
+				i.IMAGEPATH = #{imagePath}
+		WHERE i.BOARDID = #{boardID}
+		AND i.IMAGETYPE = #{imgType}
+	</update>
+
+	<delete id="deleteBoard" parameterType="int">
+		delete from board where boardid = #{boardID}
+	</delete>
 </mapper>

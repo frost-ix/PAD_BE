@@ -20,4 +20,8 @@ public interface BoardService {
 	List<BoardVO> getThumbnailList(int currentBoardID);
 
 	int postBoardWrite(BoardImgVO boardImgVO);
+
+	int postBoardUpdate(BoardImgVO boardImgVO);
+
+	int postBoardDelete(BoardImgVO boardImgVO);
 }

@@ -3,7 +3,6 @@ package com.pad.dev.daoImpl;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +10,7 @@ import com.pad.dev.dao.BoardDAO;
 import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
+import com.pad.dev.vo.imgVO.ImgVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -100,6 +100,34 @@ public class BoardDAOImpl implements BoardDAO {
 		int result = 0;
 		try {
 			result = sqlSession.insert("insertBoard", boardImgVO);
+			System.out.println("result: " + result);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return result;
+	}
+
+	@Override
+	public int postBoardUpdate(BoardImgVO boardImgVO, ImgVO imgVO) {
+		int result = 0;
+		try {
+			int resultBoard = sqlSession.update("updateBoard", boardImgVO);
+			int resultImg = sqlSession.update("updateImg", imgVO);
+			if (resultImg == 1 && resultBoard == 1) {
+				result = 1;
+			}
+			System.out.println("result: " + result);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return result;
+	}
+
+	@Override
+	public int postBoardDelete(BoardImgVO boardImgVO) {
+		int result = 0;
+		try {
+			result = sqlSession.delete("deleteBoard", boardImgVO);
 			System.out.println("result: " + result);
 		} catch (Exception e) {
 			e.getMessage();
