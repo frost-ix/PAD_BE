@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.pad.dev.vo.boardVO.BoardImgVO;
+import com.pad.dev.vo.favVO.FavVO;
 import com.pad.dev.vo.memberVO.MemberVO;
 import com.pad.dev.dao.MemberDAO;
 
@@ -69,8 +70,34 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public List<BoardImgVO> showMyFavorite(String memID) {
 		List<BoardImgVO> favoriteList = null;
-		
+		try {
+			favoriteList = sqlSession.selectList("showMyFavorite", memID);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return favoriteList;
+	}
+
+	@Override
+	public int countMyFavorite(int memID) {
+		int boardCount = 0;
+		try {
+			boardCount = sqlSession.selectOne("countMyFavorite", memID);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return boardCount;
+	}
+
+	@Override
+	public int insertFavorite(FavVO favVO) {
+		int result = 0;
+		try {
+			result = sqlSession.insert("insertFavorite", favVO);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return result;
 	}
 
 }
