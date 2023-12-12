@@ -26,4 +26,29 @@
 	<select id="showMyBoard" parameterType="String" resultType="BoardVO">
 		select * from member m, board b where m.memid = b.memid and m.memid = #{memID}
 	</select>
+
+	<select id="countMyFavorite" parameterType="String" resultType="int">
+		SELECT count(*)
+		from favorite f
+			join board b on f.boardid = b.boardid
+			join member m on m.memid = f.memid
+			join image i on i.boardid = b.boardid
+		where m.memid = #{memID}
+		and i.imagetype = 'thumbnail'
+	</select>
+
+	<select id="showMyFavorite" parameterType="String" resultType="BoardImgVO">
+		SELECT b.memid, b.boardid, b.boardtitle, i.imagetype, i.imagepath
+		from favorite f
+			join board b on f.boardid = b.boardid
+			join member m on m.memid = f.memid
+			join image i on i.boardid = b.boardid
+		where m.memid = #{memID}
+		and i.imagetype = 'thumbnail'
+	</select>
+
+	<insert id="insertFavorite" parameterType="FavVO" resultType="FavVO">
+		INSERT INTO favorite (memid, boardid)
+		VALUES (#{memID}, #{boardID})
+	</insert>
 </mapper>

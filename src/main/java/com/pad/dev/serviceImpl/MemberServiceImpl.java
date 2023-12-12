@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pad.dev.vo.boardVO.BoardImgVO;
+import com.pad.dev.vo.favVO.FavVO;
 import com.pad.dev.vo.memberVO.MemberVO;
 import com.pad.dev.dao.MemberDAO;
 import com.pad.dev.service.MemberService;
@@ -52,5 +53,17 @@ public class MemberServiceImpl implements MemberService {
     public List<BoardImgVO> showMyFavorite(String memID) {
         return md.showMyFavorite(memID);
     }
+
+	@Override
+	public int countMyFavorite(int memID) {
+		int boardCount = md.countMyFavorite(memID);
+		return boardCount;
+	}
+
+	@Override
+	public int insertFavorite(FavVO favVO) {
+		int result = md.insertFavorite(favVO);
+		return result;
+	}
 
 }

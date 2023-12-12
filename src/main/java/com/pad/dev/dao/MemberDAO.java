@@ -3,6 +3,7 @@ package com.pad.dev.dao;
 import java.util.List;
 
 import com.pad.dev.vo.boardVO.BoardImgVO;
+import com.pad.dev.vo.favVO.FavVO;
 import com.pad.dev.vo.memberVO.MemberVO;
 
 public interface MemberDAO {
@@ -17,5 +18,9 @@ public interface MemberDAO {
 	public MemberVO signInMember(MemberVO memberVO);
 
     public List<BoardImgVO> showMyFavorite(String memID);
+
+    public int countMyFavorite(int memID);
+
+	public int insertFavorite(FavVO favVO);
 
 }

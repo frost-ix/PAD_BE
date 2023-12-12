@@ -18,6 +18,7 @@
 			WHERE b.boardID &gt;= #{currentBoardID} AND b.memID = #{memID}
 		)
 		WHERE ROWNUM &lt;= 9
+		AND imagetype = 'thumbnail'
 		ORDER BY boardid DESC, rn ASC
 	</select>
 

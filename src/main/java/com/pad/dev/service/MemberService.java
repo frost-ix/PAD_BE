@@ -3,6 +3,7 @@ package com.pad.dev.service;
 import java.util.List;
 
 import com.pad.dev.vo.boardVO.BoardImgVO;
+import com.pad.dev.vo.favVO.FavVO;
 import com.pad.dev.vo.memberVO.MemberVO;
 
 public interface MemberService {
@@ -17,4 +18,8 @@ public interface MemberService {
 	MemberVO signInMember(MemberVO memberVO);
 
 	List<BoardImgVO> showMyFavorite(String memID);
+
+    int countMyFavorite(int memID);
+
+	int insertFavorite(FavVO favVO);
 }
