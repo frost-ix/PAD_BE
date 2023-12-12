@@ -6,11 +6,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pad.dev.serviceImpl.MemberServiceImpl;
-import com.pad.dev.vo.boardVO.BoardVO;
+import com.pad.dev.service.MemberService;
+import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.memberVO.MemberVO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,25 +22,26 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/proxy/member")
 @Log4j2
 public class MemberController {
-	private final MemberServiceImpl ms;
+	private final MemberService ms;
 	private final PasswordEncoder encoder;
 
 	@PostMapping("/MyInfo")
 	public List<MemberVO> getMyInfo(@RequestBody String memID) {
+		log.info("MyInfo");
 		List<MemberVO> myInfo = ms.getMyInfo(memID);
 		return myInfo;
 	}
 
 	@PostMapping("/SignUp")
-	public int memberCreate(@RequestBody MemberVO memberVO) {
+	public int SignUpMember(@RequestBody MemberVO memberVO) {
 		log.info("SignUp");
-		memberVO.setMemPW(encoder.encode(memberVO.getMemPW()));
-		int result = ms.insertMember(memberVO);
+		int result = ms.signUpMember(memberVO);
 		return result;
 	}
 
 	@PostMapping("/SignIn")
 	public MemberVO signInMember(@RequestBody MemberVO memberVO, HttpServletRequest request) {
+		log.info("SignIn");
 		HttpSession session = request.getSession(true);
 		MemberVO checkMember = ms.signInMember(memberVO);
 		String checkPassword = checkMember.getMemPW();
@@ -63,26 +63,25 @@ public class MemberController {
 
 	@PostMapping("/Update")
 	public int updateMember(@RequestBody MemberVO memberVO) {
+		log.info("Update");
 		int result = 0;
-		MemberVO checkMember = ms.signInMember(memberVO);
-		if(encoder.matches(memberVO.getMemPW(), checkMember.getMemPW())) {
-			memberVO.setMemPW(checkMember.getMemPW());
-			memberVO.setNewPW(encoder.encode(memberVO.getNewPW()));
-			result = ms.updateMember(memberVO);
-		}
 		return result;
 	}
 
 	@PostMapping("/Delete")
 	public int deleteMember(@RequestBody MemberVO memberVO) {
+		log.info("Delete");
 		int result = ms.deleteMember(memberVO);
 		return result;
 	}
 
-	@PostMapping("/ShowMyBoard")
-	public List<BoardVO> showMyBoard(@RequestParam String memID) {
-		List<BoardVO> myBoard = ms.showMyBoard(memID);
-		return myBoard;
+	@PostMapping("/MyFavorite")
+	public List<BoardImgVO> showMyFavorite(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
+		log.info("MyFavorite");
+		HttpSession session = request.getSession();
+		String memID = (String)session.getAttribute("memID");
+		List<BoardImgVO> favoriteList = ms.showMyFavorite(memID);
+		return favoriteList;
 	}
-
+	
 }

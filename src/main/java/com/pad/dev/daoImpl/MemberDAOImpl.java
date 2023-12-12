@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.pad.dev.vo.boardVO.BoardVO;
+import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.memberVO.MemberVO;
 import com.pad.dev.dao.MemberDAO;
 
@@ -36,7 +36,7 @@ public class MemberDAOImpl implements MemberDAO {
 		return member;
 	}
 
-	public int insertMember(MemberVO member) {
+	public int signUpMember(MemberVO member) {
 		int result = 0;
 		try {
 			result = sqlSession.insert("insertMember", member);
@@ -67,13 +67,10 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public List<BoardVO> showMyBoard(String memID) {
-		List<BoardVO> myBoard = null;
-		try {
-			myBoard = sqlSession.selectList("showMyBoard", memID);
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		return myBoard;
+	public List<BoardImgVO> showMyFavorite(String memID) {
+		List<BoardImgVO> favoriteList = null;
+		
+		return favoriteList;
 	}
+
 }
