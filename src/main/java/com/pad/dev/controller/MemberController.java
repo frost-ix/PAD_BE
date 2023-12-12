@@ -34,32 +34,36 @@ public class MemberController {
 
 	@PostMapping("/SignUp")
 	public int memberCreate(@RequestBody MemberVO memberVO) {
+		log.info("SignUp");
 		memberVO.setMemPW(encoder.encode(memberVO.getMemPW()));
-		System.out.println(memberVO.getMemID() + ", encodePW: " + memberVO.getMemPW());
 		int result = ms.insertMember(memberVO);
 		return result;
 	}
 
 	@PostMapping("/SignIn")
 	public MemberVO signInMember(@RequestBody MemberVO memberVO, HttpServletRequest request) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		MemberVO checkMember = ms.signInMember(memberVO);
-		if(checkMember != null) session.setAttribute("Member", checkMember);
-		
-		if(encoder.matches(memberVO.getMemPW(), checkMember.getMemPW())) 
-		return checkMember;
+		String checkPassword = checkMember.getMemPW();
+		if(encoder.matches(memberVO.getMemPW(), checkPassword)) {
+			session.setAttribute("memID", memberVO.getMemID());
+			log.info("Session memID: " + memberVO.getMemID());
+			session.setMaxInactiveInterval(1800);
+			return checkMember;
+		}
 		else return null;
 	}
 
 	@PostMapping("/Logout")
-	public void logout(HttpSession session) {
+	public void logout(HttpServletRequest request) {
+		log.info("Logout");
+		HttpSession session = request.getSession(false);
 		session.invalidate();
 	}
 
 	@PostMapping("/Update")
 	public int updateMember(@RequestBody MemberVO memberVO) {
 		int result = 0;
-		System.out.println(memberVO.toString());
 		MemberVO checkMember = ms.signInMember(memberVO);
 		if(encoder.matches(memberVO.getMemPW(), checkMember.getMemPW())) {
 			memberVO.setMemPW(checkMember.getMemPW());
@@ -78,7 +82,6 @@ public class MemberController {
 	@PostMapping("/ShowMyBoard")
 	public List<BoardVO> showMyBoard(@RequestParam String memID) {
 		List<BoardVO> myBoard = ms.showMyBoard(memID);
-		System.out.println("myBoard: " + myBoard);
 		return myBoard;
 	}
 
