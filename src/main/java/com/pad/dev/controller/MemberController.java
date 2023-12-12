@@ -42,16 +42,22 @@ public class MemberController {
 
 	@PostMapping("/SignIn")
 	public MemberVO signInMember(@RequestBody MemberVO memberVO, HttpServletRequest request) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		MemberVO checkMember = ms.signInMember(memberVO);
 		String checkPassword = checkMember.getMemPW();
-		if(checkMember != null) session.setAttribute("Member", checkPassword);
-		if(encoder.matches(memberVO.getMemPW(), checkMember.getMemPW())) return checkMember;
+		if(encoder.matches(memberVO.getMemPW(), checkPassword)) {
+			session.setAttribute("memID", memberVO.getMemID());
+			log.info("Session memID: " + memberVO.getMemID());
+			session.setMaxInactiveInterval(1800);
+			return checkMember;
+		}
 		else return null;
 	}
 
 	@PostMapping("/Logout")
-	public void logout(HttpSession session) {
+	public void logout(HttpServletRequest request) {
+		log.info("Logout");
+		HttpSession session = request.getSession(false);
 		session.invalidate();
 	}
 
