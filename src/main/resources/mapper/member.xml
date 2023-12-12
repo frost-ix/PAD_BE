@@ -47,7 +47,7 @@
 		and i.imagetype = 'thumbnail'
 	</select>
 
-	<insert id="insertFavorite" parameterType="FavVO" resultType="FavVO">
+	<insert id="insertFavorite" parameterType="FavVO">
 		INSERT INTO favorite (memid, boardid)
 		VALUES (#{memID}, #{boardID})
 	</insert>
