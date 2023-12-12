@@ -72,8 +72,11 @@
     </select>
     작성자: <input type="text" name="memID" />
     <input type="submit" value="Write"/>
-  </form>
+  </form><br>
 
+  <form action="/proxy/member/MyFavorite" method="post">
+    <input type="submit" value="Favorite">
+  </form>
 </body>
 <script>
   const up = document.getElementById('SignUp');
@@ -149,6 +152,21 @@ const update = document.getElementById('Update');
         "Content-Type": "application/json",
       },
       body: JSON.stringify(member),
+    })
+    .then(res => res.json())
+    .then(json => console.log(json));
+  });
+
+
+  const favorite = document.getElementById('favorite');
+  update.addEventListener("submit", event => {
+    event.preventDefault();
+      
+    fetch("/proxy/member/MyFavorite", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
     .then(res => res.json())
     .then(json => console.log(json));

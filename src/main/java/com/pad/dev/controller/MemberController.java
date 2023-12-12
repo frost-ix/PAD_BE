@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.pad.dev.service.MemberService;
 import com.pad.dev.vo.boardVO.BoardImgVO;
+import com.pad.dev.vo.favVO.FavVO;
 import com.pad.dev.vo.memberVO.MemberVO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,8 +52,7 @@ public class MemberController {
 			log.info("Session memID: " + memberVO.getMemID());
 			session.setMaxInactiveInterval(1800);
 			return checkMember;
-		}
-		else return null;
+		} else return null;
 	}
 
 	@PostMapping("/Logout")
@@ -62,9 +63,12 @@ public class MemberController {
 	}
 
 	@PostMapping("/Update")
-	public int updateMember(@RequestBody MemberVO memberVO) {
+	public int updateMember(@RequestBody MemberVO memberVO, HttpServletRequest request) {
 		log.info("Update");
 		int result = 0;
+		HttpSession session = request.getSession();
+		memberVO.setMemID((String)session.getAttribute("memID"));
+		result = ms.updateMember(memberVO);
 		return result;
 	}
 
@@ -75,13 +79,30 @@ public class MemberController {
 		return result;
 	}
 
+	@PostMapping("/MyFavoriteCount")
+	public int countMyFavorite(@RequestBody String memID) {
+		int boardCount = ms.countMyFavorite(Integer.parseInt(memID));
+		return boardCount;
+	}
+
 	@PostMapping("/MyFavorite")
-	public List<BoardImgVO> showMyFavorite(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
+	public List<BoardImgVO> showMyFavorite(HttpServletRequest request) {
 		log.info("MyFavorite");
 		HttpSession session = request.getSession();
 		String memID = (String)session.getAttribute("memID");
 		List<BoardImgVO> favoriteList = ms.showMyFavorite(memID);
+		System.out.println("favoriteList: " + favoriteList);
 		return favoriteList;
 	}
+	
+	@PostMapping("/InsertFavorite")
+	public int insertFavorite(@RequestBody FavVO favVO, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int result = 0;
+		favVO.setMemID((String)session.getAttribute("memID"));
+		result = ms.insertFavorite(favVO);
+		return result;
+	}
+	
 	
 }
