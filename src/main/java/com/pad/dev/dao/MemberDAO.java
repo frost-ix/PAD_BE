@@ -2,13 +2,13 @@ package com.pad.dev.dao;
 
 import java.util.List;
 
-import com.pad.dev.vo.boardVO.BoardVO;
+import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.memberVO.MemberVO;
 
 public interface MemberDAO {
 	public List<MemberVO> getMyInfo(String memID);
 
-	public int insertMember(MemberVO member);
+	public int signUpMember(MemberVO member);
 
 	public int updateMember(MemberVO memberVO);
 
@@ -16,5 +16,6 @@ public interface MemberDAO {
 
 	public MemberVO signInMember(MemberVO memberVO);
 
-	public List<BoardVO> showMyBoard(String memID);
+    public List<BoardImgVO> showMyFavorite(String memID);
+
 }
