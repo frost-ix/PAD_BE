@@ -17,7 +17,7 @@ public interface BoardService {
 
 	int getBoardMax();
 
-	List<BoardVO> getThumbnailList(int currentBoardID);
+	List<BoardImgCateVO> getThumbnailList(BoardImgCateVO boardImgCateVO);
 
 	int postBoardWrite(BoardImgVO boardImgVO);
 

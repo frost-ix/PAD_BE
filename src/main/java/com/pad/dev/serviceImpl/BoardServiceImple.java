@@ -48,6 +48,7 @@ public class BoardServiceImple implements BoardService {
 	public BoardImgCateVO getBoardOne(BoardVO boardVO) {
 		log.info("게시판 호출");
 		int boardID = boardVO.getBoardID();
+		log.info(boardID);
 		BoardImgCateVO board = bm.getBoardOne(boardID);
 		return board;
 	}
@@ -67,10 +68,10 @@ public class BoardServiceImple implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> getThumbnailList(int currentBoardID) {
+	public List<BoardImgCateVO> getThumbnailList(BoardImgCateVO boardImgCateVO) {
 		log.info("썸네일 호출");
-		log.info(currentBoardID);
-		List<BoardVO> thumbnailList = bm.getThumbnailList(currentBoardID);
+		log.info(boardImgCateVO.getBCateID());
+		List<BoardImgCateVO> thumbnailList = bm.getThumbnailList(boardImgCateVO);
 		if (thumbnailList != null) {
 			thumbnailList.forEach(thumbnail -> {
 				log.info(thumbnail);

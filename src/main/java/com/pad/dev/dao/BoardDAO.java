@@ -18,7 +18,7 @@ public interface BoardDAO {
 
 	public int getBoardMax();
 
-	public List<BoardVO> getThumbnailList(int currentBoardID);
+	public List<BoardImgCateVO> getThumbnailList(BoardImgCateVO boardImgCateVO);
 
 	public int postBoardWrite(BoardImgVO boardImgVO);
 

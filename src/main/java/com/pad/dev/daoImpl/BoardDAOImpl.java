@@ -31,13 +31,10 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardVO> getThumbnailList(int currentBoardID) {
-		List<BoardVO> thumbnailList = null;
+	public List<BoardImgCateVO> getThumbnailList(BoardImgCateVO boardImgCateVO) {
+		List<BoardImgCateVO> thumbnailList = null;
 		try {
-			if (currentBoardID == 0) {
-				System.out.println("No boardID");
-			} else
-				thumbnailList = sqlSession.selectList("getThumbnailList", currentBoardID);
+			thumbnailList = sqlSession.selectList("getThumbnailList", boardImgCateVO);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

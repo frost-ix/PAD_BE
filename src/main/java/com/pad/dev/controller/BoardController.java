@@ -1,18 +1,22 @@
 package com.pad.dev.controller;
 
-import java.util.List;
+import java.util.*;
+import java.nio.file.*;
 
 import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.pad.dev.serviceImpl.BoardServiceImple;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -64,17 +68,36 @@ public class BoardController {
 	 *          resource path : /board
 	 */
 	@PostMapping("")
-	public List<BoardVO> getBoardList(@RequestBody BoardImgVO boardImgVO) {
-		int currentBoardID = boardImgVO.getCurrentBoardID();
-		System.out.println(currentBoardID);
-		List<BoardVO> boardList = bs.getThumbnailList(currentBoardID);
+	public List<BoardImgCateVO> getBoardList(@RequestBody BoardImgCateVO boardImgCateVO) {
+		List<BoardImgCateVO> boardList = bs.getThumbnailList(boardImgCateVO);
 		return boardList;
 	}
 
-	@PostMapping("count")
+	@PostMapping("/count")
 	public int getBoardMax() {
 		int maxCount = bs.getBoardMax();
 		return maxCount;
+	}
+
+	@PostMapping("/image")
+	public void getBoardImage(@RequestBody BoardImgCateVO boardImgCateVO, HttpServletRequest req,
+			HttpServletResponse res, @RequestPart("file") MultipartFile file, @RequestBody String option) {
+		res.setCharacterEncoding("UTF-8");
+		res.setContentType("application/json; charset=UTF-8");
+		String fileName = file.getOriginalFilename();
+		// Path path = Paths.get("/image/" + fileName);
+		Path path = Paths.get("/Users/sung/Desktop/PAD_project/tempImg/" + fileName);
+		try {
+			if (option.equals("upload")) {
+				byte[] bytes = file.getBytes();
+				Files.write(path, bytes);
+				System.out.println(fileName + " | " + path);
+			} else {
+				Files.delete(path);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/***

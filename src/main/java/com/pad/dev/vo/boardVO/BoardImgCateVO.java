@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class BoardImgCateVO {
 	// Board
+	private int currentBoardID;
 	private int boardID;
 	private String boardTitle;
 	private String boardContent;
