@@ -22,4 +22,6 @@ public interface MemberService {
     int countMyFavorite(String memID);
 
 	int insertFavorite(FavVO favVO);
+
+	MemberVO getMemberSession(String memID);
 }

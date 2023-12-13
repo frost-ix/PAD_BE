@@ -19,19 +19,16 @@ public class MemberServiceImpl implements MemberService {
 	private final PasswordEncoder encoder;
 
 	public List<MemberVO> getMyInfo(String memID) {
-		List<MemberVO> myInfo = md.getMyInfo(memID);
-		return myInfo;
+		return md.getMyInfo(memID);
 	}
 
 	public int signUpMember(MemberVO memberVO) {
 		memberVO.setMemPW(encoder.encode(memberVO.getMemPW()));
-		int result = md.signUpMember(memberVO);
-		return result;
+		return md.signUpMember(memberVO);
 	}
 
 	public MemberVO signInMember(MemberVO memberVO) {
-		MemberVO member = md.signInMember(memberVO);
-		return member;
+		return md.signInMember(memberVO);
 	}
 
 	public int updateMember(MemberVO memberVO) {
@@ -46,8 +43,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	public int deleteMember(MemberVO member) {
-		int result = md.deleteMember(member);
-		return result;
+		return md.deleteMember(member);
 	}
 
     public List<BoardImgVO> showMyFavorite(String memID) {
@@ -56,14 +52,17 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int countMyFavorite(String memID) {
-		int boardCount = md.countMyFavorite(memID);
-		return boardCount;
+		return md.countMyFavorite(memID);
 	}
 
 	@Override
 	public int insertFavorite(FavVO favVO) {
-		int result = md.insertFavorite(favVO);
-		return result;
+		return md.insertFavorite(favVO);
+	}
+
+	@Override
+	public MemberVO getMemberSession(String memID) {
+		return md.getMemberSession(memID);
 	}
 
 }
