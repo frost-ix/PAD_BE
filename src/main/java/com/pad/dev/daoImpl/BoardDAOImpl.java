@@ -20,16 +20,26 @@ public class BoardDAOImpl implements BoardDAO {
 	private final SqlSession sqlSession;
 
 	@Override
+	public int getBoardID(String boardTitle) {
+		int result = 0;
+		try {
+			result = sqlSession.selectOne("getBoardID", boardTitle);
+			System.out.println("result: " + result);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return result;
+	}
+
+	@Override
 	public BoardImgCateVO getBoardOne(int boardID) {
 		BoardImgCateVO board = new BoardImgCateVO();
-		ImgVO img = new ImgVO();
 		try {
 			System.out.println(boardID);
 			board = sqlSession.selectOne("getBoardOne", boardID);
-			img = sqlSession.selectOne("getBoardOneImg", boardID);
-			board.setImageID(img.getImgID());
-			board.setImagePath(img.getImagePath());
-			System.out.println("Board : " + board + " | Img : " + img);
+			List<ImgVO> imgLIst = sqlSession.selectList("getImgs", boardID);
+			board.setImageVO(imgLIst);
+			System.out.println(boardID);
 		} catch (Exception e) {
 			System.out.println("error : " + e.getMessage());
 		}
@@ -98,12 +108,11 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int postBoardWrite(BoardImgVO boardImgVO) {
+	public int postBoard(BoardImgVO boardImgVO) {
 		System.out.println(boardImgVO);
 		int result = 0;
 		try {
 			result = sqlSession.insert("insertBoard", boardImgVO);
-			System.out.println("result: " + result);
 		} catch (Exception e) {
 			e.getMessage();
 		}
@@ -111,7 +120,19 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int postBoardUpdate(BoardImgVO boardImgVO, ImgVO imgVO) {
+	public int postBoardImg(BoardImgVO imageVO) {
+		int result = 0;
+		try {
+			System.out.println("boardID : " + imageVO.getBoardID());
+			result = sqlSession.insert("insertImage", imageVO);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return result;
+	}
+
+	@Override
+	public int putBoard(BoardImgVO boardImgVO, ImgVO imgVO) {
 		int result = 0;
 		try {
 			int resultBoard = sqlSession.update("updateBoard", boardImgVO);
@@ -125,7 +146,7 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int postBoardDelete(BoardImgVO boardImgVO) {
+	public int deleteBoard(BoardImgVO boardImgVO) {
 		int result = 0;
 		try {
 			result = sqlSession.delete("deleteBoard", boardImgVO);
