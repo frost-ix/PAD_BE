@@ -3,11 +3,12 @@ package com.pad.dev.controller;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pad.dev.service.MemberService;
 import com.pad.dev.vo.boardVO.BoardImgVO;
@@ -21,8 +22,9 @@ import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/proxy/member")
 @Log4j2
+@SessionAttributes("memID")
+@RequestMapping("/proxy/member")
 public class MemberController {
 	private final MemberService ms;
 	private final PasswordEncoder encoder;
@@ -30,15 +32,13 @@ public class MemberController {
 	@PostMapping("/MyInfo")
 	public List<MemberVO> getMyInfo(@RequestBody String memID) {
 		log.info("MyInfo");
-		List<MemberVO> myInfo = ms.getMyInfo(memID);
-		return myInfo;
+		return ms.getMyInfo(memID);
 	}
 
 	@PostMapping("/SignUp")
 	public int SignUpMember(@RequestBody MemberVO memberVO) {
 		log.info("SignUp");
-		int result = ms.signUpMember(memberVO);
-		return result;
+		return ms.signUpMember(memberVO);
 	}
 
 	@PostMapping("/SignIn")
@@ -63,45 +63,35 @@ public class MemberController {
 	}
 
 	@PostMapping("/Update")
-	public int updateMember(@RequestBody MemberVO memberVO, HttpServletRequest request) {
+	public int updateMember(@RequestBody MemberVO memberVO, @ModelAttribute("memID") String memID) {
 		log.info("Update");
-		int result = 0;
-		HttpSession session = request.getSession();
-		memberVO.setMemID((String)session.getAttribute("memID"));
-		result = ms.updateMember(memberVO);
-		return result;
+		memberVO.setMemID(memID);
+		return ms.updateMember(memberVO);
 	}
 
 	@PostMapping("/Delete")
 	public int deleteMember(@RequestBody MemberVO memberVO) {
 		log.info("Delete");
-		int result = ms.deleteMember(memberVO);
-		return result;
+		return ms.deleteMember(memberVO);
 	}
 
 	@PostMapping("/MyFavoriteCount")
-	public int countMyFavorite(@RequestBody String memID) {
-		int boardCount = ms.countMyFavorite(Integer.parseInt(memID));
-		return boardCount;
+	public int countMyFavorite(@ModelAttribute("memID") String memID) {
+		log.info("MyFavoriteBoard");
+		return ms.countMyFavorite(memID);
 	}
 
 	@PostMapping("/MyFavorite")
-	public List<BoardImgVO> showMyFavorite(HttpServletRequest request) {
+	public List<BoardImgVO> showMyFavorite(@ModelAttribute("memID") String memID) {
 		log.info("MyFavorite");
-		HttpSession session = request.getSession();
-		String memID = (String)session.getAttribute("memID");
-		List<BoardImgVO> favoriteList = ms.showMyFavorite(memID);
-		System.out.println("favoriteList: " + favoriteList);
-		return favoriteList;
+		return ms.showMyFavorite(memID);
 	}
 	
 	@PostMapping("/InsertFavorite")
-	public int insertFavorite(@RequestBody FavVO favVO, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		int result = 0;
-		favVO.setMemID((String)session.getAttribute("memID"));
-		result = ms.insertFavorite(favVO);
-		return result;
+	public int insertFavorite(@RequestBody FavVO favVO, @ModelAttribute("memID") String memID) {
+		log.info("InsertFavorite");
+		favVO.setMemID(memID);
+		return ms.insertFavorite(favVO);
 	}
 	
 	

@@ -55,7 +55,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
 	@Override
-	public int countMyFavorite(int memID) {
+	public int countMyFavorite(String memID) {
 		int boardCount = md.countMyFavorite(memID);
 		return boardCount;
 	}
