@@ -94,5 +94,10 @@ public class MemberController {
 		return ms.insertFavorite(favVO);
 	}
 	
+	@PostMapping("/session")
+	public MemberVO getMemberSession(@ModelAttribute("memID") String memID) {
+		log.info("session");
+		return ms.getMemberSession(memID);
+	}	
 	
 }

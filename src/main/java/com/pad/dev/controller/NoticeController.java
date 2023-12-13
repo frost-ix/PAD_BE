@@ -9,20 +9,21 @@ import com.pad.dev.service.NoticeService;
 import com.pad.dev.vo.notiVO.NotiVO;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
 @RestController
 @RequiredArgsConstructor
+@Log4j2
 @RequestMapping("/notice")
 public class NoticeController {
 	private final NoticeService ns;
 
 	@PostMapping("")
 	public List<NotiVO> getNoticeList() {
-		System.out.println("noti controller");
-		List<NotiVO> noticeList = ns.getNoticeList();
-		return noticeList;
+		log.info("noti controller");
+		return ns.getNoticeList();
 	}
 	
 }

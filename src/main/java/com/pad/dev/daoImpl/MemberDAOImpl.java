@@ -100,4 +100,15 @@ public class MemberDAOImpl implements MemberDAO {
 		return result;
 	}
 
+	@Override
+	public MemberVO getMemberSession(String memID) {
+		MemberVO sessionMember = null;
+		try {
+			sessionMember = sqlSession.selectOne("getMemberSession", memID);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return sessionMember;
+	}
+
 }

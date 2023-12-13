@@ -51,4 +51,9 @@
 		INSERT INTO favorite (memid, boardid)
 		VALUES (#{memID}, #{boardID})
 	</insert>
+
+	<select id="getMemberSession" parameterType="String" resultType="MemberVO">
+		SELECT memid, memNN, memTel, memMail
+		FROM member where memid = #{memID}
+	</select>
 </mapper>
