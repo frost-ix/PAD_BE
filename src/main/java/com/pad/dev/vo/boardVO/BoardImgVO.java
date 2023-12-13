@@ -1,6 +1,6 @@
 package com.pad.dev.vo.boardVO;
 
-import java.util.Date;
+import java.util.*;
 import lombok.Data;
 
 @Data
@@ -16,6 +16,6 @@ public class BoardImgVO {
 
 	// Img
 	private int imgID;
-	private String imageType;
-	private String imagePath;
+	private ArrayList<String> imageType;
+	private ArrayList<String> imagePath;
 }

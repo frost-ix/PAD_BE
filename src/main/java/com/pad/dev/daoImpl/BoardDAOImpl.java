@@ -24,6 +24,7 @@ public class BoardDAOImpl implements BoardDAO {
 		BoardImgCateVO board = null;
 		try {
 			board = sqlSession.selectOne("getBoardOne", boardID);
+			System.out.println("Board : " + board);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -80,8 +81,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardVO> getMyBoardVO(int currentBoardID, String memID) {
-		List<BoardVO> boardVO = null;
+	public List<BoardImgVO> getMyBoardVO(int currentBoardID, String memID) {
+		List<BoardImgVO> boardVO = null;
 		try {
 			Map<String, Object> map = Map.of("currentBoardID", currentBoardID, "memID", memID);
 			boardVO = sqlSession.selectList("getMyBoardList", map);
@@ -110,9 +111,7 @@ public class BoardDAOImpl implements BoardDAO {
 		try {
 			int resultBoard = sqlSession.update("updateBoard", boardImgVO);
 			int resultImg = sqlSession.update("updateImg", imgVO);
-			if (resultImg == 1 && resultBoard == 1) {
-				result = 1;
-			}
+			result = resultBoard + resultImg / 2;
 			System.out.println("result: " + result);
 		} catch (Exception e) {
 			e.getMessage();

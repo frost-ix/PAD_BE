@@ -1,5 +1,6 @@
 package com.pad.dev.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -28,10 +29,10 @@ public class BoardServiceImple implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> getMyBoardVO(int currentBoardID, String memID) {
+	public List<BoardImgVO> getMyBoardVO(int currentBoardID, String memID) {
 		log.info("내 게시판 호출");
 		log.info("Now Session member id : " + memID);
-		List<BoardVO> boardVO = bm.getMyBoardVO(currentBoardID, memID);
+		List<BoardImgVO> boardVO = bm.getMyBoardVO(currentBoardID, memID);
 		if (boardVO != null) {
 			boardVO.forEach(board -> {
 				log.info(board);
@@ -70,7 +71,7 @@ public class BoardServiceImple implements BoardService {
 	@Override
 	public List<BoardImgCateVO> getThumbnailList(BoardImgCateVO boardImgCateVO) {
 		log.info("썸네일 호출");
-		log.info(boardImgCateVO.getBCateID());
+		log.info(boardImgCateVO.getCateID());
 		List<BoardImgCateVO> thumbnailList = bm.getThumbnailList(boardImgCateVO);
 		if (thumbnailList != null) {
 			thumbnailList.forEach(thumbnail -> {
@@ -87,8 +88,7 @@ public class BoardServiceImple implements BoardService {
 	public int postBoardWrite(BoardImgVO boardImgVO) {
 		log.info("게시판 작성");
 		boardImgVO.setCateID("S-001");
-		boardImgVO.setImageType("content");
-		boardImgVO.setImagePath("/");
+		boardImgVO.setImageType(null);
 		log.info(boardImgVO);
 		int res = bm.postBoardWrite(boardImgVO);
 		if (res == 1) {
@@ -104,11 +104,14 @@ public class BoardServiceImple implements BoardService {
 	public int postBoardUpdate(BoardImgVO boardImgVO) {
 		log.info("게시판 수정");
 		ImgVO imgVO = new ImgVO();
-		if (boardImgVO.getImageType().equals("content")) {
-			imgVO.setImagePath(boardImgVO.getImagePath());
-		} else {
-			imgVO.setImagePath("");
-		}
+		imgVO.setBoardID(boardImgVO.getBoardID());
+		imgVO.setImageType(boardImgVO.getImageType());
+		imgVO.setImagePath(boardImgVO.getImagePath());
+		// if (boardImgVO.getImagePath().isEmpty()) {
+		// imgVO.setImagePath(boardImgVO.getImagePath());
+		// } else {
+		// imgVO.setImagePath(null);
+		// }
 		int res = bm.postBoardUpdate(boardImgVO, imgVO);
 		if (res == 1) {
 			log.info("게시판 수정 성공");

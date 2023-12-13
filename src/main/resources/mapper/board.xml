@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Board">
-	<select id="getMyBoardList" parameterType="map" resultType="BoardImgCateVO">
+	<select id="getMyBoardList" parameterType="map" resultType="BoardImgVO">
 		SELECT ROWNUM, boardid, boardtitle, memID ,imagepath, cateID
 		FROM (
-			SELECT b.boardid, b.boardtitle, b.memID ,b.regdate, i.imagetype, i.imagepath,
+			SELECT b.boardid, b.boardtitle, b.memID ,b.regdate, i.imagetype, i.imagepath, b.cateID,
 				ROW_NUMBER()
 				OVER(PARTITION BY b.boardid
 					ORDER BY
@@ -22,8 +22,8 @@
 		ORDER BY boardid DESC, rn ASC
 	</select>
 
-	<select id="getBoardOne" parameterType="int" resultType="BoardVO">
-		SELECT c.CATENAME , b.BOARDTITLE, m.MEMNN  , b.BOARDCONTENT , b.REGDATE , i.IMAGEPATH
+	<select id="getBoardOne" parameterType="int" resultType="BoardImgCateVO">
+		SELECT c.CATENAME , b.BOARDID, b.BOARDTITLE, m.MEMNN  , b.BOARDCONTENT , b.REGDATE , i.IMAGEPATH
 		FROM BOARD b
 		JOIN "MEMBER" m ON m.MEMID = b.MEMID
 		JOIN CATEGORY c ON b.CATEID = c.CATEID
@@ -43,7 +43,7 @@
 		select count(*) from board b where b.memid = #{memID}
 	</select>
 
-	<select id="getThumbnailList" parameterType="int" resultType="BoardVO">
+	<select id="getThumbnailList" parameterType="int" resultType="BoardImgCateVO">
 		SELECT ROWNUM, boardid, boardtitle, imagepath
 		FROM (
 			SELECT b.boardid, b.boardtitle, b.regdate, i.imagetype, i.imagepath,
@@ -85,12 +85,17 @@
 		WHERE b.BOARDID = #{boardID}
 	</update>
 
-	<update id="updateImage" parameterType="BoardImgVO">
+	<update id="updateImage" parameterType="imgVO">
 		UPDATE IMAGE i
-			SET
-				i.IMAGEPATH = #{imagePath}
-		WHERE i.BOARDID = #{boardID}
-		AND i.IMAGETYPE = #{imgType}
+		<set>
+			<foreach collection="imagePath" item="image">
+				<if test="item == 'thumbnail'">
+					i.IMAGEPATH = #{image}
+				</if>
+			</foreach>
+		</set>
+		WHERE i.BOARDID = #{boardID}		
+		AND i.IMAGETYPE = #{imageType}
 	</update>
 
 	<delete id="deleteBoard" parameterType="int">

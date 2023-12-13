@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,11 +29,11 @@ public class BoardController {
 	private final BoardServiceImple bs;
 
 	@PostMapping("/myBoard")
-	public List<BoardVO> getMyBoardVO(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
+	public List<BoardImgVO> getMyBoardVO(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int currentBoardID = boardImgVO.getCurrentBoardID();
 		String member = (String) session.getAttribute("memID");
-		List<BoardVO> boardVO = bs.getMyBoardVO(currentBoardID, member);
+		List<BoardImgVO> boardVO = bs.getMyBoardVO(currentBoardID, member);
 		return boardVO;
 	}
 
@@ -79,25 +80,33 @@ public class BoardController {
 		return maxCount;
 	}
 
+	@ResponseBody
 	@PostMapping("/image")
-	public void getBoardImage(@RequestBody BoardImgCateVO boardImgCateVO, HttpServletRequest req,
-			HttpServletResponse res, @RequestPart("file") MultipartFile file, @RequestBody String option) {
+	public ArrayList<String> getBoardImage(HttpServletRequest req, HttpServletResponse res,
+			@RequestPart("file") MultipartFile file,
+			@RequestPart("option") String option) {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("application/json; charset=UTF-8");
 		String fileName = file.getOriginalFilename();
 		// Path path = Paths.get("/image/" + fileName);
 		Path path = Paths.get("/Users/sung/Desktop/PAD_project/tempImg/" + fileName);
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			if (option.equals("upload")) {
 				byte[] bytes = file.getBytes();
 				Files.write(path, bytes);
 				System.out.println(fileName + " | " + path);
+				list.add("imgName");
+				list.add("delete");
+				return list;
 			} else {
 				Files.delete(path);
+				list.add("upload");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	/***
@@ -107,11 +116,11 @@ public class BoardController {
 	 *          resource path : /board/write
 	 */
 	@PostMapping("/Write")
-	public int postBoardWrite(@RequestBody BoardImgVO boardVO, HttpServletRequest request) {
+	public int postBoardWrite(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		System.out.println(boardVO + " | " + session.getAttribute("Member"));
-		boardVO.setMemID(session.getAttribute("memID").toString());
-		return bs.postBoardWrite(boardVO);
+		System.out.println(boardImgVO + " | " + session.getAttribute("Member"));
+		boardImgVO.setMemID(session.getAttribute("memID").toString());
+		return bs.postBoardWrite(boardImgVO);
 	}
 
 	@PostMapping("/Update")

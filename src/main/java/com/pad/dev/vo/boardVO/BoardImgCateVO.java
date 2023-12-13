@@ -12,7 +12,7 @@ public class BoardImgCateVO {
 	private String boardTitle;
 	private String boardContent;
 	private Date modifyDate;
-	private String bCateID;
+	private String cateID;
 	private String memID;
 
 	// Img
@@ -21,7 +21,6 @@ public class BoardImgCateVO {
 	private String imagePath;
 
 	// Cate
-	private String cateID;
 	private String cateName;
 	private String cateRef;
 }

@@ -1,11 +1,12 @@
 package com.pad.dev.vo.imgVO;
 
+import java.util.ArrayList;
 import lombok.Data;
 
 @Data
 public class ImgVO {
 	private int imgID;
-	private String imageType;
-	private String imagePath;
+	private ArrayList<String> imageType;
+	private ArrayList<String> imagePath;
 	private int boardID;
 }
