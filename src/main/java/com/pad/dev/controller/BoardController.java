@@ -28,6 +28,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class BoardController {
 	private final BoardServiceImple bs;
 
+	@PostMapping("/category")
+	public void postMethodName(@RequestBody String dump) {
+		// TODO: process POST request
+
+	}
+
 	@PostMapping("/myBoard")
 	public List<BoardImgVO> getMyBoardVO(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -53,7 +59,7 @@ public class BoardController {
 	 *          <p>
 	 *          resource path : /board/{boardID}
 	 *          </p>
-	 * @param boardID : One board's article id.
+	 * @param boardVO : One board's article id.
 	 */
 	@PostMapping("/watch")
 	public BoardImgCateVO getBoardOne(@RequestBody BoardVO boardVO) {

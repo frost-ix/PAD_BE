@@ -1,6 +1,5 @@
 package com.pad.dev.serviceImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -51,6 +50,7 @@ public class BoardServiceImple implements BoardService {
 		int boardID = boardVO.getBoardID();
 		log.info(boardID);
 		BoardImgCateVO board = bm.getBoardOne(boardID);
+		log.info(board);
 		return board;
 	}
 
@@ -88,7 +88,6 @@ public class BoardServiceImple implements BoardService {
 	public int postBoardWrite(BoardImgVO boardImgVO) {
 		log.info("게시판 작성");
 		boardImgVO.setCateID("S-001");
-		boardImgVO.setImageType(null);
 		log.info(boardImgVO);
 		int res = bm.postBoardWrite(boardImgVO);
 		if (res == 1) {
@@ -105,7 +104,6 @@ public class BoardServiceImple implements BoardService {
 		log.info("게시판 수정");
 		ImgVO imgVO = new ImgVO();
 		imgVO.setBoardID(boardImgVO.getBoardID());
-		imgVO.setImageType(boardImgVO.getImageType());
 		imgVO.setImagePath(boardImgVO.getImagePath());
 		// if (boardImgVO.getImagePath().isEmpty()) {
 		// imgVO.setImagePath(boardImgVO.getImagePath());

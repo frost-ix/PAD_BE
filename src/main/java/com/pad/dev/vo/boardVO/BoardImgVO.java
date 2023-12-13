@@ -15,7 +15,6 @@ public class BoardImgVO {
 	private String memID;
 
 	// Img
-	private int imgID;
-	private ArrayList<String> imageType;
+	private int imageID;
 	private ArrayList<String> imagePath;
 }

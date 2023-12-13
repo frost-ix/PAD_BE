@@ -3,7 +3,7 @@ package com.pad.dev.daoImpl;
 import java.util.List;
 import java.util.Map;
 
-import org.mybatis.spring.SqlSessionTemplate;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.pad.dev.dao.BoardDAO;
@@ -17,16 +17,21 @@ import lombok.RequiredArgsConstructor;
 @Repository
 @RequiredArgsConstructor
 public class BoardDAOImpl implements BoardDAO {
-	private final SqlSessionTemplate sqlSession;
+	private final SqlSession sqlSession;
 
 	@Override
 	public BoardImgCateVO getBoardOne(int boardID) {
-		BoardImgCateVO board = null;
+		BoardImgCateVO board = new BoardImgCateVO();
+		ImgVO img = new ImgVO();
 		try {
+			System.out.println(boardID);
 			board = sqlSession.selectOne("getBoardOne", boardID);
-			System.out.println("Board : " + board);
+			img = sqlSession.selectOne("getBoardOneImg", boardID);
+			board.setImageID(img.getImgID());
+			board.setImagePath(img.getImagePath());
+			System.out.println("Board : " + board + " | Img : " + img);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("error : " + e.getMessage());
 		}
 		return board;
 	}

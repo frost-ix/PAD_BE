@@ -1,5 +1,6 @@
 package com.pad.dev.vo.boardVO;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import lombok.Data;
@@ -16,9 +17,8 @@ public class BoardImgCateVO {
 	private String memID;
 
 	// Img
-	private int imgID;
-	private String imageType;
-	private String imagePath;
+	private int imageID;
+	private ArrayList<String> imagePath;
 
 	// Cate
 	private String cateName;

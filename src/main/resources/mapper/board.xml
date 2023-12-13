@@ -23,12 +23,15 @@
 	</select>
 
 	<select id="getBoardOne" parameterType="int" resultType="BoardImgCateVO">
-		SELECT c.CATENAME , b.BOARDID, b.BOARDTITLE, m.MEMNN  , b.BOARDCONTENT , b.REGDATE , i.IMAGEPATH
-		FROM BOARD b
-		JOIN "MEMBER" m ON m.MEMID = b.MEMID
-		JOIN CATEGORY c ON b.CATEID = c.CATEID
-		JOIN IMAGE i ON i.BOARDID = b.BOARDID
-		WHERE b.BOARDID = #{boardID} AND i.IMAGETYPE = 'content'
+		SELECT *
+			FROM BOARD b
+			WHERE b.BOARDID = #{boardID}
+	</select>
+
+	<select id="getBoardOneImg" parameterType="int" resultType="ImgVO">
+		SELECT i.IMAGEID, i.IMAGEPATH
+			FROM IMAGE i
+			WHERE i.BOARDID = #{boardID}
 	</select>
 
     <select id="getBoardList" resultType="BoardVO">
@@ -73,7 +76,10 @@
 
 	<insert id="insertImage" parameterType="BoardImgVO">
 		insert into image (imageid, imagetype, imagepath, boardid)
-		values (IMAGEID_SEQ.nextval, #{imgType}, #{imagePath}, BOARDID_SEQ.currval)
+		values (IMAGEID_SEQ.nextval, #{imgType},
+			<foreach collection="imagePath" item="image">
+					i.IMAGEPATH = #{image}
+			</foreach> , BOARDID_SEQ.currval)
 	</insert>
 
 	<update id="updateBoard" parameterType="BoardImgVO">
@@ -89,9 +95,7 @@
 		UPDATE IMAGE i
 		<set>
 			<foreach collection="imagePath" item="image">
-				<if test="item == 'thumbnail'">
 					i.IMAGEPATH = #{image}
-				</if>
 			</foreach>
 		</set>
 		WHERE i.BOARDID = #{boardID}		
