@@ -25,4 +25,6 @@ public interface BoardDAO {
 	public int postBoardUpdate(BoardImgVO boardImgVO, ImgVO imgVO);
 
 	public int postBoardDelete(BoardImgVO boardImgVO);
+
+    public List<BoardImgVO> getLatestBoard();
 }

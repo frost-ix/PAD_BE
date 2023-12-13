@@ -24,4 +24,6 @@ public interface BoardService {
 	int postBoardUpdate(BoardImgVO boardImgVO);
 
 	int postBoardDelete(BoardImgVO boardImgVO);
+
+	List<BoardImgVO> getLatestBoard();
 }
