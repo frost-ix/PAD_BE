@@ -122,4 +122,16 @@
 	<delete id="deleteBoard" parameterType="int">
 		delete from board where boardid = #{boardID}
 	</delete>
+
+	<select id="getLatestBoard" resultType="BoardImgVO">
+		select rownum, a.*
+		from(
+			select MIN(i.imageid) imageid, MIN(i.imagepath) imagepath, i.boardid, b.boardTitle, b.boardContent, b.cateid, b.regdate
+			from image i
+			join board b on i.boardid = b.boardid
+			group by i.boardid, b.boardTitle, b.boardContent, b.cateid, b.regdate
+			order by b.regdate desc
+		) a
+		where rownum &lt;= 15
+	</select>
 </mapper>

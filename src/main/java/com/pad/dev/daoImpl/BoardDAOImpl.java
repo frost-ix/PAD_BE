@@ -166,4 +166,16 @@ public class BoardDAOImpl implements BoardDAO {
 		}
 		return result;
 	}
+
+	@Override
+	public List<BoardImgVO> getLatestBoard() {
+		List<BoardImgVO> boardImgVO = null;
+		try {
+			boardImgVO = sqlSession.selectList("getLatestBoard");
+			System.out.println(boardImgVO);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return boardImgVO;
+	}
 }

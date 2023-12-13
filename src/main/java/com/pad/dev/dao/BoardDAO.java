@@ -28,5 +28,8 @@ public interface BoardDAO {
 
 	public int putBoard(BoardImgVO boardImgVO, ImgVO imgVO);
 
+  public List<BoardImgVO> getLatestBoard();
+
 	public int deleteBoard(BoardImgVO boardImgVO);
+
 }

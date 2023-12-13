@@ -3,6 +3,9 @@
 
 <mapper namespace="Notice">
     <select id="getNoticeList" resultType="NotiVO">
-        select * from Notice
+        select rownum, a.* 
+        from (select * from notice) a
+        where rownum &lt;= 5 
+        order by notiregdate desc
     </select>
 </mapper>

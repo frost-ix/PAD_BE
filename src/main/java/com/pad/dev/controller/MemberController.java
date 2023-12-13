@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.pad.dev.service.MemberService;
 import com.pad.dev.vo.boardVO.BoardImgVO;
@@ -23,7 +22,7 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @RequiredArgsConstructor
 @Log4j2
-@SessionAttributes("memID")
+
 @RequestMapping("/proxy/member")
 public class MemberController {
 	private final MemberService ms;
@@ -58,7 +57,11 @@ public class MemberController {
 	@PostMapping("/Logout")
 	public void logout(HttpServletRequest request) {
 		log.info("Logout");
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
+		String memID = (String)session.getAttribute("memID");
+		memID = "";
+		session.setAttribute("memID", memID);
+		System.out.println("session memID: " + memID);
 		session.invalidate();
 	}
 
@@ -95,9 +98,13 @@ public class MemberController {
 	}
 	
 	@PostMapping("/session")
-	public MemberVO getMemberSession(@ModelAttribute("memID") String memID) {
+	public MemberVO getMemberSession(HttpServletRequest request) {
 		log.info("session");
-		return ms.getMemberSession(memID);
+		HttpSession session = request.getSession();
+		String memID = (String)session.getAttribute("memID");
+		System.out.println("session memID: " + memID);
+		if(memID == "") return null;
+ 		else return ms.getMemberSession(memID);
 	}	
 	
 }

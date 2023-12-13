@@ -130,4 +130,8 @@ public class BoardServiceImple implements BoardService {
 			return 0;
 		}
 	}
+
+    public List<BoardImgVO> getLatestBoard() {
+        return bm.getLatestBoard();
+    }
 }

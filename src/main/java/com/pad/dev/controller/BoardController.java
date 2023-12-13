@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.pad.dev.serviceImpl.BoardServiceImple;
+import com.pad.dev.service.BoardService;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/proxy/board")
 public class BoardController {
-	private final BoardServiceImple bs;
+	private final BoardService bs;
 
 	@PostMapping("/category")
 	public void postMethodName(@RequestBody String dump) {
@@ -135,5 +135,12 @@ public class BoardController {
 		int result = bs.deleteBoard(boardVO);
 		return result;
 	}
+
+	@PostMapping("/latestBoard")
+	public List<BoardImgVO> getLatestBoard() {
+		System.out.println("latestBoard");
+		return bs.getLatestBoard();
+	}
+	
 
 }
