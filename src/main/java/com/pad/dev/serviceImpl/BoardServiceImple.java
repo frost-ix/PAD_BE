@@ -1,6 +1,6 @@
 package com.pad.dev.serviceImpl;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 
@@ -85,11 +85,21 @@ public class BoardServiceImple implements BoardService {
 	}
 
 	@Override
-	public int postBoardWrite(BoardImgVO boardImgVO) {
+	public int postBoard(BoardImgVO boardImgVO) {
 		log.info("게시판 작성");
 		boardImgVO.setCateID("S-001");
 		log.info(boardImgVO);
-		int res = bm.postBoardWrite(boardImgVO);
+
+		int res = bm.postBoard(boardImgVO);
+		int boardID = bm.getBoardID(boardImgVO.getBoardTitle());
+		boardImgVO.setBoardID(boardID);
+		log.info(boardImgVO);
+		log.info("board id : " + boardID);
+		boardImgVO.setImagePath(null);
+
+		log.info("boardImg - imgPath length : " + boardImgVO.getImagePath());
+		res = bm.postBoardImg(boardImgVO);
+
 		if (res == 1) {
 			log.info("게시판 작성 성공");
 			return 1;
@@ -100,17 +110,11 @@ public class BoardServiceImple implements BoardService {
 	}
 
 	@Override
-	public int postBoardUpdate(BoardImgVO boardImgVO) {
+	public int putBoard(BoardImgVO boardImgVO) {
 		log.info("게시판 수정");
 		ImgVO imgVO = new ImgVO();
 		imgVO.setBoardID(boardImgVO.getBoardID());
-		imgVO.setImagePath(boardImgVO.getImagePath());
-		// if (boardImgVO.getImagePath().isEmpty()) {
-		// imgVO.setImagePath(boardImgVO.getImagePath());
-		// } else {
-		// imgVO.setImagePath(null);
-		// }
-		int res = bm.postBoardUpdate(boardImgVO, imgVO);
+		int res = bm.putBoard(boardImgVO, imgVO);
 		if (res == 1) {
 			log.info("게시판 수정 성공");
 			return res;
@@ -121,9 +125,9 @@ public class BoardServiceImple implements BoardService {
 	}
 
 	@Override
-	public int postBoardDelete(BoardImgVO boardImgVO) {
+	public int deleteBoard(BoardImgVO boardImgVO) {
 		log.info("게시판 삭제");
-		int res = bm.postBoardDelete(boardImgVO);
+		int res = bm.deleteBoard(boardImgVO);
 		if (res == 1) {
 			log.info("게시판 삭제 성공");
 			return 1;

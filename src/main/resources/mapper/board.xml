@@ -22,6 +22,21 @@
 		ORDER BY boardid DESC, rn ASC
 	</select>
 
+	<resultMap id="ImgList" type="ImgVO">
+		<result property="imageID" column="IMAGEID"/>
+		<result property="imagePath" column="IMAGEPATH"/>
+	</resultMap>
+
+	<select id="getImgs" resultMap="ImgList">
+		select
+			i.IMAGEID,
+			i.IMAGEPATH,
+			i.BOARDID
+		from image i
+		where i.BOARDID = #{boardID}
+	</select>
+
+
 	<select id="getBoardOne" parameterType="int" resultType="BoardImgCateVO">
 		SELECT *
 			FROM BOARD b
@@ -47,9 +62,9 @@
 	</select>
 
 	<select id="getThumbnailList" parameterType="int" resultType="BoardImgCateVO">
-		SELECT ROWNUM, boardid, boardtitle, imagepath
+		SELECT ROWNUM, boardid, boardtitle, imagepath, imageid
 		FROM (
-			SELECT b.boardid, b.boardtitle, b.regdate, i.imagetype, i.imagepath,
+			SELECT b.boardid, b.boardtitle, b.regdate, i.imageid, i.imagetype, i.imagepath,
 				ROW_NUMBER()
 				OVER(PARTITION BY b.boardid
 					ORDER BY
@@ -69,17 +84,23 @@
 		ORDER BY boardid DESC
 	</select>
 
+	<select id="getBoardID" parameterType="String" resultType="int">
+		select b.boardID from board b where b.boardTitle = #{boardTitle}
+	</select>
+
 	<insert id="insertBoard" parameterType="BoardImgVO">
 		insert into board (boardid, boardtitle, boardcontent, regdate, cateid, memid)
 		values (BOARDID_SEQ.nextval, #{boardTitle}, #{boardContent}, sysdate, #{cateID}, #{memID})
-		</insert>
-
+	</insert>
+	
 	<insert id="insertImage" parameterType="BoardImgVO">
-		insert into image (imageid, imagetype, imagepath, boardid)
-		values (IMAGEID_SEQ.nextval, #{imgType},
-			<foreach collection="imagePath" item="image">
-					i.IMAGEPATH = #{image}
-			</foreach> , BOARDID_SEQ.currval)
+		insert into image (imageid, imagepath, boardid)
+			values
+			<foreach collection="list" item="imgPath" index="index">
+			(
+				IMAGEID_SEQ.nextval, IMAGEPATH = #{imgPath.index}, #{boardID}
+			)
+			</foreach>
 	</insert>
 
 	<update id="updateBoard" parameterType="BoardImgVO">

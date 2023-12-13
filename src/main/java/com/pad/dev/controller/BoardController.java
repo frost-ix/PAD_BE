@@ -94,8 +94,8 @@ public class BoardController {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("application/json; charset=UTF-8");
 		String fileName = file.getOriginalFilename();
-		// Path path = Paths.get("/image/" + fileName);
-		Path path = Paths.get("/Users/sung/Desktop/PAD_project/tempImg/" + fileName);
+		Path path = Paths.get("/image/" + fileName);
+		// Path path = Paths.get("/Users/sung/Desktop/PAD_project/tempImg/" + fileName);
 		ArrayList<String> list = new ArrayList<String>();
 		try {
 			if (option.equals("upload")) {
@@ -126,18 +126,18 @@ public class BoardController {
 		HttpSession session = request.getSession();
 		System.out.println(boardImgVO + " | " + session.getAttribute("Member"));
 		boardImgVO.setMemID(session.getAttribute("memID").toString());
-		return bs.postBoardWrite(boardImgVO);
+		return bs.postBoard(boardImgVO);
 	}
 
 	@PostMapping("/Update")
 	public int postBoardUpdate(@RequestBody BoardImgVO boardVO) {
-		int boardID = bs.postBoardUpdate(boardVO);
+		int boardID = bs.putBoard(boardVO);
 		return boardID;
 	}
 
 	@PostMapping("/Delete")
 	public int postBoardDelete(@RequestBody BoardImgVO boardVO) {
-		int result = bs.postBoardDelete(boardVO);
+		int result = bs.deleteBoard(boardVO);
 		return result;
 	}
 

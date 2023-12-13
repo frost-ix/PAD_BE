@@ -12,6 +12,8 @@ public interface BoardDAO {
 
 	public int getMyBoardMax(String memID);
 
+	public int getBoardID(String boardTitle);
+
 	public BoardImgCateVO getBoardOne(int boardID);
 
 	public List<BoardVO> getBoardList();
@@ -20,11 +22,14 @@ public interface BoardDAO {
 
 	public List<BoardImgCateVO> getThumbnailList(BoardImgCateVO boardImgCateVO);
 
-	public int postBoardWrite(BoardImgVO boardImgVO);
+	public int postBoard(BoardImgVO boardImgVO);
 
-	public int postBoardUpdate(BoardImgVO boardImgVO, ImgVO imgVO);
+	public int postBoardImg(BoardImgVO imgVO);
 
-	public int postBoardDelete(BoardImgVO boardImgVO);
+	public int putBoard(BoardImgVO boardImgVO, ImgVO imgVO);
 
-    public List<BoardImgVO> getLatestBoard();
+  public List<BoardImgVO> getLatestBoard();
+
+	public int deleteBoard(BoardImgVO boardImgVO);
+
 }
