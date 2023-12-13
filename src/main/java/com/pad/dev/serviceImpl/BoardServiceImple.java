@@ -88,16 +88,10 @@ public class BoardServiceImple implements BoardService {
 	public int postBoard(BoardImgVO boardImgVO) {
 		log.info("게시판 작성");
 		boardImgVO.setCateID("S-001");
-		log.info(boardImgVO);
-
 		int res = bm.postBoard(boardImgVO);
 		int boardID = bm.getBoardID(boardImgVO.getBoardTitle());
 		boardImgVO.setBoardID(boardID);
-		log.info(boardImgVO);
-		log.info("board id : " + boardID);
-		boardImgVO.setImagePath(null);
-
-		log.info("boardImg - imgPath length : " + boardImgVO.getImagePath());
+		log.info("insert : " + boardImgVO);
 		res = bm.postBoardImg(boardImgVO);
 
 		if (res == 1) {

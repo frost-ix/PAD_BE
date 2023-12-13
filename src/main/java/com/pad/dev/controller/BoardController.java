@@ -94,25 +94,21 @@ public class BoardController {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("application/json; charset=UTF-8");
 		String fileName = file.getOriginalFilename();
-		Path path = Paths.get("/image/" + fileName);
-		// Path path = Paths.get("/Users/sung/Desktop/PAD_project/tempImg/" + fileName);
-		ArrayList<String> list = new ArrayList<String>();
+		// Path path = Paths.get("/image/" + fileName);
+		Path path = Paths.get("/Users/sung/Desktop/PAD_project/tempImg/" + fileName);
+		String list = new String();
+		ArrayList<String> imgList = new ArrayList<String>();
 		try {
-			if (option.equals("upload")) {
-				byte[] bytes = file.getBytes();
-				Files.write(path, bytes);
-				System.out.println(fileName + " | " + path);
-				list.add("imgName");
-				list.add("delete");
-				return list;
-			} else {
-				Files.delete(path);
-				list.add("upload");
-			}
+			byte[] bytes = file.getBytes();
+			Files.write(path, bytes);
+			System.out.println(fileName + " | " + path);
+			list = fileName;
+			System.out.println(list);
+			imgList.add(list);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return imgList;
 	}
 
 	/***
@@ -122,9 +118,8 @@ public class BoardController {
 	 *          resource path : /board/write
 	 */
 	@PostMapping("/Write")
-	public int postBoardWrite(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
+	public int postBoardWrite(HttpServletRequest request, @RequestBody BoardImgVO boardImgVO) {
 		HttpSession session = request.getSession();
-		System.out.println(boardImgVO + " | " + session.getAttribute("Member"));
 		boardImgVO.setMemID(session.getAttribute("memID").toString());
 		return bs.postBoard(boardImgVO);
 	}

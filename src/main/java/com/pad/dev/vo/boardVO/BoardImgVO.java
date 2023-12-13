@@ -1,6 +1,7 @@
 package com.pad.dev.vo.boardVO;
 
 import java.util.*;
+
 import lombok.Data;
 
 @Data
@@ -15,6 +16,7 @@ public class BoardImgVO {
 	private String memID;
 
 	// Img
+	// ImgVO imgVO;
 	private int imageID;
-	private ArrayList<String> imagePath;
+	private ArrayList<String> imageNames;
 }

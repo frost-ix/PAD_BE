@@ -93,14 +93,10 @@
 		values (BOARDID_SEQ.nextval, #{boardTitle}, #{boardContent}, sysdate, #{cateID}, #{memID})
 	</insert>
 	
+
 	<insert id="insertImage" parameterType="BoardImgVO">
-		insert into image (imageid, imagepath, boardid)
-			values
-			<foreach collection="list" item="imgPath" index="index">
-			(
-				IMAGEID_SEQ.nextval, IMAGEPATH = #{imgPath.index}, #{boardID}
-			)
-			</foreach>
+			insert into image (imageid, imagePath, boardid)
+			values (IMAGEID_SEQ.nextval, #{imagePath}, #{boardID})
 	</insert>
 
 	<update id="updateBoard" parameterType="BoardImgVO">
