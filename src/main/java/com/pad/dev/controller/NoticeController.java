@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RestController
 @RequiredArgsConstructor
 @Log4j2
-@RequestMapping("/notice")
+@RequestMapping("/proxy/notice")
 public class NoticeController {
 	private final NoticeService ns;
 
-	@PostMapping("")
+	@PostMapping("mainNotice")
 	public List<NotiVO> getNoticeList() {
 		log.info("noti controller");
 		return ns.getNoticeList();

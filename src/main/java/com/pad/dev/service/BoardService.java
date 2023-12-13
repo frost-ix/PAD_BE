@@ -23,5 +23,8 @@ public interface BoardService {
 
 	int putBoard(BoardImgVO boardImgVO);
 
+	List<BoardImgVO> getLatestBoard();
+
 	int deleteBoard(BoardImgVO boardImgVO);
+
 }

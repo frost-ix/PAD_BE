@@ -17,7 +17,6 @@ public class NoticeServiceImple implements NoticeService {
 
     @Override
     public List<NotiVO> getNoticeList() {
-        List<NotiVO> noticeList = nd.getNoticeList();
-        return noticeList;
+        return nd.getNoticeList();
     }
 }
