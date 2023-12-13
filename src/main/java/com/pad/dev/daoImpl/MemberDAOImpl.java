@@ -22,7 +22,7 @@ public class MemberDAOImpl implements MemberDAO {
 		try {
 			myInfo = sqlSession.selectList("getMyInfo", memID);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.getMessage();
 		}
 		return myInfo;
 	}
@@ -32,7 +32,7 @@ public class MemberDAOImpl implements MemberDAO {
 		try {
 			member = sqlSession.selectOne("signInMember", memberVO);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.getMessage();
 		}
 		return member;
 	}
@@ -42,7 +42,7 @@ public class MemberDAOImpl implements MemberDAO {
 		try {
 			result = sqlSession.insert("insertMember", member);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.getMessage();
 		}
 		return result;
 	}
@@ -52,7 +52,7 @@ public class MemberDAOImpl implements MemberDAO {
 		try {
 			result = sqlSession.update("updateMember", memberVO);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.getMessage();
 		}
 		return result;
 	}
@@ -62,7 +62,7 @@ public class MemberDAOImpl implements MemberDAO {
 		try {
 			result = sqlSession.delete("deleteMember", member);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.getMessage();
 		}
 		return result;
 	}
@@ -73,13 +73,13 @@ public class MemberDAOImpl implements MemberDAO {
 		try {
 			favoriteList = sqlSession.selectList("showMyFavorite", memID);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.getMessage();
 		}
 		return favoriteList;
 	}
 
 	@Override
-	public int countMyFavorite(int memID) {
+	public int countMyFavorite(String memID) {
 		int boardCount = 0;
 		try {
 			boardCount = sqlSession.selectOne("countMyFavorite", memID);

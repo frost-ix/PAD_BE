@@ -19,7 +19,7 @@ public interface MemberService {
 
 	List<BoardImgVO> showMyFavorite(String memID);
 
-    int countMyFavorite(int memID);
+    int countMyFavorite(String memID);
 
 	int insertFavorite(FavVO favVO);
 }

@@ -19,7 +19,7 @@ public interface MemberDAO {
 
     public List<BoardImgVO> showMyFavorite(String memID);
 
-    public int countMyFavorite(int memID);
+    public int countMyFavorite(String memID);
 
 	public int insertFavorite(FavVO favVO);
 
