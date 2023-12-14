@@ -122,6 +122,7 @@ public class BoardServiceImple implements BoardService {
 	@Override
 	public int deleteBoard(BoardImgVO boardImgVO) {
 		log.info("게시판 삭제");
+		log.info(boardImgVO.getBoardID());
 		int res = bm.deleteBoard(boardImgVO);
 		if (res == 1) {
 			log.info("게시판 삭제 성공");

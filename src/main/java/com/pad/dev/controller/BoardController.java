@@ -126,16 +126,16 @@ public class BoardController {
 			fileName = file.getOriginalFilename();
 		}
 		// path = Paths.get(path + "/" + fileName);
-		// Path path = Paths.get("/image");
-		Path localPath = Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
-		localPath = Paths.get(localPath + "/" + fileName);
+		Path path = Paths.get("/image");
+		// Path localPath = Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
+		path = Paths.get(path + "/" + fileName);
 		String list = new String();
 		ArrayList<String> imgList = new ArrayList<String>();
 		try {
 			byte[] bytes = file.getBytes();
 			// Files.write(path, bytes);
-			Files.write(localPath, bytes);
-			System.out.println(fileName + " | " + localPath);
+			Files.write(path, bytes);
+			System.out.println(fileName + " | " + path);
 			list = fileName;
 			imgList.add(list);
 			System.out.println(list + " | " + imgList + " | " + option);
