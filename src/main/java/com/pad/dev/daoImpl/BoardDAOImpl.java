@@ -160,7 +160,7 @@ public class BoardDAOImpl implements BoardDAO {
 	public int deleteBoard(BoardImgVO boardImgVO) {
 		int result = 0;
 		try {
-			result = sqlSession.delete("deleteBoard", boardImgVO);
+			result = sqlSession.delete("deleteBoard", boardImgVO.getBoardID());
 			System.out.println("result: " + result);
 		} catch (Exception e) {
 			e.getMessage();
