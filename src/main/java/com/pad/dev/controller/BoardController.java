@@ -6,6 +6,7 @@ import java.nio.file.*;
 import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
+import com.pad.dev.vo.imgVO.ImgVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/proxy/board")
 public class BoardController {
 	private final BoardService bs;
+	private Path path = Paths.get("/image");
+	private Path localPath = Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
 
 	@PostMapping("/category")
 	public void postMethodName(@RequestBody String dump) {
@@ -64,6 +67,22 @@ public class BoardController {
 	@PostMapping("/watch")
 	public BoardImgCateVO getBoardOne(@RequestBody BoardVO boardVO) {
 		BoardImgCateVO board = bs.getBoardOne(boardVO);
+
+		List<ImgVO> imgList = board.getImageVO();
+		List<ImgVO> tempList = new ArrayList<ImgVO>();
+
+		imgList.forEach(img -> {
+			ImgVO imgVO = new ImgVO();
+			imgVO.setImageID(img.getImageID());
+			imgVO.setBoardID(img.getBoardID());
+			String imgPath = img.getImagePath();
+			imgVO.setImagePath(path + "/" + imgPath);
+			tempList.add(imgVO);
+		});
+		board.setImageVO(tempList);
+
+		System.out.println(board.getImageVO());
+
 		return board;
 	}
 
@@ -95,7 +114,7 @@ public class BoardController {
 		res.setContentType("application/json; charset=UTF-8");
 		String fileName = file.getOriginalFilename();
 		// Path path = Paths.get("/image/" + fileName);
-		Path path = Paths.get("/Users/sung/Desktop/PAD_project/tempImg/" + fileName);
+		path = Paths.get(path + "/" + fileName);
 		String list = new String();
 		ArrayList<String> imgList = new ArrayList<String>();
 		try {
@@ -103,8 +122,9 @@ public class BoardController {
 			Files.write(path, bytes);
 			System.out.println(fileName + " | " + path);
 			list = fileName;
-			System.out.println(list);
 			imgList.add(list);
+			System.out.println(list + " | " + imgList + " | " + option);
+			return imgList;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -141,6 +161,5 @@ public class BoardController {
 		System.out.println("latestBoard");
 		return bs.getLatestBoard();
 	}
-	
 
 }
