@@ -132,7 +132,7 @@
 			group by i.boardid, b.boardTitle, b.boardContent, b.cateid, b.regdate
 			order by b.regdate desc
 		) a
-		where rownum &lt;= 15
+		where rownum &lt;= 10
 	</select>
 
 	<select id="getCateBoard" parameterType="BoardImgVO" resultType="BoardImgVO">
