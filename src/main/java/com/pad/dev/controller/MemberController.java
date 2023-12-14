@@ -104,6 +104,15 @@ public class MemberController {
 		favVO.setMemID(memID);
 		return ms.insertFavorite(favVO);
 	}
+
+	@PostMapping("favCancle")
+	public int deleteFavorite(@RequestBody FavVO favVO, HttpServletRequest request) {
+		log.info("Delete Favorite");
+		HttpSession session = request.getSession();
+		favVO.setMemID((String)session.getAttribute("memID"));
+		return ms.deleteFavorite(favVO);
+	}
+	
 	
 	@PostMapping("/session")
 	public MemberVO getMemberSession(HttpServletRequest request) {

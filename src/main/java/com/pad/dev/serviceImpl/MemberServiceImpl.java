@@ -61,6 +61,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public int deleteFavorite(FavVO favVO) {
+		return md.deleteFavorite(favVO);
+	}
+
+	@Override
 	public MemberVO getMemberSession(String memID) {
 		return md.getMemberSession(memID);
 	}

@@ -23,6 +23,7 @@ public interface MemberDAO {
 
 	public int insertFavorite(FavVO favVO);
 
+    public int deleteFavorite(FavVO favVO);
+	
 	public MemberVO getMemberSession(String memID);
-
 }
