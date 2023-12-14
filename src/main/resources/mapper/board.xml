@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Board">
-	<select id="getMyBoardList" parameterType="BoardImgVO" resultType="BoardImgVO">
+	<select id="getMyBoardList" parameterType="BoardImgCateVO" resultType="BoardImgCateVO">
 		select b.boardid, a.imageid, b.boardtitle, b.cateid, b.memid
 		from (
 			SELECT rownum r, t.boardid, t.imagepath, t.imageid
@@ -59,21 +59,20 @@
 	</select>
 
 	<select id="getThumbnailList" parameterType="int" resultType="BoardImgCateVO">
-		WITH numbered_rows AS (
-			SELECT ROW_NUMBER() OVER(ORDER BY b.boardid DESC) AS r, b.boardid, a.imageid, b.boardtitle, b.cateid, a.imagepath
+		select b.boardid, a.imageid, b.boardtitle, b.cateid
+		from (
+			SELECT rownum r, t.boardid, t.imagepath, t.imageid
 			FROM (
-				SELECT t.boardid, t.imagepath, t.imageid
-				FROM (
-					SELECT boardid, imagepath, imageid, 
-						ROW_NUMBER() OVER(PARTITION BY boardid ORDER BY imageid ASC) AS rn
-					FROM image
-				) t
-				WHERE t.rn = 1
-			) a 
-			JOIN board b ON b.boardid = a.boardid
-			ORDER BY b.boardid DESC
-		)
-		SELECT * FROM numbered_rows WHERE r BETWEEN #{start} AND #{end}
+				SELECT boardid, imagepath, imageid, 
+					ROW_NUMBER() OVER(PARTITION BY boardid ORDER BY imageid ASC) AS rn
+				FROM image
+			) t
+			WHERE t.rn = 1
+			
+		)a 
+		join board b on b.boardid = a.boardid
+		where r BETWEEN #{start} AND #{end}
+		order by b.boardid desc
 	</select>
 
 	<select id="getBoardID" parameterType="String" resultType="int">

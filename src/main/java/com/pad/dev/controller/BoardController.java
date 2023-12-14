@@ -29,7 +29,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/proxy/board")
 public class BoardController {
 	private final BoardService bs;
-	private Path path = Paths.get("C:\\Users\\YongQ\\OneDrive\\바탕 화면\\PadImages");
+	private Path path = Paths.get("http:///1.209.148.143:4100/image");
+	private Path localPath = Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
 
 	@PostMapping("/category")
 	public List<BoardImgVO> boardImgVO(@RequestBody BoardImgVO boardImgVO) {
@@ -43,11 +44,14 @@ public class BoardController {
 	}
 
 	@PostMapping("/myBoard")
-	public List<BoardImgVO> getMyBoardList(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
+
+	public List<BoardImgCateVO> getMyBoardVO(@RequestBody BoardImgCateVO boardImgCateVO, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		boardImgVO.setMemID((String)session.getAttribute("memID"));
-		List<BoardImgVO> myBoardList = bs.getMyBoardList(boardImgVO);
-		return myBoardList;
+		System.out.println("Start : " + boardImgCateVO.getStart());
+		System.out.println("End : " + boardImgCateVO.getEnd());
+		boardImgCateVO.setMemID(session.getAttribute("memID").toString());
+		List<BoardImgCateVO> boardVO = bs.getMyBoardVO(boardImgCateVO);
+		return boardVO;
 	}
 
 	@PostMapping("/myBoardCount")
