@@ -93,11 +93,11 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardImgVO> getMyBoardVO(int currentBoardID, String memID) {
-		List<BoardImgVO> boardVO = null;
+	public List<BoardImgCateVO> getMyBoardVO(BoardImgCateVO boardImgCateVO) {
+		List<BoardImgCateVO> boardVO = null;
 		try {
-			Map<String, Object> map = Map.of("currentBoardID", currentBoardID, "memID", memID);
-			boardVO = sqlSession.selectList("getMyBoardList", map);
+			boardVO = sqlSession.selectList("getMyBoardList", boardImgCateVO);
+			System.out.println("boardVO: " + boardVO);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

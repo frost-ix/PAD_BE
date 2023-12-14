@@ -44,11 +44,12 @@ public class BoardController {
 	}
 
 	@PostMapping("/myBoard")
-	public List<BoardImgVO> getMyBoardVO(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
+	public List<BoardImgCateVO> getMyBoardVO(@RequestBody BoardImgCateVO boardImgCateVO, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		int currentBoardID = boardImgVO.getCurrentBoardID();
-		String member = (String) session.getAttribute("memID");
-		List<BoardImgVO> boardVO = bs.getMyBoardVO(currentBoardID, member);
+		System.out.println("Start : " + boardImgCateVO.getStart());
+		System.out.println("End : " + boardImgCateVO.getEnd());
+		boardImgCateVO.setMemID(session.getAttribute("memID").toString());
+		List<BoardImgCateVO> boardVO = bs.getMyBoardVO(boardImgCateVO);
 		return boardVO;
 	}
 

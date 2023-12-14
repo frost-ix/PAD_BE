@@ -8,7 +8,7 @@ import com.pad.dev.vo.boardVO.BoardVO;
 import com.pad.dev.vo.cateVO.CateVO;
 
 public interface BoardService {
-	List<BoardImgVO> getMyBoardVO(int currentBoardID, String memID);
+	List<BoardImgCateVO> getMyBoardVO(BoardImgCateVO boardImgCateVO);
 
 	int getMyBoardMax(String memID);
 
@@ -28,8 +28,8 @@ public interface BoardService {
 
 	int deleteBoard(BoardImgVO boardImgVO);
 
-    List<BoardImgVO> getCateBoard(BoardImgVO boardImgVO);
+	List<BoardImgVO> getCateBoard(BoardImgVO boardImgVO);
 
-    List<CateVO> getCategory();
+	List<CateVO> getCategory();
 
 }
