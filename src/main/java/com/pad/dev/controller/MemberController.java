@@ -21,7 +21,6 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @RequiredArgsConstructor
 @Log4j2
-// @SessionAttributes("memID")
 @RequestMapping("/proxy/member")
 public class MemberController {
 	private final MemberService ms;
@@ -111,7 +110,10 @@ public class MemberController {
 		HttpSession session = request.getSession();
 		String memID = (String)session.getAttribute("memID");
 		System.out.println("session memID: " + memID);
-		if(memID == "") return null;
+		if(memID == "") {
+			System.out.println("memID가 null이야");
+			return null;
+		}
  		else return ms.getMemberSession(memID);
 	}	
 	

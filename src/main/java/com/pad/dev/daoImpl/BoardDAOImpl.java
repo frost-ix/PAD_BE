@@ -36,11 +36,9 @@ public class BoardDAOImpl implements BoardDAO {
 	public BoardImgCateVO getBoardOne(int boardID) {
 		BoardImgCateVO board = new BoardImgCateVO();
 		try {
-			System.out.println(boardID);
 			board = sqlSession.selectOne("getBoardOne", boardID);
 			List<ImgVO> imgLIst = sqlSession.selectList("getImgs", boardID);
 			board.setImageVO(imgLIst);
-			System.out.println(boardID);
 		} catch (Exception e) {
 			System.out.println("error : " + e.getMessage());
 		}
@@ -68,7 +66,6 @@ public class BoardDAOImpl implements BoardDAO {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		System.out.println(boardList);
 		return boardList;
 	}
 
@@ -77,7 +74,6 @@ public class BoardDAOImpl implements BoardDAO {
 		int maxCount = 0;
 		try {
 			maxCount = sqlSession.selectOne("getBoardMax");
-			System.out.println(maxCount);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -114,7 +110,7 @@ public class BoardDAOImpl implements BoardDAO {
 		try {
 			result = sqlSession.insert("insertBoard", boardImgVO);
 		} catch (Exception e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		}
 		return result;
 	}
@@ -123,13 +119,10 @@ public class BoardDAOImpl implements BoardDAO {
 	public int postBoardImg(BoardImgVO imageVO) {
 		int result = 0;
 		try {
-			System.out.println("boardID : " + imageVO.getBoardID());
-			System.out.println("imageNames : " + imageVO.getImageNames());
 			for (String imageName : imageVO.getImageNames()) {
 				ImgVO imgVO = new ImgVO();
 				imgVO.setImagePath(imageName);
 				imgVO.setBoardID(imageVO.getBoardID());
-				System.out.println("imgVO : " + imgVO);
 				if (!imageName.isEmpty()) {
 					result = sqlSession.insert("insertImage", imgVO);
 				} else {
@@ -173,7 +166,6 @@ public class BoardDAOImpl implements BoardDAO {
 		List<BoardImgVO> boardImgVO = null;
 		try {
 			boardImgVO = sqlSession.selectList("getLatestBoard");
-			System.out.println(boardImgVO);
 		} catch (Exception e) {
 			e.getMessage();
 		}
@@ -185,7 +177,6 @@ public class BoardDAOImpl implements BoardDAO {
 		List<BoardImgVO> cateBoard = null;
 		try {
 			cateBoard = sqlSession.selectList("getCateBoard", boardImgVO);
-			System.out.println(cateBoard);
 		} catch (Exception e) {
 			e.getMessage();
 		}
@@ -197,7 +188,6 @@ public class BoardDAOImpl implements BoardDAO {
 		List<CateVO> categoryList = null;
 		try {
 			categoryList = sqlSession.selectList("getCategory");
-			System.out.println(categoryList);
 		} catch (Exception e) {
 			e.getMessage();
 		}
