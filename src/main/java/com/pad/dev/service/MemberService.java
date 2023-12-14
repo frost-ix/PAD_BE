@@ -17,7 +17,7 @@ public interface MemberService {
 
 	MemberVO signInMember(MemberVO memberVO);
 
-	List<BoardImgVO> showMyFavorite(String memID);
+	List<BoardImgVO> showMyFavorite(BoardImgVO boardImgVO);
 
     int countMyFavorite(String memID);
 

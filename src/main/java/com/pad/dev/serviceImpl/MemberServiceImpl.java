@@ -46,8 +46,8 @@ public class MemberServiceImpl implements MemberService {
 		return md.deleteMember(member);
 	}
 
-    public List<BoardImgVO> showMyFavorite(String memID) {
-        return md.showMyFavorite(memID);
+    public List<BoardImgVO> showMyFavorite(BoardImgVO boardImgVO) {
+        return md.showMyFavorite(boardImgVO);
     }
 
 	@Override

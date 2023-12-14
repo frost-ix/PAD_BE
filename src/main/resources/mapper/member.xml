@@ -28,23 +28,34 @@
 	</select>
 
 	<select id="countMyFavorite" parameterType="String" resultType="int">
-		SELECT count(*)
-		from favorite f
-			join board b on f.boardid = b.boardid
-			join member m on m.memid = f.memid
-			join image i on i.boardid = b.boardid
-		where m.memid = #{memID}
-		and i.imagetype = 'thumbnail'
+		select COUNT(*) from favorite where memid = #{memID}
 	</select>
 
-	<select id="showMyFavorite" parameterType="String" resultType="BoardImgVO">
-		SELECT b.memid, b.boardid, b.boardtitle, i.imagetype, i.imagepath
-		from favorite f
-			join board b on f.boardid = b.boardid
-			join member m on m.memid = f.memid
-			join image i on i.boardid = b.boardid
-		where m.memid = #{memID}
-		and i.imagetype = 'thumbnail'
+	<select id="showMyFavorite" parameterType="BoardImgVO" resultType="BoardImgVO">
+		select q, boardid, memid, boardtitle, imagepath, writer 
+		from (
+			select rownum q, boardid, memid, boardtitle, imagepath, writer
+				from (
+					select b.boardid, f.memid as memid, b.boardtitle, imagepath, b.memid as writer 
+					from favorite f
+					join board b on b.boardid = f.boardid
+					join (
+						select boardid, imageid, imagepath
+						from (
+							SELECT rownum r, t.boardid, t.imagepath, t.imageid
+							FROM (
+								SELECT boardid, imagepath, imageid, 
+									ROW_NUMBER() OVER(PARTITION BY boardid ORDER BY imageid ASC) AS rn
+								FROM image
+							) t
+							WHERE t.rn = 1
+						) 
+					) i on i.boardid = b.boardid
+			)
+			where memid = #{memID}
+		) 
+		where q between #{start} and #{end}
+		order by boardid desc
 	</select>
 
 	<insert id="insertFavorite" parameterType="FavVO">

@@ -17,7 +17,7 @@ public interface MemberDAO {
 
 	public MemberVO signInMember(MemberVO memberVO);
 
-    public List<BoardImgVO> showMyFavorite(String memID);
+    public List<BoardImgVO> showMyFavorite(BoardImgVO boardImgVO);
 
     public int countMyFavorite(String memID);
 

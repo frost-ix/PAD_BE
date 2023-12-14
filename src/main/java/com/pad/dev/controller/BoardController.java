@@ -45,10 +45,9 @@ public class BoardController {
 	@PostMapping("/myBoard")
 	public List<BoardImgVO> getMyBoardVO(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		int currentBoardID = boardImgVO.getCurrentBoardID();
 		String member = (String) session.getAttribute("memID");
-		List<BoardImgVO> boardVO = bs.getMyBoardVO(currentBoardID, member);
-		return boardVO;
+		// List<BoardImgVO> boardVO = bs.getMyBoardVO(member);
+		return null;
 	}
 
 	@PostMapping("/myBoardCount")

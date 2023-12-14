@@ -68,10 +68,11 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public List<BoardImgVO> showMyFavorite(String memID) {
+	public List<BoardImgVO> showMyFavorite(BoardImgVO boardImgVO) {
 		List<BoardImgVO> favoriteList = null;
 		try {
-			favoriteList = sqlSession.selectList("showMyFavorite", memID);
+			favoriteList = sqlSession.selectList("showMyFavorite", boardImgVO);
+			System.out.println("DAOAODAO: " + favoriteList);
 		} catch (Exception e) {
 			e.getMessage();
 		}
