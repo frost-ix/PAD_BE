@@ -29,7 +29,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/proxy/board")
 public class BoardController {
 	private final BoardService bs;
-	private Path path = Paths.get("C:\\Users\\YongQ\\OneDrive\\바탕 화면\\PadImages");
+	private Path path = Paths.get("http:///1.209.148.143:4100/image");
+	private Path localPath = Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
 
 	@PostMapping("/category")
 	public List<BoardImgVO> boardImgVO(@RequestBody BoardImgVO boardImgVO) {
@@ -43,11 +44,13 @@ public class BoardController {
 	}
 
 	@PostMapping("/myBoard")
-	public List<BoardImgVO> getMyBoardVO(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
+	public List<BoardImgCateVO> getMyBoardVO(@RequestBody BoardImgCateVO boardImgCateVO, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String member = (String) session.getAttribute("memID");
-		// List<BoardImgVO> boardVO = bs.getMyBoardVO(member);
-		return null;
+		System.out.println("Start : " + boardImgCateVO.getStart());
+		System.out.println("End : " + boardImgCateVO.getEnd());
+		boardImgCateVO.setMemID(session.getAttribute("memID").toString());
+		List<BoardImgCateVO> boardVO = bs.getMyBoardVO(boardImgCateVO);
+		return boardVO;
 	}
 
 	@PostMapping("/myBoardCount")
@@ -58,16 +61,6 @@ public class BoardController {
 		return maxCount;
 	}
 
-	/***
-	 * <h2>R : read one board</h2>
-	 * 
-	 * @author Frost-ix
-	 * @apiNote
-	 *          <p>
-	 *          resource path : /board/{boardID}
-	 *          </p>
-	 * @param boardVO : One board's article id.
-	 */
 	@PostMapping("/watch")
 	public BoardImgCateVO getBoardOne(@RequestBody BoardVO boardVO) {
 		BoardImgCateVO board = bs.getBoardOne(boardVO);
@@ -90,13 +83,6 @@ public class BoardController {
 		return board;
 	}
 
-	/***
-	 * <h2>R : read all boards</h2>
-	 * 
-	 * @author Frost-ix
-	 * @apiNote
-	 *          resource path : /board
-	 */
 	@PostMapping("")
 	public List<BoardImgCateVO> getBoardList(@RequestBody BoardImgCateVO boardImgCateVO) {
 		System.out.println("start: " + boardImgCateVO.getStart());
@@ -148,12 +134,6 @@ public class BoardController {
 		return imgList;
 	}
 
-	/***
-	 * <h2>C : Create Board</h2>
-	 * 
-	 * @apiNote
-	 *          resource path : /board/write
-	 */
 	@PostMapping("/Write")
 	public int postBoardWrite(HttpServletRequest request, @RequestBody BoardImgVO boardImgVO) {
 		HttpSession session = request.getSession();

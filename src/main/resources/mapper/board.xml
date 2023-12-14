@@ -2,16 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Board">
-	<select id="getMyBoardList" parameterType="map" resultType="BoardImgVO">
-		SELECT ROWNUM, boardid, boardtitle, memID ,imagepath, cateID
-		FROM (
-			SELECT b.boardid, b.boardtitle, b.memID ,b.regdate, i.imagepath, b.cateID
+	<select id="getMyBoardList" parameterType="boardImgCateVO" resultType="BoardImgCateVO">
+		select rownum, a.*
+		from(
+			SELECT b.boardid,
+					MAX(b.boardtitle) AS boardtitle, 
+					MAX(b.cateid) AS cateid,
+					MAX(b.memid) AS memid,
+					MAX(i.imagepath) AS imagepath
 			FROM board b
-			JOIN image i ON b.boardid = i.boardid
-			WHERE b.boardID &gt;= #{currentBoardID} AND b.memID = #{memID}
-		)
-		WHERE ROWNUM &lt;= 9
-		ORDER BY boardid DESC
+			JOIN image i ON i.boardid = b.boardid
+			WHERE b.memid = #{memID}
+			GROUP BY b.boardid
+			ORDER BY b.boardid ASC
+		) a
+		where rownum between #{start} and #{end}
 	</select>
 
 	<resultMap id="ImgList" type="ImgVO">
@@ -54,6 +59,7 @@
 	</select>
 
 	<select id="getThumbnailList" parameterType="int" resultType="BoardImgCateVO">
+<<<<<<< main
 		select b.boardid, a.imageid, b.boardtitle, b.cateid
 		from (
 			SELECT rownum r, t.boardid, t.imagepath, t.imageid
@@ -68,6 +74,17 @@
 		join board b on b.boardid = a.boardid
 		where r BETWEEN #{start} AND #{end}
 		order by b.boardid desc
+=======
+	select rownum, a.*
+		from(
+			SELECT b.boardid, MAX(b.boardtitle) AS boardtitle, MAX(b.cateid) AS cateid, MAX(b.memid) AS memid, MAX(i.imagepath) AS imagepath
+			FROM board b
+			JOIN image i ON i.boardid = b.boardid
+			GROUP BY b.boardid
+			ORDER BY b.boardid ASC
+		) a
+		where rownum between #{start} and #{end}
+>>>>>>> main
 	</select>
 
 	<select id="getBoardID" parameterType="String" resultType="int">
