@@ -85,7 +85,7 @@
 	</select>
 
 	<select id="getBoardID" parameterType="String" resultType="int">
-		select b.boardID from board b where b.boardTitle = #{boardTitle}
+		select boardID from board where boardTitle = #{boardTitle}
 	</select>
 
 	<insert id="insertBoard" parameterType="BoardImgVO">

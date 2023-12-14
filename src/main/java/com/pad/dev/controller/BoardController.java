@@ -42,7 +42,6 @@ public class BoardController {
 	public List<CateVO> postMethodName() {
 		return bs.getCategory();
 	}
-	
 
 	@PostMapping("/myBoard")
 	public List<BoardImgVO> getMyBoardVO(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
@@ -119,14 +118,21 @@ public class BoardController {
 			@RequestPart("option") String option) {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("application/json; charset=UTF-8");
-		String fileName = file.getOriginalFilename();
 		// Path path = Paths.get("/image/" + fileName);
-		path = Paths.get(path + "/" + fileName);
+		String fileName = new String();
+		if (file.isEmpty()) {
+			fileName = null;
+		} else {
+			fileName = file.getOriginalFilename();
+		}
+		// path = Paths.get(path + "/" + fileName);
+		localPath = Paths.get(localPath + "/" + fileName);
 		String list = new String();
 		ArrayList<String> imgList = new ArrayList<String>();
 		try {
 			byte[] bytes = file.getBytes();
-			Files.write(path, bytes);
+			// Files.write(path, bytes);
+			Files.write(localPath, bytes);
 			System.out.println(fileName + " | " + path);
 			list = fileName;
 			imgList.add(list);

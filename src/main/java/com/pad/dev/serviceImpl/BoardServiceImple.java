@@ -88,9 +88,9 @@ public class BoardServiceImple implements BoardService {
 	@Override
 	public int postBoard(BoardImgVO boardImgVO) {
 		log.info("게시판 작성");
-		boardImgVO.setCateID("S-001");
 		int res = bm.postBoard(boardImgVO);
 		int boardID = bm.getBoardID(boardImgVO.getBoardTitle());
+		log.info(boardID);
 		boardImgVO.setBoardID(boardID);
 		log.info("insert : " + boardImgVO);
 		res = bm.postBoardImg(boardImgVO);
@@ -132,9 +132,9 @@ public class BoardServiceImple implements BoardService {
 		}
 	}
 
-    public List<BoardImgVO> getLatestBoard() {
-        return bm.getLatestBoard();
-    }
+	public List<BoardImgVO> getLatestBoard() {
+		return bm.getLatestBoard();
+	}
 
 	@Override
 	public List<BoardImgVO> getCateBoard(BoardImgVO boardImgVO) {
