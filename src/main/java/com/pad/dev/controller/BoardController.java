@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/proxy/board")
 public class BoardController {
 	private final BoardService bs;
-	private Path path = Paths.get("/image");
+	private Path path = Paths.get("http:///1.209.148.143:4100/image");
 	private Path localPath = Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
 
 	@PostMapping("/category")

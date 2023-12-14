@@ -133,11 +133,13 @@ public class BoardDAOImpl implements BoardDAO {
 				if (!imageName.isEmpty()) {
 					result = sqlSession.insert("insertImage", imgVO);
 				} else {
+					imgVO.setImagePath(null);
+					result = sqlSession.insert("insertImage", imgVO);
 					return result;
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("사진 1개 업로드 했음 : " + e.getMessage());
+			System.out.println("사진 1개 업로드 했으나.... : " + e.getMessage());
 		}
 		return result;
 	}
