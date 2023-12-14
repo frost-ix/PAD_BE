@@ -63,6 +63,10 @@
 		VALUES (#{memID}, #{boardID})
 	</insert>
 
+	<delete id="deleteFavorite" parameterType="FavVO">
+		delete favorite where memid = #{memID} AND boardid = #{boardID}
+	</delete>
+
 	<select id="getMemberSession" parameterType="String" resultType="MemberVO">
 		SELECT memid, memNN, memTel, memMail
 		FROM member where memid = #{memID}

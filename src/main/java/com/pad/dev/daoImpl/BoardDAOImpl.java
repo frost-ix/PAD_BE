@@ -1,7 +1,6 @@
 package com.pad.dev.daoImpl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -93,15 +92,16 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardImgVO> getMyBoardVO(int currentBoardID, String memID) {
-		List<BoardImgVO> boardVO = null;
+	public List<BoardImgVO> getMyBoardList(BoardImgVO boardImgVO) {
+		List<BoardImgVO> myBoardList = null;
+		System.out.println(boardImgVO.getMemID() + ", " +boardImgVO.getStart() + ", " + boardImgVO.getEnd());
 		try {
-			Map<String, Object> map = Map.of("currentBoardID", currentBoardID, "memID", memID);
-			boardVO = sqlSession.selectList("getMyBoardList", map);
+			myBoardList = sqlSession.selectList("getMyBoardList", boardImgVO);
+			System.out.println("DDFSFSF: " + myBoardList);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return boardVO;
+		return myBoardList;
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class BoardDAOImpl implements BoardDAO {
 		if(boardImgVO.getImageNames().isEmpty()) 
 			result = sqlSession.insert("insertImage", boardImgVO);
 		else {
-			for (String imageName : boardImgVO.getImageNames()) {
+			for(String imageName : boardImgVO.getImageNames()) {
 				ImgVO imgVO = new ImgVO();
 				imgVO.setImagePath(imageName);
 				imgVO.setBoardID(boardImgVO.getBoardID());

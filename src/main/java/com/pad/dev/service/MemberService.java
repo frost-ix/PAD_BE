@@ -23,5 +23,7 @@ public interface MemberService {
 
 	int insertFavorite(FavVO favVO);
 
+    int deleteFavorite(FavVO favVO);
+	
 	MemberVO getMemberSession(String memID);
 }

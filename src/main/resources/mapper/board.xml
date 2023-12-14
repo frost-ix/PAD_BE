@@ -2,16 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Board">
-	<select id="getMyBoardList" parameterType="map" resultType="BoardImgVO">
-		SELECT ROWNUM, boardid, boardtitle, memID ,imagepath, cateID
-		FROM (
-			SELECT b.boardid, b.boardtitle, b.memID ,b.regdate, i.imagepath, b.cateID
-			FROM board b
-			JOIN image i ON b.boardid = i.boardid
-			WHERE b.boardID &gt;= #{currentBoardID} AND b.memID = #{memID}
-		)
-		WHERE ROWNUM &lt;= 9
-		ORDER BY boardid DESC
+	<select id="getMyBoardList" parameterType="BoardImgVO" resultType="BoardImgVO">
+		select b.boardid, a.imageid, b.boardtitle, b.cateid, b.memid
+		from (
+			SELECT rownum r, t.boardid, t.imagepath, t.imageid
+			FROM (
+				SELECT boardid, imagepath, imageid, 
+					ROW_NUMBER() OVER(PARTITION BY boardid ORDER BY imageid ASC) AS rn
+				FROM image
+			) t
+			WHERE t.rn = 1
+		)a 
+		join board b on b.boardid = a.boardid
+		where b.memid = #{memID}
+		and r BETWEEN #{start} AND #{end}
+		order by b.boardid desc
 	</select>
 
 	<resultMap id="ImgList" type="ImgVO">
@@ -54,20 +59,21 @@
 	</select>
 
 	<select id="getThumbnailList" parameterType="int" resultType="BoardImgCateVO">
-		select b.boardid, a.imageid, b.boardtitle, b.cateid
-		from (
-			SELECT rownum r, t.boardid, t.imagepath, t.imageid
+		WITH numbered_rows AS (
+			SELECT ROW_NUMBER() OVER(ORDER BY b.boardid DESC) AS r, b.boardid, a.imageid, b.boardtitle, b.cateid, a.imagepath
 			FROM (
-				SELECT boardid, imagepath, imageid, 
-					ROW_NUMBER() OVER(PARTITION BY boardid ORDER BY imageid ASC) AS rn
-				FROM image
-			) t
-			WHERE t.rn = 1
-			
-		)a 
-		join board b on b.boardid = a.boardid
-		where r BETWEEN #{start} AND #{end}
-		order by b.boardid desc
+				SELECT t.boardid, t.imagepath, t.imageid
+				FROM (
+					SELECT boardid, imagepath, imageid, 
+						ROW_NUMBER() OVER(PARTITION BY boardid ORDER BY imageid ASC) AS rn
+					FROM image
+				) t
+				WHERE t.rn = 1
+			) a 
+			JOIN board b ON b.boardid = a.boardid
+			ORDER BY b.boardid DESC
+		)
+		SELECT * FROM numbered_rows WHERE r BETWEEN #{start} AND #{end}
 	</select>
 
 	<select id="getBoardID" parameterType="String" resultType="int">

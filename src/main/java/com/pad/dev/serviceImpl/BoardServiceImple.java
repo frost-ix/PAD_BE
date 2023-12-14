@@ -29,20 +29,10 @@ public class BoardServiceImple implements BoardService {
 	}
 
 	@Override
-	public List<BoardImgVO> getMyBoardVO(int currentBoardID, String memID) {
+	public List<BoardImgVO> getMyBoardList(BoardImgVO boardImgVO) {
 		log.info("내 게시판 호출");
-		log.info("Now Session member id : " + memID);
-		List<BoardImgVO> boardVO = bm.getMyBoardVO(currentBoardID, memID);
-		if (boardVO != null) {
-			boardVO.forEach(board -> {
-				log.info(board);
-			});
-			return boardVO;
-		} else {
-			log.warn("게시글 없음");
-			return null;
-		}
-		// return boardVO;
+		List<BoardImgVO> myBoardList = bm.getMyBoardList(boardImgVO);
+		return myBoardList;
 	}
 
 	@Override

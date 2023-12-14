@@ -112,4 +112,15 @@ public class MemberDAOImpl implements MemberDAO {
 		return sessionMember;
 	}
 
+	@Override
+	public int deleteFavorite(FavVO favVO) {
+		int result = 0;
+		try {
+			result = sqlSession.delete("deleteFavorite", favVO);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return result;
+	}
+
 }

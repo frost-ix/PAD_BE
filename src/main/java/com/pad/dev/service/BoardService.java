@@ -8,7 +8,7 @@ import com.pad.dev.vo.boardVO.BoardVO;
 import com.pad.dev.vo.cateVO.CateVO;
 
 public interface BoardService {
-	List<BoardImgVO> getMyBoardVO(int currentBoardID, String memID);
+	List<BoardImgVO> getMyBoardList(BoardImgVO boardImgVO);
 
 	int getMyBoardMax(String memID);
 
