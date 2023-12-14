@@ -101,6 +101,8 @@ public class BoardController {
 	 */
 	@PostMapping("")
 	public List<BoardImgCateVO> getBoardList(@RequestBody BoardImgCateVO boardImgCateVO) {
+		System.out.println("start: " + boardImgCateVO.getStart());
+		System.out.println("end: " + boardImgCateVO.getEnd());
 		List<BoardImgCateVO> boardList = bs.getThumbnailList(boardImgCateVO);
 		return boardList;
 	}
@@ -126,9 +128,11 @@ public class BoardController {
 			fileName = file.getOriginalFilename();
 		}
 		// path = Paths.get(path + "/" + fileName);
+
 		Path path = Paths.get("/image");
 		// Path localPath = Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
 		path = Paths.get(path + "/" + fileName);
+
 		String list = new String();
 		ArrayList<String> imgList = new ArrayList<String>();
 		try {

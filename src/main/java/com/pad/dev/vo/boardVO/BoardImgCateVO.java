@@ -18,9 +18,12 @@ public class BoardImgCateVO {
 	private String cateID;
 	private String memID;
 
+	private int start;
+	private int end;
+
 	// Img
-	// private int imageID;
-	// private ArrayList<String> imagePath;
+	private int imageID;
+	private String imagePath;
 	private List<ImgVO> imageVO;
 
 	// Cate
