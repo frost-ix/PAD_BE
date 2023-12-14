@@ -59,6 +59,22 @@
 	</select>
 
 	<select id="getThumbnailList" parameterType="int" resultType="BoardImgCateVO">
+<<<<<<< main
+		select b.boardid, a.imageid, b.boardtitle, b.cateid
+		from (
+			SELECT rownum r, t.boardid, t.imagepath, t.imageid
+			FROM (
+				SELECT boardid, imagepath, imageid, 
+					ROW_NUMBER() OVER(PARTITION BY boardid ORDER BY imageid ASC) AS rn
+				FROM image
+			) t
+			WHERE t.rn = 1
+			
+		)a 
+		join board b on b.boardid = a.boardid
+		where r BETWEEN #{start} AND #{end}
+		order by b.boardid desc
+=======
 	select rownum, a.*
 		from(
 			SELECT b.boardid, MAX(b.boardtitle) AS boardtitle, MAX(b.cateid) AS cateid, MAX(b.memid) AS memid, MAX(i.imagepath) AS imagepath
@@ -68,6 +84,7 @@
 			ORDER BY b.boardid ASC
 		) a
 		where rownum between #{start} and #{end}
+>>>>>>> main
 	</select>
 
 	<select id="getBoardID" parameterType="String" resultType="int">
@@ -81,8 +98,12 @@
 	
 
 	<insert id="insertImage" parameterType="BoardImgVO">
-			insert into image (imageid, imagePath, boardid)
-			values (IMAGEID_SEQ.nextval, #{imagePath}, #{boardID})
+		<if test="imagePath == null">
+			insert into image (imageid, boardid) values (imageid_seq.nextval, #{boardID})
+		</if>
+		<if test="imagePath != null">
+			insert into image values (IMAGEID_SEQ.nextval, #{imagePath}, #{boardID})
+		</if>
 	</insert>
 
 	<update id="updateBoard" parameterType="BoardImgVO">
@@ -102,7 +123,6 @@
 			</foreach>
 		</set>
 		WHERE i.BOARDID = #{boardID}		
-		AND i.IMAGETYPE = #{imageType}
 	</update>
 
 	<delete id="deleteBoard" parameterType="int">
@@ -122,20 +142,20 @@
 	</select>
 
 	<select id="getCateBoard" parameterType="BoardImgVO" resultType="BoardImgVO">
-		select rownum, imageid, imagepath, cateid, boardid, boardcontent
-		from(
-			select MIN(i.imageid) imageid, MIN(i.imagepath) imagepath, i.boardid, b.boardContent, b.cateid
-			from image i
-			join board b on i.boardid = b.boardid
-			where i.boardid &gt;= 1
-			and cateid = #{cateID}
-			<!-- <if test='cateID.equals("S-001")'>
-				and cateid = 'S-001'
-			</if> -->
-			group by i.boardid, b.boardContent, b.cateid
-		)
-		where rownum &lt;= 9
-		order by boardid desc
+		select b.boardid, a.imageid, b.boardtitle, b.cateid, a.imagepath
+		from (
+			SELECT rownum r, t.boardid, t.imagepath, t.imageid
+			FROM (
+				SELECT boardid, imagepath, imageid, 
+					ROW_NUMBER() OVER(PARTITION BY boardid ORDER BY imageid ASC) AS rn
+				FROM image
+			) t
+			WHERE t.rn = 1
+		)a 
+		join board b on b.boardid = a.boardid
+		where cateid = #{cateID}
+		and r BETWEEN #{start} AND #{end}
+		order by b.boardid desc
 	</select>
 
 	<select id="getCategory" parameterType="String" resultType="CateVO">

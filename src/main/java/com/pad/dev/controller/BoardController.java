@@ -61,16 +61,6 @@ public class BoardController {
 		return maxCount;
 	}
 
-	/***
-	 * <h2>R : read one board</h2>
-	 * 
-	 * @author Frost-ix
-	 * @apiNote
-	 *          <p>
-	 *          resource path : /board/{boardID}
-	 *          </p>
-	 * @param boardVO : One board's article id.
-	 */
 	@PostMapping("/watch")
 	public BoardImgCateVO getBoardOne(@RequestBody BoardVO boardVO) {
 		BoardImgCateVO board = bs.getBoardOne(boardVO);
@@ -93,13 +83,6 @@ public class BoardController {
 		return board;
 	}
 
-	/***
-	 * <h2>R : read all boards</h2>
-	 * 
-	 * @author Frost-ix
-	 * @apiNote
-	 *          resource path : /board
-	 */
 	@PostMapping("")
 	public List<BoardImgCateVO> getBoardList(@RequestBody BoardImgCateVO boardImgCateVO) {
 		System.out.println("start: " + boardImgCateVO.getStart());
@@ -151,12 +134,6 @@ public class BoardController {
 		return imgList;
 	}
 
-	/***
-	 * <h2>C : Create Board</h2>
-	 * 
-	 * @apiNote
-	 *          resource path : /board/write
-	 */
 	@PostMapping("/Write")
 	public int postBoardWrite(HttpServletRequest request, @RequestBody BoardImgVO boardImgVO) {
 		HttpSession session = request.getSession();

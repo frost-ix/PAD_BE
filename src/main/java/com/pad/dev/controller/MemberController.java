@@ -88,14 +88,15 @@ public class MemberController {
 	}
 
 	@PostMapping("/MyFavorite")
-	public List<BoardImgVO> showMyFavorite(HttpServletRequest request) {
+	public List<BoardImgVO> showMyFavorite(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
 		log.info("MyFavorite");
 		HttpSession session = request.getSession();
-		String memID = (String)session.getAttribute("memID");
-		return ms.showMyFavorite(memID);
+		boardImgVO.setMemID((String)session.getAttribute("memID"));
+		System.out.println("conconcocno:" + boardImgVO);
+		return ms.showMyFavorite(boardImgVO);
 	}
 	
-	@PostMapping("/InsertFavorite")
+	@PostMapping("/fav")
 	public int insertFavorite(@RequestBody FavVO favVO, HttpServletRequest request) {
 		log.info("InsertFavorite");
 		HttpSession session = request.getSession();

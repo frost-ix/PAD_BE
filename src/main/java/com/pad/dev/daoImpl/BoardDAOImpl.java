@@ -116,23 +116,17 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int postBoardImg(BoardImgVO imageVO) {
+	public int postBoardImg(BoardImgVO boardImgVO) {
 		int result = 0;
-		try {
-			for (String imageName : imageVO.getImageNames()) {
+		if(boardImgVO.getImageNames().isEmpty()) 
+			result = sqlSession.insert("insertImage", boardImgVO);
+		else {
+			for(String imageName : boardImgVO.getImageNames()) {
 				ImgVO imgVO = new ImgVO();
 				imgVO.setImagePath(imageName);
-				imgVO.setBoardID(imageVO.getBoardID());
-				if (!imageName.isEmpty()) {
-					result = sqlSession.insert("insertImage", imgVO);
-				} else {
-					imgVO.setImagePath(null);
-					result = sqlSession.insert("insertImage", imgVO);
-					return result;
-				}
+				imgVO.setBoardID(boardImgVO.getBoardID());
+				result = sqlSession.insert("insertImage", imgVO);
 			}
-		} catch (Exception e) {
-			System.out.println("사진 1개 업로드 했으나.... : " + e.getMessage());
 		}
 		return result;
 	}
