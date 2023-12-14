@@ -3,7 +3,6 @@ package com.pad.dev.controller;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +21,7 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @RequiredArgsConstructor
 @Log4j2
-
+// @SessionAttributes("memID")
 @RequestMapping("/proxy/member")
 public class MemberController {
 	private final MemberService ms;
@@ -64,10 +63,13 @@ public class MemberController {
 		System.out.println("session memID: " + memID);
 		session.invalidate();
 	}
-
+	
 	@PostMapping("/Update")
-	public int updateMember(@RequestBody MemberVO memberVO, @ModelAttribute("memID") String memID) {
+	public int updateMember(@RequestBody MemberVO memberVO, HttpServletRequest request) {
 		log.info("Update");
+		HttpSession session = request.getSession();
+		String memID = (String)session.getAttribute("memID");
+		log.info("Session memID: " + memID);
 		memberVO.setMemID(memID);
 		return ms.updateMember(memberVO);
 	}
@@ -79,20 +81,26 @@ public class MemberController {
 	}
 
 	@PostMapping("/MyFavoriteCount")
-	public int countMyFavorite(@ModelAttribute("memID") String memID) {
+	public int countMyFavorite(HttpServletRequest request) {
 		log.info("MyFavoriteBoard");
+		HttpSession session = request.getSession();
+		String memID = (String)session.getAttribute("memID");
 		return ms.countMyFavorite(memID);
 	}
 
 	@PostMapping("/MyFavorite")
-	public List<BoardImgVO> showMyFavorite(@ModelAttribute("memID") String memID) {
+	public List<BoardImgVO> showMyFavorite(HttpServletRequest request) {
 		log.info("MyFavorite");
+		HttpSession session = request.getSession();
+		String memID = (String)session.getAttribute("memID");
 		return ms.showMyFavorite(memID);
 	}
 	
 	@PostMapping("/InsertFavorite")
-	public int insertFavorite(@RequestBody FavVO favVO, @ModelAttribute("memID") String memID) {
+	public int insertFavorite(@RequestBody FavVO favVO, HttpServletRequest request) {
 		log.info("InsertFavorite");
+		HttpSession session = request.getSession();
+		String memID = (String)session.getAttribute("memID");
 		favVO.setMemID(memID);
 		return ms.insertFavorite(favVO);
 	}

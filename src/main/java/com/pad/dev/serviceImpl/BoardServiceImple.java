@@ -9,6 +9,7 @@ import com.pad.dev.service.BoardService;
 import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
+import com.pad.dev.vo.cateVO.CateVO;
 import com.pad.dev.vo.imgVO.ImgVO;
 
 import lombok.RequiredArgsConstructor;
@@ -134,4 +135,15 @@ public class BoardServiceImple implements BoardService {
     public List<BoardImgVO> getLatestBoard() {
         return bm.getLatestBoard();
     }
+
+	@Override
+	public List<BoardImgVO> getCateBoard(BoardImgVO boardImgVO) {
+		log.info("카테고리 필터링");
+		return bm.getCateBoard(boardImgVO);
+	}
+
+	@Override
+	public List<CateVO> getCategory() {
+		return bm.getCategory();
+	}
 }

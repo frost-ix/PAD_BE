@@ -134,4 +134,25 @@
 		) a
 		where rownum &lt;= 15
 	</select>
+
+	<select id="getCateBoard" parameterType="BoardImgVO" resultType="BoardImgVO">
+		select rownum, imageid, imagepath, cateid, boardid, boardcontent
+		from(
+			select MIN(i.imageid) imageid, MIN(i.imagepath) imagepath, i.boardid, b.boardContent, b.cateid
+			from image i
+			join board b on i.boardid = b.boardid
+			where i.boardid &gt;= 1
+			and cateid = #{cateID}
+			<!-- <if test='cateID.equals("S-001")'>
+				and cateid = 'S-001'
+			</if> -->
+			group by i.boardid, b.boardContent, b.cateid
+		)
+		where rownum &lt;= 9
+		order by boardid desc
+	</select>
+
+	<select id="getCategory" parameterType="String" resultType="CateVO">
+		SELECT cateid, catename FROM category
+	</select>
 </mapper>

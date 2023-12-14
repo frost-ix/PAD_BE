@@ -6,6 +6,7 @@ import java.nio.file.*;
 import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
+import com.pad.dev.vo.cateVO.CateVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,10 +30,16 @@ public class BoardController {
 	private final BoardService bs;
 
 	@PostMapping("/category")
-	public void postMethodName(@RequestBody String dump) {
-		// TODO: process POST request
-
+	public List<BoardImgVO> boardImgVO(@RequestBody BoardImgVO boardImgVO) {
+		System.out.println(boardImgVO.getCateID());
+		return bs.getCateBoard(boardImgVO);
 	}
+
+	@PostMapping("/cate")
+	public List<CateVO> postMethodName() {
+		return bs.getCategory();
+	}
+	
 
 	@PostMapping("/myBoard")
 	public List<BoardImgVO> getMyBoardVO(@RequestBody BoardImgVO boardImgVO, HttpServletRequest request) {
