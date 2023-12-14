@@ -126,6 +126,8 @@ public class BoardController {
 			fileName = file.getOriginalFilename();
 		}
 		// path = Paths.get(path + "/" + fileName);
+		// Path path = Paths.get("/image");
+		Path localPath = Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
 		localPath = Paths.get(localPath + "/" + fileName);
 		String list = new String();
 		ArrayList<String> imgList = new ArrayList<String>();
@@ -133,7 +135,7 @@ public class BoardController {
 			byte[] bytes = file.getBytes();
 			// Files.write(path, bytes);
 			Files.write(localPath, bytes);
-			System.out.println(fileName + " | " + path);
+			System.out.println(fileName + " | " + localPath);
 			list = fileName;
 			imgList.add(list);
 			System.out.println(list + " | " + imgList + " | " + option);
@@ -154,6 +156,7 @@ public class BoardController {
 	public int postBoardWrite(HttpServletRequest request, @RequestBody BoardImgVO boardImgVO) {
 		HttpSession session = request.getSession();
 		boardImgVO.setMemID(session.getAttribute("memID").toString());
+		System.out.println(boardImgVO);
 		return bs.postBoard(boardImgVO);
 	}
 
