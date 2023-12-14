@@ -29,8 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/proxy/board")
 public class BoardController {
 	private final BoardService bs;
-	private Path path = Paths.get("/image");
-	private Path localPath = Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
+	private Path path = Paths.get("C:\\Users\\YongQ\\OneDrive\\바탕 화면\\PadImages");
 
 	@PostMapping("/category")
 	public List<BoardImgVO> boardImgVO(@RequestBody BoardImgVO boardImgVO) {
@@ -101,6 +100,8 @@ public class BoardController {
 	 */
 	@PostMapping("")
 	public List<BoardImgCateVO> getBoardList(@RequestBody BoardImgCateVO boardImgCateVO) {
+		System.out.println("start: " + boardImgCateVO.getStart());
+		System.out.println("end: " + boardImgCateVO.getEnd());
 		List<BoardImgCateVO> boardList = bs.getThumbnailList(boardImgCateVO);
 		return boardList;
 	}
@@ -127,7 +128,7 @@ public class BoardController {
 		}
 		// path = Paths.get(path + "/" + fileName);
 		// Path path = Paths.get("/image");
-		Path localPath = Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
+		Path localPath = Paths.get("C:\\Users\\YongQ\\OneDrive\\바탕 화면\\PadImages");
 		localPath = Paths.get(localPath + "/" + fileName);
 		String list = new String();
 		ArrayList<String> imgList = new ArrayList<String>();

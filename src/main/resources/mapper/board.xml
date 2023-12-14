@@ -62,26 +62,15 @@
 	</select>
 
 	<select id="getThumbnailList" parameterType="int" resultType="BoardImgCateVO">
-		SELECT ROWNUM, boardid, boardtitle, imagepath, imageid
-		FROM (
-			SELECT b.boardid, b.boardtitle, b.regdate, i.imageid, i.imagetype, i.imagepath,
-				ROW_NUMBER()
-				OVER(PARTITION BY b.boardid
-					ORDER BY
-						CASE WHEN i.imagetype = 'thumbnail' OR i.imagetype = NULL
-								THEN 1
-							ELSE 2
-						END) as rn
+		select rownum, a.*
+		from(
+			SELECT b.boardid, MAX(b.boardtitle) AS boardtitle, MAX(b.cateid) AS cateid, MAX(b.memid) AS memid, MAX(i.imagepath) AS imagepath
 			FROM board b
-			JOIN image i ON b.boardid = i.boardid
-			WHERE b.boardID &gt;= #{currentBoardID}
-		)
-		WHERE rn = 1
-		AND ROWNUM &lt;= 9
-		<if test="cateID != null">
-		AND CATEID = #{cateID}
-		</if>
-		ORDER BY boardid DESC
+			JOIN image i ON i.boardid = b.boardid
+			GROUP BY b.boardid
+			ORDER BY b.boardid ASC
+		) a
+		where rownum between #{start} and #{end}
 	</select>
 
 	<select id="getBoardID" parameterType="String" resultType="int">
@@ -153,6 +142,6 @@
 	</select>
 
 	<select id="getCategory" parameterType="String" resultType="CateVO">
-		SELECT cateid, catename FROM category
+		select * from category where cateref is not null
 	</select>
 </mapper>
