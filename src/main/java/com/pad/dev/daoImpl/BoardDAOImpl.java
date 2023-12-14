@@ -10,6 +10,7 @@ import com.pad.dev.dao.BoardDAO;
 import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
+import com.pad.dev.vo.cateVO.CateVO;
 import com.pad.dev.vo.imgVO.ImgVO;
 
 import lombok.RequiredArgsConstructor;
@@ -177,5 +178,29 @@ public class BoardDAOImpl implements BoardDAO {
 			e.getMessage();
 		}
 		return boardImgVO;
+	}
+
+	@Override
+	public List<BoardImgVO> getCateBoard(BoardImgVO boardImgVO) {
+		List<BoardImgVO> cateBoard = null;
+		try {
+			cateBoard = sqlSession.selectList("getCateBoard", boardImgVO);
+			System.out.println(cateBoard);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return cateBoard;
+	}
+
+	@Override
+	public List<CateVO> getCategory() {
+		List<CateVO> categoryList = null;
+		try {
+			categoryList = sqlSession.selectList("getCategory");
+			System.out.println(categoryList);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return categoryList;
 	}
 }
