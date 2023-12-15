@@ -28,4 +28,6 @@ public class BoardImgCateVO {
 	// Cate
 	private String cateName;
 	private String cateRef;
+
+	private Boolean favv;
 }

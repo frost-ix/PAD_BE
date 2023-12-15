@@ -71,4 +71,27 @@
 		SELECT memid, memNN, memTel, memMail
 		FROM member where memid = #{memID}
 	</select>
+
+	<select id="isFav" parameterType="FavVO" resultType="FavVO">
+		select rownum q, boardid, memid, boardtitle, imagepath, writer
+		from (
+			select b.boardid, f.memid as memid, b.boardtitle, imagepath, b.memid as writer 
+			from favorite f
+			join board b on b.boardid = f.boardid
+			join (
+				select boardid, imageid, imagepath
+				from (
+					SELECT rownum r, t.boardid, t.imagepath, t.imageid
+					FROM (
+						SELECT boardid, imagepath, imageid, 
+							ROW_NUMBER() OVER(PARTITION BY boardid ORDER BY imageid ASC) AS rn
+						FROM image
+					) t
+					WHERE t.rn = 1
+				) 
+			) i on i.boardid = b.boardid
+	)
+	where memid = #{memID}
+	and boardid = #{boardID}
+	</select>
 </mapper>

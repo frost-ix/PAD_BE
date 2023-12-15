@@ -10,6 +10,7 @@ import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
 import com.pad.dev.vo.cateVO.CateVO;
+import com.pad.dev.vo.favVO.FavVO;
 import com.pad.dev.vo.imgVO.ImgVO;
 
 import lombok.RequiredArgsConstructor;
@@ -147,4 +148,10 @@ public class BoardServiceImple implements BoardService {
 	public List<CateVO> getCategory() {
 		return bm.getCategory();
 	}
+
+	@Override
+	public FavVO isFav(FavVO dum) {
+		return bm.isFav(dum);
+	}
+
 }

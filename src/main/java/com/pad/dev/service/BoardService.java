@@ -6,6 +6,7 @@ import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
 import com.pad.dev.vo.cateVO.CateVO;
+import com.pad.dev.vo.favVO.FavVO;
 
 public interface BoardService {
 	List<BoardImgCateVO> getMyBoardVO(BoardImgCateVO boardImgCateVO);
@@ -31,5 +32,7 @@ public interface BoardService {
 	List<BoardImgVO> getCateBoard(BoardImgVO boardImgVO);
 
 	List<CateVO> getCategory();
+
+	FavVO isFav(FavVO dum);
 
 }
