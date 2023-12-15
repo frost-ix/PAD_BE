@@ -118,10 +118,10 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int postBoardImg(BoardImgVO boardImgVO) {
 		int result = 0;
-		if(boardImgVO.getImageNames().isEmpty()) 
+		if (boardImgVO.getImageNames().isEmpty())
 			result = sqlSession.insert("insertImage", boardImgVO);
 		else {
-			for(String imageName : boardImgVO.getImageNames()) {
+			for (String imageName : boardImgVO.getImageNames()) {
 				ImgVO imgVO = new ImgVO();
 				imgVO.setImagePath(imageName);
 				imgVO.setBoardID(boardImgVO.getBoardID());
@@ -201,6 +201,5 @@ public class BoardDAOImpl implements BoardDAO {
 		}
 		return isFav;
 	}
-
 
 }

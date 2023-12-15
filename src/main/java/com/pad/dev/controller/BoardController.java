@@ -123,7 +123,7 @@ public class BoardController {
 		}
 		// path = Paths.get(path + "/" + fileName);
 
-		Path path = Paths.get("/image");
+		Path path = Paths.get("/images");
 		// Path localPath = Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
 		path = Paths.get(path + "/" + fileName);
 
