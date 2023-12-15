@@ -80,7 +80,6 @@ public class BoardController {
 			tf = true;
 		board.setFavv(tf);
 		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAA: " + board.getFavv());
-		board.setImgList(imgList);
 		imgList.forEach(img -> {
 			String imgVO = new String();
 			imgVO = img.getImagePath();
