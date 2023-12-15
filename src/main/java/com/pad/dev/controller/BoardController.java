@@ -7,6 +7,7 @@ import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
 import com.pad.dev.vo.cateVO.CateVO;
+import com.pad.dev.vo.favVO.FavVO;
 import com.pad.dev.vo.imgVO.ImgVO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,8 +30,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/proxy/board")
 public class BoardController {
 	private final BoardService bs;
-	private Path path = Paths.get("http:///1.209.148.143:4100/image");
-	private Path localPath = Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
+	private Path path = Paths.get("C:\\Users\\YongQ\\OneDrive\\바탕 화면\\PadImages");
+	// private Path localPath = Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
 
 	@PostMapping("/category")
 	public List<BoardImgVO> boardImgVO(@RequestBody BoardImgVO boardImgVO) {
@@ -63,12 +64,19 @@ public class BoardController {
 	}
 
 	@PostMapping("/watch")
-	public BoardImgCateVO getBoardOne(@RequestBody BoardVO boardVO) {
+	public BoardImgCateVO getBoardOne(HttpServletRequest request, @RequestBody BoardVO boardVO) {
 		BoardImgCateVO board = bs.getBoardOne(boardVO);
-
+		HttpSession session = request.getSession();
 		List<ImgVO> imgList = board.getImageVO();
 		List<ImgVO> tempList = new ArrayList<ImgVO>();
-
+		FavVO dum = new FavVO();
+		dum.setMemID((String)session.getAttribute("memID"));
+		dum.setBoardID(boardVO.getBoardID());
+		FavVO favVO = bs.isFav(dum);
+		Boolean tf = false;
+		if(favVO != null) tf = true;
+		board.setFavv(tf);
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAA: " + board.getFavv());
 		imgList.forEach(img -> {
 			ImgVO imgVO = new ImgVO();
 			imgVO.setImageID(img.getImageID());

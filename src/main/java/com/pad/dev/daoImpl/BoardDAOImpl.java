@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.pad.dev.dao.BoardDAO;
+import com.pad.dev.vo.favVO.FavVO;
 import com.pad.dev.vo.boardVO.BoardImgCateVO;
 import com.pad.dev.vo.boardVO.BoardImgVO;
 import com.pad.dev.vo.boardVO.BoardVO;
@@ -188,4 +189,18 @@ public class BoardDAOImpl implements BoardDAO {
 		}
 		return categoryList;
 	}
+
+	@Override
+	public FavVO isFav(FavVO dum) {
+		FavVO isFav = null;
+		try {
+			isFav = sqlSession.selectOne("isFav", dum);
+			System.out.println("isFav: " + isFav);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return isFav;
+	}
+
+
 }
