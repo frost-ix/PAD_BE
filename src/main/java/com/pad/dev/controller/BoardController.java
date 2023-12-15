@@ -48,7 +48,6 @@ public class BoardController {
 	}
 
 	@PostMapping("/myBoard")
-
 	public List<BoardImgCateVO> getMyBoardVO(@RequestBody BoardImgCateVO boardImgCateVO, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		System.out.println("Start : " + boardImgCateVO.getStart());
