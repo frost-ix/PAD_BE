@@ -30,8 +30,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/proxy/board")
 public class BoardController {
 	private final BoardService bs;
-	private Path path = Paths.get("C:\\Users\\YongQ\\OneDrive\\바탕 화면\\PadImages");
-	// private Path localPath = Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
+	// private Path path = Paths.get("C:\\Users\\YongQ\\OneDrive\\바탕
+	// 화면\\PadImages");
+	private Path path = Paths.get("/images");
+	// private Path localPath =
+	// Paths.get("/Users/sung/Desktop/PAD_project/tempImg");
 
 	@PostMapping("/category")
 	public List<BoardImgVO> boardImgVO(@RequestBody BoardImgVO boardImgVO) {
@@ -67,25 +70,23 @@ public class BoardController {
 		BoardImgCateVO board = bs.getBoardOne(boardVO);
 		HttpSession session = request.getSession();
 		List<ImgVO> imgList = board.getImageVO();
-		List<ImgVO> tempList = new ArrayList<ImgVO>();
+		ArrayList<String> tempList = new ArrayList<String>();
 		FavVO dum = new FavVO();
-		dum.setMemID((String)session.getAttribute("memID"));
+		dum.setMemID((String) session.getAttribute("memID"));
 		dum.setBoardID(boardVO.getBoardID());
 		FavVO favVO = bs.isFav(dum);
 		Boolean tf = false;
-		if(favVO != null) tf = true;
+		if (favVO != null)
+			tf = true;
 		board.setFavv(tf);
 		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAA: " + board.getFavv());
 		board.setImgList(imgList);
 		imgList.forEach(img -> {
-			ImgVO imgVO = new ImgVO();
-			imgVO.setImageID(img.getImageID());
-			imgVO.setBoardID(img.getBoardID());
-			String imgPath = img.getImagePath();
-			imgVO.setImagePath(path + "/" + imgPath);
-			tempList.add(imgVO);
+			String imgVO = new String();
+			imgVO = img.getImagePath();
+			tempList.add(path + "/" + imgVO);
 		});
-		board.setImageVO(tempList);
+		board.setImagePath(tempList);
 
 		System.out.println(board.getImageVO());
 

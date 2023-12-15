@@ -1,6 +1,6 @@
 package com.pad.dev.vo.boardVO;
 
-import java.util.List;
+import java.util.*;
 import java.util.Date;
 
 import com.pad.dev.vo.imgVO.ImgVO;
@@ -22,7 +22,7 @@ public class BoardImgCateVO {
 
 	// Img
 	private int imageID;
-	private String imagePath;
+	private ArrayList<String> imagePath;
 	private List<ImgVO> imageVO;
 
 	// Cate
