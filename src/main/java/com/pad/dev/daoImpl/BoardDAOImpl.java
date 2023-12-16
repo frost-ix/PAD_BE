@@ -172,7 +172,9 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<BoardImgVO> getCateBoard(BoardImgVO boardImgVO) {
 		List<BoardImgVO> cateBoard = null;
 		try {
+			System.out.println("import : " + boardImgVO);
 			cateBoard = sqlSession.selectList("getCateBoard", boardImgVO);
+			System.out.println("extract : " + cateBoard);
 		} catch (Exception e) {
 			e.getMessage();
 		}

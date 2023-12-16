@@ -133,7 +133,7 @@
 		where rownum &lt;= 10
 	</select>
 
-	<select id="getCateBoard" parameterType="BoardImgVO" resultType="BoardImgVO">
+	<select id="getCateBoard" parameterType="boardImgVO" resultType="BoardImgVO">
 		select b.boardid, a.imageid, b.boardtitle, b.cateid, a.imagepath
 		from (
 			SELECT rownum r, t.boardid, t.imagepath, t.imageid

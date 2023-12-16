@@ -141,6 +141,7 @@ public class BoardServiceImple implements BoardService {
 	@Override
 	public List<BoardImgVO> getCateBoard(BoardImgVO boardImgVO) {
 		log.info("카테고리 필터링");
+		log.info(boardImgVO.getCateID());
 		return bm.getCateBoard(boardImgVO);
 	}
 
